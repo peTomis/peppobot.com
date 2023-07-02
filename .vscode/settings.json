@@ -1,0 +1,19 @@
+{
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/node_modules": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "tslint.autoFixOnSave": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.singleQuote": false,
+    "prettier.printWidth": 180,
+  }
+  
+  
