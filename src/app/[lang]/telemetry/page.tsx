@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { getDictionary } from "@/i18n/dictionaries";
 import { localizedAlternates } from "@/i18n/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return { alternates: await localizedAlternates("/") };
+  const { nav } = await getDictionary();
+  return { title: nav.telemetry, alternates: await localizedAlternates("/telemetry") };
 }
 
-export default function Home() {
+export default function TelemetryPage() {
   return <main className="mx-auto w-full max-w-[1240px] flex-1 px-6" />;
 }

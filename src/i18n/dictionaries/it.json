@@ -17,6 +17,10 @@
     "closeMenu": "Chiudi menu",
     "language": "Lingua"
   },
+  "findPeppobot": {
+    "find": "Trova",
+    "tagline": "AGGIUNGIMI · GUARDAMI · SFIDAMI"
+  },
   "bottomBar": {
     "credits": "SCRITTO DA UN FINTO ROBOT, PER UMANI VERI",
     "build": "BUILD 4.2.0",

@@ -17,6 +17,10 @@
     "closeMenu": "Close menu",
     "language": "Language"
   },
+  "findPeppobot": {
+    "find": "Find",
+    "tagline": "ADD ME · WATCH ME · CHALLENGE ME"
+  },
   "bottomBar": {
     "credits": "WRITTEN BY A FAKE ROBOT, FOR REAL HUMANS",
     "build": "BUILD 4.2.0",

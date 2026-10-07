@@ -115,7 +115,8 @@ src/app/                    Next.js App Router
   globals.css               design tokens exposed to Tailwind v4 (`bg-acc`, `text-fg-dim`, `font-display`…)
   [lang]/layout.tsx         root layout: fonts, localized metadata, top/bottom bars
   [lang]/page.tsx           placeholder home page
-src/components/             TopBar (desktop + mobile menu, EN/IT switch), BottomBar, nav config
+src/components/             TopBar (desktop + mobile menu, EN/IT switch), FindPeppobot (gamertags), BottomBar, nav config
+public/icons/               platform icons for the gamertag cards
 src/i18n/                   locales config, dictionaries (en.json, it.json), getDictionary()
 src/proxy.ts                redirects unprefixed URLs to /en or /it
 ```

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Chakra_Petch, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import { Suspense } from "react";
 import { BottomBar } from "@/components/bottom-bar";
+import { FindPeppobot } from "@/components/find-peppobot";
 import { ActiveTopBar, TopBar } from "@/components/top-bar";
 import { locales } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
@@ -30,15 +31,12 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [lang, dict] = await Promise.all([getLocale(), getDictionary()]);
+  const dict = await getDictionary();
   return {
-    title: dict.meta.title,
+    // Pages set a short title (e.g. "Library"), shown as "Library — Peppobot".
+    title: { default: dict.meta.title, template: "%s — Peppobot" },
     description: dict.meta.description,
     metadataBase: new URL("https://www.peppobot.com"),
-    alternates: {
-      canonical: `/${lang}`,
-      languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
-    },
   };
 }
 
@@ -56,6 +54,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
           <ActiveTopBar {...topBar} />
         </Suspense>
         {children}
+        <FindPeppobot />
         <BottomBar />
       </body>
     </html>
