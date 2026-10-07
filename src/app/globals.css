@@ -44,3 +44,13 @@ body {
   background: var(--acc);
   color: var(--bg);
 }
+
+/* Mobile/desktop switch used by the design (window.innerWidth < 760). */
+@theme {
+  --breakpoint-desk: 47.5rem;
+}
+
+/* Flat-top hexagon, the design's core shape. */
+@utility hex {
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
