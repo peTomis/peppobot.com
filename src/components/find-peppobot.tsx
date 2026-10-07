@@ -20,7 +20,7 @@ export async function FindPeppobot() {
 
   return (
     <section aria-labelledby="find-peppobot" className="bg-acc text-bg">
-      <div className="mx-auto flex max-w-[1240px] flex-col gap-9 px-6 py-18">
+      <div className="flex flex-col px-6 mx-auto max-w-310 gap-9 py-18">
         <div className="flex flex-wrap items-end justify-between gap-5">
           <h2 id="find-peppobot" className="flex flex-wrap gap-4 font-display text-[clamp(36px,5vw,64px)] leading-[0.9] font-bold uppercase">
             <span>{t.find}</span>
@@ -38,9 +38,9 @@ export async function FindPeppobot() {
                 <Card
                   {...(tag.url ? { href: tag.url, target: "_blank", rel: "noopener noreferrer" } : {})}
                   style={{ "--c": tag.color } as CSSProperties}
-                  className={`flex items-center gap-4 bg-bg px-[18px] py-4 text-fg [clip-path:polygon(0_0,calc(100%-18px)_0,100%_18px,100%_100%,0_100%)]${tag.url ? " hover:bg-surface-hover hover:text-fg" : ""}`}
+                  className={`flex items-center gap-4 bg-bg px-4.5 py-4 text-fg [clip-path:polygon(0_0,calc(100%-18px)_0,100%_18px,100%_100%,0_100%)]${tag.url ? " hover:bg-surface-hover hover:text-fg" : ""}`}
                 >
-                  <span className="hex grid h-[45px] w-[52px] shrink-0 place-items-center bg-(--c)">
+                  <span className="hex grid h-11.25 w-13 shrink-0 place-items-center bg-(--c)">
                     <Image src={`/icons/${tag.icon}.svg`} alt="" width={22} height={22} className={tag.icon === "epicgames" ? "brightness-0" : "brightness-0 invert"} />
                   </span>
                   <span className="flex flex-col min-w-0 gap-1">

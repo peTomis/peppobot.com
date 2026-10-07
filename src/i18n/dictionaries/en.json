@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Peppobot — Pilot log // Game reports",
-    "description": "Every game Peppobot runs — scored on six axes, reviewed without filters, tracked to the hour."
+    "description": "Every game Peppobot runs. Scored on six axes, reviewed without filters, tracked to the hour."
   },
   "nav": {
     "home": "Home",
@@ -16,6 +16,20 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "language": "Language"
+  },
+  "hero": {
+    "eyebrow": "FIELD REPORTS · SINCE 1996",
+    "titleGames": "Games",
+    "titlePlayed": "played.",
+    "titleReports": "Reports",
+    "titleFiled": "filed.",
+    "intro": "Every game Peppobot runs. Scored on six axes, reviewed without filters, tracked to the hour.",
+    "openLibrary": "Open library",
+    "scoringProtocol": "Scoring protocol",
+    "kpiLogged": "LOGGED",
+    "kpiHours": "HOURS",
+    "kpiAvgScore": "AVG SCORE",
+    "ticker": ["Now playing", "Reports filed", "Six axes", "No filters"]
   },
   "findPeppobot": {
     "find": "Find",

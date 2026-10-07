@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { HomeHero } from "@/components/home-hero";
 import { localizedAlternates } from "@/i18n/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -6,5 +7,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Home() {
-  return <main className="mx-auto w-full max-w-[1240px] flex-1 px-6" />;
+  return (
+    <main className="flex-1">
+      <HomeHero />
+    </main>
+  );
 }

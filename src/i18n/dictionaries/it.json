@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Peppobot — Diario di bordo // Report di gioco",
-    "description": "Ogni gioco affrontato da Peppobot — valutato su sei assi, recensito senza filtri, tracciato ora per ora."
+    "description": "Ogni gioco affrontato da Peppobot. Valutato su sei assi, recensito senza filtri, tracciato ora per ora."
   },
   "nav": {
     "home": "Home",
@@ -16,6 +16,20 @@
     "openMenu": "Apri menu",
     "closeMenu": "Chiudi menu",
     "language": "Lingua"
+  },
+  "hero": {
+    "eyebrow": "REPORT DAL CAMPO · DAL 1996",
+    "titleGames": "Giochi",
+    "titlePlayed": "giocati.",
+    "titleReports": "Recensioni",
+    "titleFiled": "archiviate.",
+    "intro": "Ogni gioco affrontato da Peppobot. Valutato su sei assi, recensito senza filtri, tracciato ora per ora.",
+    "openLibrary": "Apri libreria",
+    "scoringProtocol": "Come voto",
+    "kpiLogged": "REGISTRATI",
+    "kpiHours": "ORE",
+    "kpiAvgScore": "VOTO MEDIO",
+    "ticker": ["In gioco", "Recensioni archiviate", "Sei assi", "Senza filtri"]
   },
   "findPeppobot": {
     "find": "Trova",

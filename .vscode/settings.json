@@ -110,5 +110,22 @@
   "[xml]": {
     "editor.defaultFormatter": "mikeburgh.xml-format"
   },
-  "cSpell.words": ["cardmarket", "extralight", "hiresopt", "HOLO", "NEXTAUTH", "Pokeball", "Pokemontcg", "pokemontcgsdk", "tcgdex", "Topbar", "withcards"]
+  "cSpell.words": [
+    "cardmarket",
+    "epicgames",
+    "extralight",
+    "Gametag",
+    "GAMETAGS",
+    "hiresopt",
+    "HOLO",
+    "NEXTAUTH",
+    "PEPPOBOT",
+    "Pokeball",
+    "Pokemontcg",
+    "pokemontcgsdk",
+    "tcgdex",
+    "Topbar",
+    "VIDEOGAMES",
+    "withcards"
+  ]
 }
