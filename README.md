@@ -18,15 +18,15 @@ The persona drives the copy. The site reads like a robot's ship log: "pilot", "r
 
 ### Core concepts
 
-| Concept | Meaning |
-|---|---|
+| Concept           | Meaning                                                                                                                                                                                                  |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Game / Report** | One logged title: developer, platform, genre, year, status, hours played, finish date (or last session), progress % (while playing), six axis scores, one-line verdict, long-form review, pros and cons. |
-| **Status** | `Playing` (green), `Completed` (purple), `Dropped` (red). |
-| **Six axes** | Every game is rated 0–10 on **Gameplay**, **Narrative**, **Visuals**, **Audio**, **Longevity** and **Innovation**. |
-| **Overall score** | The plain average of the six axes. No hidden weights. |
-| **Tiers** | `OVERCLOCKED` 9.0+ (all-time list) · `OPTIMAL` 8.0–8.9 · `STABLE` 7.0–7.9 · `GLITCHED` 5.0–6.9 · `CORRUPTED` 0–4.9 (skip it). |
-| **Provisional** | A `Playing` game shows its score labelled "PROVISIONAL — RUN AT N%" until it is finished. |
-| **Queue** | Upcoming games, each with a `HIGH` / `MED` / `LOW` priority, platform, release window and a note. |
+| **Status**        | `Playing` (green), `Completed` (purple), `Dropped` (red).                                                                                                                                                |
+| **Six axes**      | Every game is rated 0–10 on **Gameplay**, **Narrative**, **Visuals**, **Audio**, **Longevity** and **Innovation**.                                                                                       |
+| **Overall score** | The plain average of the six axes. No hidden weights.                                                                                                                                                    |
+| **Tiers**         | `OVERCLOCKED` 9.0+ (all-time list) · `OPTIMAL` 8.0–8.9 · `STABLE` 7.0–7.9 · `GLITCHED` 5.0–6.9 · `CORRUPTED` 0–4.9 (skip it).                                                                            |
+| **Provisional**   | A `Playing` game shows its score labelled "PROVISIONAL — RUN AT N%" until it is finished.                                                                                                                |
+| **Queue**         | Upcoming games, each with a `HIGH` / `MED` / `LOW` priority, platform, release window and a note.                                                                                                        |
 
 Dropped games stay in the library but are left out of aggregate stats such as the average score, tier distribution, axis profile and genre averages. Hours still count them.
 
@@ -34,14 +34,14 @@ Dropped games stay in the library but are left out of aggregate stats such as th
 
 The prototype is a single-page app with in-memory navigation. In Next.js each screen should become its own route:
 
-| Screen | Suggested route | Contents |
-|---|---|---|
-| **Home** | `/` | Hero ("Games played. Reports filed.") with a large hexagon logo badge and a circular "PLAYING AND ENJOYING VIDEOGAMES ◆ SINCE 1996" text ring. KPI chips (games logged, total hours, average score). Two angled scrolling tickers. **01 Now playing** (cards with progress bar and hours). **02 Latest reports** (last 3 completed). **03 Hall of fame** (top 5 by score). **Next in queue** promo card. |
-| **Library** ("The archive — Every game logged.") | `/library` | Full-text search over title, developer, genre and platform. Status filter chips (All / Playing / Completed / Dropped). Sort by Recent / Score / Hours / A–Z. Grid or list view. Pagination at 12 per page. Shows a "filtered of total entries" counter and an empty state. |
-| **Game report** | `/games/[slug]` | Cover, big hex score badge, tags, title, developer, quoted verdict, tier stamp, provisional flag. **01 Score matrix**: hexagonal radar chart plus a per-axis bar breakdown with axis descriptions. **02 Full report**: rich content blocks, then pros ("+ Systems nominal") and cons ("− Errors detected"). Sticky **Pilot data** sidebar (status, platform, developer, playtime, date, progress, tier). Previous and next report links. |
-| **Telemetry** ("Pilot telemetry.") | `/telemetry` | KPI tiles (games logged, hours played, completed, average score). **01 Pilot profile**: radar of the six axes averaged across all rated games ("taste fingerprint"). **02 Rating tiers** distribution. **03 Hours by platform**. **04 Genre scan**: average score and game count per genre. |
-| **Queue** ("Loading bay — Up next.") | `/queue` | Intro ("priority is set by hype, free time and how loudly friends keep asking"). Counts per priority. List of queued games with priority stamps. |
-| **Protocol** ("How scores are computed — Scoring protocol.") | `/protocol` | Methodology: **01 Six axes** with descriptions. **02 Rating tiers** with ranges. **03 About the pilot** ("Human pilot. Robot patience."). |
+| Screen                                                       | Suggested route | Contents                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ------------------------------------------------------------ | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Home**                                                     | `/`             | Hero ("Games played. Reports filed.") with a large hexagon logo badge and a circular "PLAYING AND ENJOYING VIDEOGAMES ◆ SINCE 1996" text ring. KPI chips (games logged, total hours, average score). Two angled scrolling tickers. **01 Now playing** (cards with progress bar and hours). **02 Latest reports** (last 3 completed). **03 Hall of fame** (top 5 by score). **Next in queue** promo card.                                 |
+| **Library** ("The archive — Every game logged.")             | `/library`      | Full-text search over title, developer, genre and platform. Status filter chips (All / Playing / Completed / Dropped). Sort by Recent / Score / Hours / A–Z. Grid or list view. Pagination at 12 per page. Shows a "filtered of total entries" counter and an empty state.                                                                                                                                                               |
+| **Game report**                                              | `/games/[slug]` | Cover, big hex score badge, tags, title, developer, quoted verdict, tier stamp, provisional flag. **01 Score matrix**: hexagonal radar chart plus a per-axis bar breakdown with axis descriptions. **02 Full report**: rich content blocks, then pros ("+ Systems nominal") and cons ("− Errors detected"). Sticky **Pilot data** sidebar (status, platform, developer, playtime, date, progress, tier). Previous and next report links. |
+| **Telemetry** ("Pilot telemetry.")                           | `/telemetry`    | KPI tiles (games logged, hours played, completed, average score). **01 Pilot profile**: radar of the six axes averaged across all rated games ("taste fingerprint"). **02 Rating tiers** distribution. **03 Hours by platform**. **04 Genre scan**: average score and game count per genre.                                                                                                                                              |
+| **Queue** ("Loading bay — Up next.")                         | `/queue`        | Intro ("priority is set by hype, free time and how loudly friends keep asking"). Counts per priority. List of queued games with priority stamps.                                                                                                                                                                                                                                                                                         |
+| **Protocol** ("How scores are computed — Scoring protocol.") | `/protocol`     | Methodology: **01 Six axes** with descriptions. **02 Rating tiers** with ranges. **03 About the pilot** ("Human pilot. Robot patience.").                                                                                                                                                                                                                                                                                                |
 
 Shared on every page:
 
@@ -74,16 +74,16 @@ Dark, angular, "mecha HUD" style: hexagons everywhere, clipped corners, outlined
 
 **Colours** (from the default "Green / Purple" palette):
 
-| Token | Value | Use |
-|---|---|---|
-| `--bg` | `#100a18` | page background, text on accent fills |
-| `--surface` / `--surface-hover` | `#1a1126` / `#2a1640` | cards, rows, inputs |
-| `--line` | `#3e2c56` | radar grid |
-| `--fg` → `--fg-faint` | `#f3eefa` `#ddd3ec` `#c4b8d8` `#a595bf` `#7a6a92` | text scale |
-| `--acc` | `#5cff8a` (green) | primary accent, Playing, OVERCLOCKED |
-| `--acc2` | `#b65cff` (purple) | secondary accent, Completed, STABLE |
-| `--acc3` | `#ff5cd6` (pink) | tertiary accent, provisional, cons |
-| — | `#a8ff5c` / `#ff8a5c` / `#ff5c7a` | OPTIMAL / GLITCHED / CORRUPTED and Dropped |
+| Token                           | Value                                             | Use                                        |
+| ------------------------------- | ------------------------------------------------- | ------------------------------------------ |
+| `--bg`                          | `#100a18`                                         | page background, text on accent fills      |
+| `--surface` / `--surface-hover` | `#1a1126` / `#2a1640`                             | cards, rows, inputs                        |
+| `--line`                        | `#3e2c56`                                         | radar grid                                 |
+| `--fg` → `--fg-faint`           | `#f3eefa` `#ddd3ec` `#c4b8d8` `#a595bf` `#7a6a92` | text scale                                 |
+| `--acc`                         | `#5cff8a` (green)                                 | primary accent, Playing, OVERCLOCKED       |
+| `--acc2`                        | `#b65cff` (purple)                                | secondary accent, Completed, STABLE        |
+| `--acc3`                        | `#ff5cd6` (pink)                                  | tertiary accent, provisional, cons         |
+| —                               | `#a8ff5c` / `#ff8a5c` / `#ff5c7a`                 | OPTIMAL / GLITCHED / CORRUPTED and Dropped |
 
 The prototype also has two alternate palettes behind a `palette` prop. They only swap the three accents: **Lime / Violet** (`#c6ff3d #8a1fd6 #ff5c8a`) and **Mint / Magenta** (`#3dffc6 #ff5cd6 #ffd65c`).
 
@@ -112,9 +112,12 @@ design/                     Claude Design export (reference only, not built)
   assets/peppobot.png       logo
 public/peppobot.png         logo used by the app
 src/app/                    Next.js App Router
-  layout.tsx                fonts (Chakra Petch, IBM Plex Sans, JetBrains Mono) + metadata
   globals.css               design tokens exposed to Tailwind v4 (`bg-acc`, `text-fg-dim`, `font-display`…)
-  page.tsx                  placeholder home page
+  [lang]/layout.tsx         root layout: fonts, localized metadata, top/bottom bars
+  [lang]/page.tsx           placeholder home page
+src/components/             TopBar (desktop + mobile menu, EN/IT switch), BottomBar, nav config
+src/i18n/                   locales config, dictionaries (en.json, it.json), getDictionary()
+src/proxy.ts                redirects unprefixed URLs to /en or /it
 ```
 
 ## Stack
@@ -123,11 +126,24 @@ src/app/                    Next.js App Router
 - Tailwind CSS v4. Tokens are defined in `src/app/globals.css` under `@theme`.
 - Fonts via `next/font/google`
 
+## Internationalization
+
+The site is in English (`en`, the default) and Italian (`it`). Every route lives under `src/app/[lang]/`, so URLs always carry the language: `/en/library`, `/it/library`.
+
+- **Language picking**: [`src/proxy.ts`](src/proxy.ts) redirects any URL without a language (for example `/` or `/library`) to one. It uses the `NEXT_LOCALE` cookie if set, otherwise the browser's `Accept-Language` header, otherwise `en`.
+- **Switching**: the EN / IT switch in the top bar keeps the current page, changing only the language, and saves the choice in the `NEXT_LOCALE` cookie.
+- **Strings**: [`src/i18n/dictionaries/en.json`](src/i18n/dictionaries/en.json) and [`it.json`](src/i18n/dictionaries/it.json). `en.json` defines the `Dictionary` type, so a key missing from `it.json` fails type-checking.
+- **Server components** call `await getDictionary()` (and `getLocale()`). These read the language from the URL through `next/root-params`, so nothing has to pass it down.
+- **Client components** can't read the dictionary themselves. They get the strings they need as props from a server component, as `TopBar` does.
+- **SEO**: each language is prerendered statically. `<html lang>`, the title and description are localized, and the pages declare `canonical` and `hreflang` alternate links.
+
+To add a language, add its code to `locales` in [`src/i18n/config.ts`](src/i18n/config.ts), create its JSON dictionary and register it in [`src/i18n/dictionaries.ts`](src/i18n/dictionaries.ts).
+
 ## Getting started
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
+npm run dev      # http://localhost:4888
 npm run build    # production build
 npm run lint
 ```

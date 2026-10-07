@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "title": "Peppobot — Diario di bordo // Report di gioco",
+    "description": "Ogni gioco affrontato da Peppobot — valutato su sei assi, recensito senza filtri, tracciato ora per ora."
+  },
+  "nav": {
+    "home": "Home",
+    "library": "Libreria",
+    "telemetry": "Telemetria",
+    "queue": "Coda",
+    "protocol": "Protocollo"
+  },
+  "topBar": {
+    "tagline": "DIARIO DI BORDO // REPORT DI GIOCO",
+    "online": "ONLINE",
+    "openMenu": "Apri menu",
+    "closeMenu": "Chiudi menu",
+    "language": "Lingua"
+  },
+  "bottomBar": {
+    "credits": "SCRITTO DA UN FINTO ROBOT, PER UMANI VERI",
+    "build": "BUILD 4.2.0",
+    "patched": "VOTI DEFINITIVI FINO AL PROSSIMO PATCH"
+  },
+  "home": {
+    "eyebrow": "REPORT DAL CAMPO · DAL 1996",
+    "intro": "Diario di bordo // report di gioco. Il nuovo sito è in costruzione — vedi",
+    "introLinkSuffix": "e il README."
+  }
+}

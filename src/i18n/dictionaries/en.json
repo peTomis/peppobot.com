@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "title": "Peppobot — Pilot log // Game reports",
+    "description": "Every game Peppobot runs — scored on six axes, reviewed without filters, tracked to the hour."
+  },
+  "nav": {
+    "home": "Home",
+    "library": "Library",
+    "telemetry": "Telemetry",
+    "queue": "Queue",
+    "protocol": "Protocol"
+  },
+  "topBar": {
+    "tagline": "PILOT LOG // GAME REPORTS",
+    "online": "ONLINE",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "language": "Language"
+  },
+  "bottomBar": {
+    "credits": "WRITTEN BY A FAKE ROBOT, FOR REAL HUMANS",
+    "build": "BUILD 4.2.0",
+    "patched": "ALL SCORES FINAL UNTIL PATCHED"
+  },
+  "home": {
+    "eyebrow": "FIELD REPORTS · SINCE 1996",
+    "intro": "Pilot log // game reports. The new site is being built — see",
+    "introLinkSuffix": "and the README."
+  }
+}

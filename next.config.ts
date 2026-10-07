@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  // Let phones on the LAN load dev assets (JS, HMR) so the page hydrates.
+  allowedDevOrigins: ["192.168.1.13"],
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
