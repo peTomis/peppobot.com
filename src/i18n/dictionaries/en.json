@@ -18,7 +18,7 @@
     "language": "Language"
   },
   "hero": {
-    "eyebrow": "FIELD REPORTS · SINCE 1996",
+    "eyebrow": "UPDATED · SINCE 1999",
     "titleGames": "Games",
     "titlePlayed": "played.",
     "titleReports": "Reports",
@@ -31,11 +31,118 @@
     "kpiAvgScore": "AVG SCORE",
     "ticker": ["Now playing", "Reports filed", "Six axes", "No filters"]
   },
+  "nowPlaying": {
+    "now": "Now",
+    "playing": "playing",
+    "activeRun": "ACTIVE RUN",
+    "activeRuns": "ACTIVE RUNS",
+    "progress": "PROGRESS"
+  },
+  "latestReports": {
+    "latest": "Latest",
+    "reports": "reports",
+    "allReports": "All reports"
+  },
+  "hallOfFame": {
+    "hallOf": "Hall of",
+    "fame": "fame",
+    "nextInQueue": "NEXT IN QUEUE",
+    "tba": "TBA"
+  },
+  "library": {
+    "archive": "THE ARCHIVE",
+    "every": "Every",
+    "game": "game",
+    "logged": "logged.",
+    "of": "OF",
+    "entries": "ENTRIES",
+    "search": "Search title, developer, genre, platform…",
+    "searchLabel": "Search the library",
+    "sortBy": "SORT BY",
+    "sorts": {
+      "recent": "Recent",
+      "score": "Score",
+      "hours": "Hours",
+      "az": "A–Z"
+    },
+    "all": "All",
+    "statuses": {
+      "Playing": "Playing",
+      "Completed": "Completed",
+      "Dropped": "Dropped",
+      "Not Started": "Not started"
+    },
+    "grid": "GRID",
+    "list": "LIST",
+    "columns": {
+      "title": "TITLE",
+      "platform": "PLATFORM",
+      "genre": "GENRE",
+      "hours": "HOURS",
+      "status": "STATUS",
+      "score": "SCORE"
+    },
+    "prev": "Prev",
+    "next": "Next",
+    "page": "PAGE",
+    "noMatches": "No matches in memory bank"
+  },
+  "report": {
+    "back": "Library · Report",
+    "by": "by",
+    "outOf": "/ 10",
+    "inProgress": "IN PROGRESS — RUN AT",
+    "notStarted": "NOT STARTED YET",
+    "scoreMatrix": ["Score", "matrix"],
+    "fullReport": ["Full", "report"],
+    "pros": "+ Systems nominal",
+    "cons": "− Errors detected",
+    "pilotData": "Pilot data",
+    "rows": {
+      "status": "STATUS",
+      "platform": "PLATFORM",
+      "developer": "DEVELOPER",
+      "playtime": "PLAYTIME",
+      "logged": "LOGGED",
+      "released": "RELEASED",
+      "progress": "PROGRESS",
+      "tier": "TIER"
+    },
+    "previous": "PREVIOUS REPORT",
+    "next": "NEXT REPORT",
+    "axes": [
+      {
+        "name": "Gameplay",
+        "note": "Moment-to-moment feel: controls, systems, combat, puzzles. Does it play well?"
+      },
+      {
+        "name": "Narrative",
+        "note": "Story, characters, writing and world-building. Does it make me care?"
+      },
+      {
+        "name": "Visuals",
+        "note": "Art direction first, raw tech second. Does it look like nothing else?"
+      },
+      {
+        "name": "Audio",
+        "note": "Soundtrack, sound design and voice work. Does it stay in my head?"
+      },
+      {
+        "name": "Longevity",
+        "note": "Replay value, content depth and pacing over the full run."
+      },
+      {
+        "name": "Innovation",
+        "note": "New ideas, bold design swings, things I have never played before."
+      }
+    ]
+  },
   "findPeppobot": {
     "find": "Find",
     "tagline": "ADD ME · WATCH ME · CHALLENGE ME"
   },
   "bottomBar": {
+    "madeBy": "Made by",
     "credits": "WRITTEN BY A FAKE ROBOT, FOR REAL HUMANS",
     "build": "BUILD 4.2.0",
     "patched": "ALL SCORES FINAL UNTIL PATCHED"

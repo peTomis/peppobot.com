@@ -3,7 +3,6 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { getGames } from "@/lib/games";
 import Link from "next/link";
-import type { Game } from "@/content/games";
 import { localizePath } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { HomeMetrics } from "./home-metrics";
@@ -19,10 +18,10 @@ export async function HomeHero() {
   return (
     <>
       <section className="relative flex items-center z-1 min-h-170 overflow-x-clip bg-bg">
-        {/* Hatched parallelogram under the badge; on mobile 2× wider, ⅓ shorter, same top edge */}
+        {/* Hatched parallelogram under the badge; on mobile yellow, 2× wider, about half as tall, and lower */}
         <div
           aria-hidden
-          className="absolute -bottom-19.25 h-36.75 w-[min(48vw,560px)] desk:-bottom-37.5 desk:h-55 desk:w-[min(24vw,280px)] bg-[repeating-linear-gradient(-45deg,var(--acc2)_0_3px,transparent_3px_16px)] [clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] right-[calc(max(-120px,-8vw)+min(64vw,760px)*0.22)] motion-safe:animate-bob-stripes"
+          className="absolute -bottom-24 h-26 w-[min(48vw,560px)] desk:-bottom-37.5 desk:h-55 desk:w-[min(24vw,280px)] bg-[repeating-linear-gradient(-45deg,#ffd65c_0_3px,transparent_3px_16px)] desk:bg-[repeating-linear-gradient(-45deg,var(--acc2)_0_3px,transparent_3px_16px)] [clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] right-[calc(max(-120px,-8vw)+min(64vw,760px)*0.22)] motion-safe:animate-bob-stripes"
         />
 
         {/* Big hexagon badge with the text ring */}
@@ -42,12 +41,12 @@ export async function HomeHero() {
               </svg>
               <Image src="/peppobot.png" alt="" width={400} height={400} priority className="relative h-auto w-[54%] invert mix-blend-screen" />
             </div>
-            <div className="absolute top-[6%] left-1/2 -translate-x-1/2 bg-acc px-3 py-1.5 font-mono text-xs tracking-[0.2em] whitespace-nowrap text-bg">PB-0001 // PILOT</div>
+            <div className="hidden desk:block absolute top-[6%] left-1/2 -translate-x-1/2 bg-acc px-3 py-1.5 font-mono text-xs tracking-[0.2em] whitespace-nowrap text-bg">PB-0001 // PILOT</div>
           </div>
           <DotHex fill="var(--acc)" className="absolute top-[90.4%] left-[8.3%] -z-10 h-auto w-[29.4%] overflow-visible motion-safe:animate-bob-dots" />
         </div>
 
-        <div className="relative flex flex-col w-full px-6 pt-10 pb-8 mx-auto z-2 max-w-310 gap-7 desk:pt-24 desk:pb-24">
+        <div className="relative flex flex-col w-full px-6 pt-10 pb-8 mx-auto z-2 max-w-310 gap-7 desk:pt-18 desk:pb-24">
           <div className="flex items-center gap-3 font-mono text-xs tracking-[0.18em] text-acc">
             <span className="hex h-3 w-3.5 bg-acc" />
             {t.eyebrow}
@@ -72,7 +71,7 @@ export async function HomeHero() {
         </div>
       </section>
 
-      <Suspense fallback={<Tickers words={t.ticker} games={[]} />}>
+      <Suspense fallback={<Tickers words={t.ticker} purple={[]} green={[]} />}>
         <GameTickers words={t.ticker} />
       </Suspense>
     </>
@@ -97,22 +96,32 @@ function CtaLabel({ label, other }: { label: string; other: string }) {
 async function GameTickers({ words }: { words: string[] }) {
   // MongoDB's driver reads the clock; defer its work until a request arrives.
   await connection();
-  const games = await getGames();
-  return <Tickers words={words} games={games} />;
+  const titles = (await getGames()).map((game) => game.title);
+  // A fresh order per request, independent for each band.
+  return <Tickers words={words} purple={shuffle(titles)} green={shuffle(titles)} />;
+}
+
+/** Fisher–Yates shuffle into a new array. */
+function shuffle<T>(items: T[]) {
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
 }
 
 /** Two decorative game-title bands; slogans fill the loading state. */
-function Tickers({ words, games }: { words: string[]; games: Game[] }) {
+function Tickers({ words, purple, green }: { words: string[]; purple: string[]; green: string[] }) {
   const band = "absolute -inset-x-[5%] overflow-hidden py-3.5 font-display text-[22px] font-bold tracking-[0.14em] whitespace-nowrap text-bg uppercase";
-  const titles = games.map((game) => game.title);
 
   return (
     <div aria-hidden className="pointer-events-none relative z-2 mb-12 h-37.5 overflow-x-clip">
       <div className={`${band} top-8.5 rotate-2 bg-acc2`}>
-        <TickerTrack items={titles} reverse />
+        <TickerTrack items={purple} reverse />
       </div>
       <div className={`${band} top-14.5 -rotate-2 bg-acc`}>
-        <TickerTrack items={titles.length ? titles : words} triangle />
+        <TickerTrack items={green.length ? green : words} triangle />
       </div>
     </div>
   );

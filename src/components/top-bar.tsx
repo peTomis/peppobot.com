@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type CSSProperties } from "react";
 import { LOCALE_COOKIE, localizePath, locales, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { ACCENTS, NAV, isActive } from "./nav";
+import { ACCENTS, NAV, NavItem, isActive } from "./nav";
 
 type TopBarProps = {
   lang: Locale;
@@ -93,7 +93,7 @@ export function TopBar({ pathname, lang, nav, strings: t }: TopBarProps & { path
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen((o) => !o)}
-            className={`hex flex h-11.25 w-13 cursor-pointer flex-col items-center justify-center gap-1 ${menuOpen ? "bg-acc3" : "bg-acc"}`}
+            className={`hex flex h-11.25 w-13 cursor-pointer flex-col items-center justify-center gap-1 ${menuOpen ? "bg-acc2" : "bg-acc"}`}
           >
             <span className={`h-0.5 w-4.5 bg-bg transition-transform ${menuOpen ? "translate-y-1.5 rotate-45" : ""}`} />
             <span className={`h-0.5 w-4.5 bg-bg ${menuOpen ? "opacity-0" : ""}`} />
@@ -104,7 +104,7 @@ export function TopBar({ pathname, lang, nav, strings: t }: TopBarProps & { path
 
       {menuOpen && (
         <nav id="mobile-menu" className="fixed inset-x-0 top-16.25 bottom-0 z-40 flex flex-col gap-1.5 overflow-y-auto bg-bg px-4 pt-6 pb-8 desk:hidden">
-          {NAV.map((item, i) => {
+          {NAV.map((item: NavItem, i) => {
             const on = isActive(item, pathname);
             return (
               <Link
@@ -112,7 +112,7 @@ export function TopBar({ pathname, lang, nav, strings: t }: TopBarProps & { path
                 href={localizePath(item.href, lang)}
                 aria-current={on ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
-                style={{ "--c": ACCENTS[i % 3] } as CSSProperties}
+                style={{ "--c": ACCENTS[i % 2] } as CSSProperties}
                 className={`flex w-full items-center gap-4 px-4 py-3.5 [clip-path:polygon(0_0,calc(100%-20px)_0,100%_20px,100%_100%,0_100%)] ${on ? "bg-(--c)" : "bg-surface"}`}
               >
                 <span className={`hex grid h-9.5 w-11 shrink-0 place-items-center font-mono text-[13px] font-bold ${on ? "bg-bg text-(--c)" : "bg-(--c) text-bg"}`}>
@@ -145,7 +145,7 @@ function LogoBadge() {
 function Online({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-2 font-mono text-[11px] tracking-widest text-fg-dim">
-      <span className="rounded-full size-2 bg-acc" />
+      <span className="rounded-full size-2 bg-[#05b105]" />
       {children}
     </div>
   );

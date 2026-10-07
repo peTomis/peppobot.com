@@ -18,24 +18,131 @@
     "language": "Lingua"
   },
   "hero": {
-    "eyebrow": "REPORT DAL CAMPO · DAL 1996",
+    "eyebrow": "SUL PEZZO · DAL 1999",
     "titleGames": "Giochi",
     "titlePlayed": "giocati.",
     "titleReports": "Recensioni",
     "titleFiled": "archiviate.",
     "intro": "Ogni gioco affrontato da Peppobot. Valutato su sei assi, recensito senza filtri, tracciato ora per ora.",
-    "openLibrary": "Apri libreria",
-    "scoringProtocol": "Come voto",
+    "openLibrary": "Libreria",
+    "scoringProtocol": "Il mio Protocollo",
     "kpiLogged": "REGISTRATI",
     "kpiHours": "ORE",
     "kpiAvgScore": "VOTO MEDIO",
     "ticker": ["In gioco", "Recensioni archiviate", "Sei assi", "Senza filtri"]
+  },
+  "nowPlaying": {
+    "now": "Ora",
+    "playing": "in gioco",
+    "activeRun": "GIOCO",
+    "activeRuns": "GIOCHI",
+    "progress": "PROGRESSO"
+  },
+  "latestReports": {
+    "latest": "Ultime",
+    "reports": "recensioni",
+    "allReports": "Tutte le recensioni"
+  },
+  "hallOfFame": {
+    "hallOf": "Hall of",
+    "fame": "fame",
+    "nextInQueue": "PROSSIMO IN CODA",
+    "tba": "TBA"
+  },
+  "library": {
+    "archive": "L'ARCHIVIO",
+    "every": "Ogni",
+    "game": "gioco",
+    "logged": "registrato.",
+    "of": "SU",
+    "entries": "TITOLI",
+    "search": "Cerca titolo, sviluppatore, genere, piattaforma…",
+    "searchLabel": "Cerca nella libreria",
+    "sortBy": "ORDINA PER",
+    "sorts": {
+      "recent": "Recenti",
+      "score": "Voto",
+      "hours": "Ore",
+      "az": "A–Z"
+    },
+    "all": "Tutti",
+    "statuses": {
+      "Playing": "In corso",
+      "Completed": "Completati",
+      "Dropped": "Abbandonati",
+      "Not Started": "Da iniziare"
+    },
+    "grid": "GRIGLIA",
+    "list": "LISTA",
+    "columns": {
+      "title": "TITOLO",
+      "platform": "PIATTAFORMA",
+      "genre": "GENERE",
+      "hours": "ORE",
+      "status": "STATO",
+      "score": "VOTO"
+    },
+    "prev": "Prec",
+    "next": "Succ",
+    "page": "PAGINA",
+    "noMatches": "Nessun risultato in memoria"
+  },
+  "report": {
+    "back": "Libreria · Report",
+    "by": "di",
+    "outOf": "/ 10",
+    "inProgress": "IN CORSO — RUN AL",
+    "notStarted": "NON ANCORA INIZIATO",
+    "scoreMatrix": ["Matrice", "voti"],
+    "fullReport": ["Report", "completo"],
+    "pros": "+ Sistemi nominali",
+    "cons": "− Errori rilevati",
+    "pilotData": "Dati pilota",
+    "rows": {
+      "status": "STATO",
+      "platform": "PIATTAFORMA",
+      "developer": "SVILUPPATORE",
+      "playtime": "TEMPO DI GIOCO",
+      "logged": "REGISTRATO",
+      "released": "USCITA",
+      "progress": "PROGRESSO",
+      "tier": "TIER"
+    },
+    "previous": "REPORT PRECEDENTE",
+    "next": "REPORT SUCCESSIVO",
+    "axes": [
+      {
+        "name": "Gameplay",
+        "note": "La sensazione momento per momento: controlli, sistemi, combattimento, enigmi. Si gioca bene?"
+      },
+      {
+        "name": "Narrativa",
+        "note": "Storia, personaggi, scrittura e world-building. Mi fa appassionare?"
+      },
+      {
+        "name": "Grafica",
+        "note": "Prima la direzione artistica, poi la tecnica. Ha un aspetto unico?"
+      },
+      {
+        "name": "Audio",
+        "note": "Colonna sonora, sound design e doppiaggio. Mi resta in testa?"
+      },
+      {
+        "name": "Longevità",
+        "note": "Rigiocabilità, profondità dei contenuti e ritmo sull'intera run."
+      },
+      {
+        "name": "Innovazione",
+        "note": "Idee nuove, scelte di design audaci, cose mai giocate prima."
+      }
+    ]
   },
   "findPeppobot": {
     "find": "Trova",
     "tagline": "AGGIUNGIMI · GUARDAMI · SFIDAMI"
   },
   "bottomBar": {
+    "madeBy": "Realizzato da",
     "credits": "SCRITTO DA UN FINTO ROBOT, PER UMANI VERI",
     "build": "BUILD 4.2.0",
     "patched": "VOTI DEFINITIVI FINO AL PROSSIMO PATCH"
