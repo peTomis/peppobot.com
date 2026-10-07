@@ -7,6 +7,7 @@ import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { getNextInQueue, getTopRated } from "@/lib/games";
 import { DotHex } from "./dot-hex";
 import { gameHref } from "./nav";
+import { PlatformLogo } from "./platform-logo";
 import { SectionHeading } from "./section-heading";
 import { TranslatedText } from "./translated-text";
 
@@ -34,7 +35,6 @@ async function NextInQueue({ lang, label, tba }: { lang: Locale; label: string; 
   await connection();
   const next = await getNextInQueue();
   if (!next) return null;
-  const platform = PLATFORMS[next.platform]?.name;
 
   return (
     <aside className="relative flex min-h-105 flex-col justify-between gap-10 overflow-hidden bg-acc2 p-10 text-bg [clip-path:polygon(40px_0,100%_0,100%_calc(100%-40px),calc(100%-40px)_100%,0_100%,0_40px)]">
@@ -50,7 +50,11 @@ async function NextInQueue({ lang, label, tba }: { lang: Locale; label: string; 
         <TranslatedText text={next.description} lang={lang} className="mt-5 max-w-105 text-[17px] leading-normal font-medium" />
       </div>
       <div className="relative flex flex-wrap gap-2 font-mono text-[11px] font-bold tracking-[0.12em] uppercase">
-        {platform && <span className="bg-bg px-2.5 py-1.5 text-acc2">{platform}</span>}
+        {PLATFORMS[next.platform] && (
+          <span className="flex items-center bg-bg px-2.5 py-1.5 text-acc2">
+            <PlatformLogo platform={next.platform} />
+          </span>
+        )}
         <span className="bg-bg px-2.5 py-1.5 text-acc2">{releaseYear(next) ?? tba}</span>
       </div>
     </aside>

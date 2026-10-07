@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-import type { LibraryStats } from "@/content/games";
+import type { Data } from "@/content/data";
 
 export function HomeMetrics({ lang, loggedLabel, hoursLabel, averageLabel }: { lang: string; loggedLabel: string; hoursLabel: string; averageLabel: string }) {
-  const [metrics, setMetrics] = useState<LibraryStats | null>(null);
+  const [metrics, setMetrics] = useState<Data | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch("/api/games/metrics", { signal: controller.signal, cache: "default" })
+    fetch("/api/data", { signal: controller.signal, cache: "default" })
       .then(async (response) => {
         if (!response.ok) throw new Error("Unable to load metrics");
-        return response.json() as Promise<LibraryStats>;
+        return response.json() as Promise<Data>;
       })
       .then(setMetrics)
       .catch(() => {

@@ -6,6 +6,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import type { Translated } from "@/i18n/translations";
 import { DotHex } from "./dot-hex";
 import { gameHref } from "./nav";
+import { PlatformLogo } from "./platform-logo";
 import { SectionHeading } from "./section-heading";
 import { TranslatedText } from "./translated-text";
 
@@ -20,7 +21,7 @@ export function GameReport({ report, lang, t, statuses }: { report: Report; lang
   const one = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const tier = game.average != null ? tierOf(game.average) : null;
   const statusColor = STATUS_COLORS[game.status];
-  const platform = PLATFORMS[game.platform]?.name;
+  const platform = PLATFORMS[game.platform] ? <PlatformLogo platform={game.platform} /> : null;
   const year = releaseYear(game);
   const logged = game.finishedOn != null && new Intl.DateTimeFormat(lang, { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" }).format(game.finishedOn);
   const hasReport = Boolean(game.pros?.length || game.cons?.length);
@@ -68,7 +69,8 @@ export function GameReport({ report, lang, t, statuses }: { report: Report; lang
 
           <div className="flex min-w-0 flex-[1_1_360px] flex-col gap-6">
             <div className="flex flex-wrap gap-2 font-mono text-[11px] font-bold tracking-[0.12em] uppercase">
-              {[platform, game.genre, year].filter(Boolean).map((chip) => (
+              {platform && <span className="flex items-center bg-surface px-3 py-1.75 text-fg-muted">{platform}</span>}
+              {[game.genre, year].filter(Boolean).map((chip) => (
                 <span key={String(chip)} className="bg-surface px-3 py-1.75 text-fg-muted">
                   {chip}
                 </span>
@@ -141,7 +143,7 @@ export function GameReport({ report, lang, t, statuses }: { report: Report; lang
             {data.map((row) => (
               <div key={row.k} className="flex justify-between gap-3 bg-bg/12 px-3 py-2.5 font-mono text-xs font-bold">
                 <dt className="tracking-[0.12em]">{row.k}</dt>
-                <dd className="text-right uppercase">{row.v}</dd>
+                <dd className="flex items-center justify-end text-right uppercase">{row.v}</dd>
               </div>
             ))}
           </dl>

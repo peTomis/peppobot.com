@@ -1,7 +1,6 @@
 import "server-only";
 import { ObjectId, type WithId } from "mongodb";
-import { cacheLife } from "next/cache";
-import { PLATFORMS, type Game, type GameReport, type LibraryPage, type LibraryQuery, type LibrarySort, type LibraryStats } from "@/content/games";
+import { PLATFORMS, type Game, type GameReport, type LibraryPage, type LibraryQuery, type LibrarySort } from "@/content/games";
 import { getDatabase } from "@/lib/mongodb";
 
 // Explicit public fields: additional database fields never leak into API responses.
@@ -146,29 +145,4 @@ export async function getGame(id: string): Promise<Game | null> {
   if (!/^[a-f0-9]{24}$/i.test(id)) return null;
   const byObjectId = await collection.findOne({ _id: new ObjectId(id) }, { projection, maxTimeMS: 5000 });
   return byObjectId ? toGame(byObjectId) : null;
-}
-
-/** Aggregate the entire collection, independently of list pagination or status. */
-export async function libraryStats(): Promise<LibraryStats> {
-  "use cache";
-  cacheLife({ stale: 60, revalidate: 60, expire: 120 });
-  const db = await getDatabase();
-  const metrics = await db
-    .collection<Game>("games")
-    .aggregate<LibraryStats>(
-      [
-        {
-          $group: {
-            _id: null,
-            count: { $sum: 1 },
-            hours: { $sum: "$hours" },
-            avgScore: { $avg: { $cond: [{ $eq: ["$status", "Completed"] }, "$average", null] } },
-          },
-        },
-        { $project: { _id: 0, count: 1, hours: 1, avgScore: 1 } },
-      ],
-      { maxTimeMS: 5000 },
-    )
-    .next();
-  return metrics ?? { count: 0, hours: 0, avgScore: null };
 }

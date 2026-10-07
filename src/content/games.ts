@@ -22,20 +22,21 @@ export type LibraryQuery = { q: string; status: GameStatus | null; sort: Library
 /** `offset` is the position of the first game on this page within all matches. */
 export type LibraryPage = { games: Game[]; matches: number; total: number; page: number; pages: number; offset: number };
 
+/** `logo.file` is in `public/icons`, cropped to the drawing; `ratio` is its width / height. */
 export const PLATFORMS = {
-  1: { id: 1, name: "Steam" },
-  2: { id: 2, name: "Epic Games" },
-  3: { id: 3, name: "Ea Play" },
-  4: { id: 4, name: "Ubisoft Connect" },
-  5: { id: 5, name: "Switch 2" },
-  6: { id: 6, name: "Switch 1" },
-  7: { id: 7, name: "PS5" },
-  8: { id: 8, name: "PS4" },
-  9: { id: 9, name: "Xbox Series X" },
-  10: { id: 10, name: "Xbox One" },
-  11: { id: 11, name: "iOS" },
-  12: { id: 12, name: "Android" },
-  13: { id: 13, name: "Other" },
+  1: { id: 1, name: "Steam", logo: { file: "steam", ratio: 1 } },
+  2: { id: 2, name: "Epic Games", logo: { file: "epicgames", ratio: 1 } },
+  3: { id: 3, name: "Ea Play", logo: { file: "ea", ratio: 1 } },
+  4: { id: 4, name: "Ubisoft Connect", logo: { file: "ubisoft", ratio: 1 } },
+  5: { id: 5, name: "Switch 2", logo: { file: "nintendo-switch-2", ratio: 1.85 } },
+  6: { id: 6, name: "Switch 1", logo: { file: "nintendo-switch", ratio: 1 } },
+  7: { id: 7, name: "PS5", logo: { file: "ps5", ratio: 4.35 } },
+  8: { id: 8, name: "PS4", logo: { file: "ps4", ratio: 4.37 } },
+  9: { id: 9, name: "Xbox Series X", logo: { file: "xbox-series", ratio: 2.22 } },
+  10: { id: 10, name: "Xbox One", logo: { file: "xbox-one", ratio: 5.57 } },
+  11: { id: 11, name: "iOS", logo: { file: "ios", ratio: 1 } },
+  12: { id: 12, name: "Android", logo: { file: "android", ratio: 1 } },
+  13: { id: 13, name: "Other", logo: null },
 } as const;
 
 export type Platform = keyof typeof PLATFORMS;
@@ -85,7 +86,6 @@ export type Game = {
 /** Release year, read in UTC so a New Year's Day release never shifts a year. */
 export const releaseYear = (game: Pick<Game, "releasedOn">) => (game.releasedOn != null ? new Date(game.releasedOn).getUTCFullYear() : null);
 
-export type LibraryStats = { count: number; hours: number; avgScore: number | null };
 
 export type ReportLink = { id: string; title: string };
 
