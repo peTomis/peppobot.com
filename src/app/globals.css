@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* Design tokens from design/Peppobot v2.dc.html ("Green / Purple" palette) */
+:root {
+  --bg: #100a18;
+  --surface: #1a1126;
+  --surface-hover: #2a1640;
+  --line: #3e2c56;
+  --fg: #f3eefa;
+  --fg-soft: #ddd3ec;
+  --fg-muted: #c4b8d8;
+  --fg-dim: #a595bf;
+  --fg-faint: #7a6a92;
+  --acc: #5cff8a;
+  --acc2: #b65cff;
+  --acc3: #ff5cd6;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-fg-soft: var(--fg-soft);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-dim: var(--fg-dim);
+  --color-fg-faint: var(--fg-faint);
+  --color-acc: var(--acc);
+  --color-acc2: var(--acc2);
+  --color-acc3: var(--acc3);
+  --font-display: var(--font-chakra-petch);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--acc);
+  color: var(--bg);
+}
