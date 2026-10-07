@@ -229,55 +229,85 @@ const listColumns = "grid grid-cols-[56px_minmax(0,2.4fr)_minmax(0,1fr)_minmax(0
 
 function ListTable({ games, lang, offset, score, t }: { games: Game[]; lang: Locale; offset: number; score: Intl.NumberFormat; t: Strings }) {
   const c = t.columns;
+  const number = (index: number) => String(offset + index + 1).padStart(3, "0");
   return (
-    <div className="overflow-x-auto">
-      <div role="table" className="flex min-w-190 flex-col gap-1.5">
-        <div role="row" className={`${listColumns} px-4.5 pb-2 font-mono text-[10px] font-bold tracking-[0.16em] text-fg-faint`}>
-          <span role="columnheader">#</span>
-          <span role="columnheader">{c.title}</span>
-          <span role="columnheader">{c.platform}</span>
-          <span role="columnheader">{c.genre}</span>
-          <span role="columnheader">{c.hours}</span>
-          <span role="columnheader">{c.status}</span>
-          <span role="columnheader" className="text-right">
-            {c.score}
-          </span>
-        </div>
+    <>
+      {/* Mobile: one compact card per game instead of the wide table. */}
+      <ul className="flex flex-col gap-2 desk:hidden">
         {games.map((game, index) => (
-          <div
-            key={game.id}
-            role="row"
-            style={{ borderLeftColor: STATUS_COLORS[game.status] }}
-            className={`${listColumns} relative items-center border-l-6 bg-surface px-4.5 py-3 hover:bg-surface-hover`}
-          >
-            <span role="cell" className="font-display text-[26px] font-bold text-transparent [-webkit-text-stroke:1px_var(--acc2)]">
-              {String(offset + index + 1).padStart(3, "0")}
-            </span>
-            <div role="cell" className="min-w-0">
-              <Link href={gameHref(lang, game.id)} className="font-display text-[19px] font-bold text-fg uppercase after:absolute after:inset-0 hover:text-fg">
-                {game.title}
-              </Link>
-              <div className="text-[13px] text-fg-dim">{game.dev}</div>
-            </div>
-            <span role="cell" className="font-mono text-xs text-fg-muted">
-              {PLATFORMS[game.platform]?.name}
-            </span>
-            <span role="cell" className="font-mono text-xs text-fg-muted">
-              {game.genre}
-            </span>
-            <span role="cell" className="font-mono text-sm font-bold">
-              {game.hours}h
-            </span>
-            <span role="cell" className="justify-self-start">
-              <StatusTag status={game.status} t={t} />
-            </span>
-            <span role="cell" className="justify-self-end">
-              <ScoreHex game={game} score={score} className="w-14 h-12 text-base" />
+          <li key={game.id}>
+            <Link
+              href={gameHref(lang, game.id)}
+              style={{ borderLeftColor: STATUS_COLORS[game.status] }}
+              className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-l-5 bg-surface py-3.5 pr-3.5 pl-4 text-fg [clip-path:polygon(0_0,calc(100%-16px)_0,100%_16px,100%_100%,0_100%)] hover:text-fg active:bg-surface-hover"
+            >
+              <div className="flex flex-col min-w-0 gap-1.5">
+                <div className="flex items-baseline gap-2 font-display font-bold">
+                  <span className="text-base text-transparent [-webkit-text-stroke:1px_var(--acc2)]">{number(index)}</span>
+                  <span className="text-[17px] leading-[1.1] uppercase">{game.title}</span>
+                </div>
+                <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest uppercase">
+                  <StatusTag status={game.status} t={t} className="px-2! py-1!" />
+                  {PLATFORMS[game.platform] && <span className="px-2 py-1 bg-bg text-fg-dim">{PLATFORMS[game.platform].name}</span>}
+                  <span className="px-2 py-1 bg-bg text-fg-dim">{game.hours}h</span>
+                </div>
+                <div className="text-xs text-fg-dim">{game.genre}</div>
+              </div>
+              <ScoreHex game={game} score={score} className="h-11.25 w-13 text-[15px]" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <div className="hidden overflow-x-auto desk:block">
+        <div role="table" className="flex min-w-190 flex-col gap-1.5">
+          <div role="row" className={`${listColumns} px-4.5 pb-2 font-mono text-[10px] font-bold tracking-[0.16em] text-fg-faint`}>
+            <span role="columnheader">#</span>
+            <span role="columnheader">{c.title}</span>
+            <span role="columnheader">{c.platform}</span>
+            <span role="columnheader">{c.genre}</span>
+            <span role="columnheader">{c.hours}</span>
+            <span role="columnheader">{c.status}</span>
+            <span role="columnheader" className="text-right">
+              {c.score}
             </span>
           </div>
-        ))}
+          {games.map((game, index) => (
+            <div
+              key={game.id}
+              role="row"
+              style={{ borderLeftColor: STATUS_COLORS[game.status] }}
+              className={`${listColumns} relative items-center border-l-6 bg-surface px-4.5 py-3 hover:bg-surface-hover`}
+            >
+              <span role="cell" className="font-display text-[26px] font-bold text-transparent [-webkit-text-stroke:1px_var(--acc2)]">
+                {number(index)}
+              </span>
+              <div role="cell" className="min-w-0">
+                <Link href={gameHref(lang, game.id)} className="font-display text-[19px] font-bold text-fg uppercase after:absolute after:inset-0 hover:text-fg">
+                  {game.title}
+                </Link>
+                <div className="text-[13px] text-fg-dim">{game.dev}</div>
+              </div>
+              <span role="cell" className="font-mono text-xs text-fg-muted">
+                {PLATFORMS[game.platform]?.name}
+              </span>
+              <span role="cell" className="font-mono text-xs text-fg-muted">
+                {game.genre}
+              </span>
+              <span role="cell" className="font-mono text-sm font-bold">
+                {game.hours}h
+              </span>
+              <span role="cell" className="justify-self-start">
+                <StatusTag status={game.status} t={t} />
+              </span>
+              <span role="cell" className="justify-self-end">
+                <ScoreHex game={game} score={score} className="w-14 h-12 text-base" />
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

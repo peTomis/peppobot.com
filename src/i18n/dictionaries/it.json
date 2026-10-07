@@ -67,10 +67,10 @@
     },
     "all": "Tutti",
     "statuses": {
-      "Playing": "In corso",
-      "Completed": "Completati",
-      "Dropped": "Abbandonati",
-      "Not Started": "Da iniziare"
+      "Playing": "Smanettandoci",
+      "Completed": "Completato",
+      "Dropped": "Abbandonato",
+      "Not Started": "dolce attesa"
     },
     "grid": "GRIGLIA",
     "list": "LISTA",
@@ -93,10 +93,10 @@
     "outOf": "/ 10",
     "inProgress": "IN CORSO — RUN AL",
     "notStarted": "NON ANCORA INIZIATO",
-    "scoreMatrix": ["Matrice", "voti"],
+    "scoreMatrix": ["PARZIALE", "voti"],
     "fullReport": ["Report", "completo"],
-    "pros": "+ Sistemi nominali",
-    "cons": "− Errori rilevati",
+    "pros": "+ Punti di forza",
+    "cons": "− Tasti dolenti",
     "pilotData": "Dati pilota",
     "rows": {
       "status": "STATO",

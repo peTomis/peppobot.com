@@ -95,7 +95,7 @@
     "notStarted": "NOT STARTED YET",
     "scoreMatrix": ["Score", "matrix"],
     "fullReport": ["Full", "report"],
-    "pros": "+ Systems nominal",
+    "pros": "+ Check Passed",
     "cons": "− Errors detected",
     "pilotData": "Pilot data",
     "rows": {

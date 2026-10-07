@@ -58,12 +58,12 @@ export async function HomeHero() {
             <span className="text-acc2">{t.titleFiled}</span>
           </h1>
           <p className="max-w-[min(440px,40vw)] text-lg leading-[1.6] text-pretty text-fg-soft">{t.intro}</p>
-          {/* Mobile: staggered, library left and protocol right. */}
+          {/* Mobile: stacked on the left, protocol offset 24px. */}
           <div className="flex flex-col gap-3 mt-12 desk:mt-0 desk:flex-row desk:flex-wrap">
             <Link href={localizePath("/library", lang)} className={`${ctaClass} self-start bg-acc [clip-path:polygon(0_0,calc(100%-16px)_0,100%_50%,calc(100%-16px)_100%,0_100%)]`}>
               <CtaLabel label={t.openLibrary} other={t.scoringProtocol} />
             </Link>
-            <Link href={localizePath("/protocol", lang)} className={`${ctaClass} self-end bg-acc2 desk:self-start [clip-path:polygon(16px_0,100%_0,100%_100%,16px_100%,0_50%)]`}>
+            <Link href={localizePath("/protocol", lang)} className={`${ctaClass} ml-6 self-start bg-acc2 desk:ml-0 [clip-path:polygon(16px_0,100%_0,100%_100%,16px_100%,0_50%)]`}>
               <CtaLabel label={t.scoringProtocol} other={t.openLibrary} />
             </Link>
           </div>
