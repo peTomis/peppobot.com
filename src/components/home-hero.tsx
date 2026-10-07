@@ -1,8 +1,12 @@
 import Image from "next/image";
+import { connection } from "next/server";
+import { Suspense } from "react";
+import { getGames } from "@/lib/games";
 import Link from "next/link";
-import { GAMES, libraryStats } from "@/content/games";
+import type { Game } from "@/content/games";
 import { localizePath } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
+import { HomeMetrics } from "./home-metrics";
 import { DotHex } from "./dot-hex";
 
 const RING_TEXT = "PLAYING AND ENJOYING VIDEOGAMES ◆ SINCE 1999 ◆ PEPPOBOT ◆";
@@ -11,13 +15,6 @@ const ctaClass = "grid px-[30px] py-[18px] text-center font-display text-[15px] 
 
 export async function HomeHero() {
   const [lang, { hero: t }] = await Promise.all([getLocale(), getDictionary()]);
-  const stats = libraryStats();
-  const oneDecimal = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  const kpis = [
-    { value: stats.count, label: t.kpiLogged, bg: "bg-acc" },
-    { value: stats.hours, label: t.kpiHours, bg: "bg-acc2" },
-    { value: oneDecimal.format(stats.avgScore), label: t.kpiAvgScore, bg: "bg-acc3" },
-  ];
 
   return (
     <>
@@ -33,7 +30,7 @@ export async function HomeHero() {
           <div className="relative grid col-start-1 row-start-1 size-full place-items-center motion-safe:animate-bob-hex">
             <div className="hex col-start-1 row-start-1 aspect-[1.155] w-full bg-acc2" />
             <div className="relative col-start-1 row-start-1 grid aspect-square w-[74%] place-items-center rounded-full">
-              <svg viewBox="0 0 400 400" className="absolute inset-0 size-full">
+              <svg viewBox="0 0 400 400" className="absolute inset-0 size-full origin-center motion-safe:animate-spin motion-safe:[animation-duration:30s] motion-safe:[animation-direction:reverse]">
                 <defs>
                   <path id="hero-ring" d="M200,200 m-160,0 a160,160 0 1,1 320,0 a160,160 0 1,1 -320,0" />
                 </defs>
@@ -71,18 +68,13 @@ export async function HomeHero() {
               <CtaLabel label={t.scoringProtocol} other={t.openLibrary} />
             </Link>
           </div>
-          <dl className="grid grid-cols-3 pt-2 desk:flex desk:flex-wrap">
-            {kpis.map((kpi) => (
-              <div key={kpi.label} className={`flex min-w-0 flex-col-reverse gap-1 px-3 py-4 text-bg desk:min-w-30 desk:px-5.5 ${kpi.bg}`}>
-                <dt className="font-mono text-[clamp(8px,2.4vw,10px)] tracking-[0.12em] desk:text-[10px] desk:tracking-[0.16em]">{kpi.label}</dt>
-                <dd className="font-mono text-[clamp(22px,7vw,30px)] leading-none font-bold desk:text-[30px]">{kpi.value}</dd>
-              </div>
-            ))}
-          </dl>
+          <HomeMetrics lang={lang} loggedLabel={t.kpiLogged} hoursLabel={t.kpiHours} averageLabel={t.kpiAvgScore} />
         </div>
       </section>
 
-      <Tickers words={t.ticker} />
+      <Suspense fallback={<Tickers words={t.ticker} games={[]} />}>
+        <GameTickers words={t.ticker} />
+      </Suspense>
     </>
   );
 }
@@ -102,30 +94,46 @@ function CtaLabel({ label, other }: { label: string; other: string }) {
   );
 }
 
-/** Two tilted bands: game titles, then the site's slogans. Decorative. */
-function Tickers({ words }: { words: string[] }) {
-  const band = "absolute -inset-x-[5%] flex gap-8 py-3.5 font-display text-[22px] font-bold tracking-[0.14em] whitespace-nowrap text-bg uppercase";
-  const titles = [...GAMES, ...GAMES].map((g) => g.title);
-  const slogans = Array.from({ length: 4 }, () => words).flat();
+async function GameTickers({ words }: { words: string[] }) {
+  // MongoDB's driver reads the clock; defer its work until a request arrives.
+  await connection();
+  const games = await getGames();
+  return <Tickers words={words} games={games} />;
+}
+
+/** Two decorative game-title bands; slogans fill the loading state. */
+function Tickers({ words, games }: { words: string[]; games: Game[] }) {
+  const band = "absolute -inset-x-[5%] overflow-hidden py-3.5 font-display text-[22px] font-bold tracking-[0.14em] whitespace-nowrap text-bg uppercase";
+  const titles = games.map((game) => game.title);
 
   return (
     <div aria-hidden className="pointer-events-none relative z-2 mb-12 h-37.5 overflow-x-clip">
       <div className={`${band} top-8.5 rotate-2 bg-acc2`}>
-        {titles.map((title, i) => (
-          <span key={i} className="flex items-center gap-8">
-            {title}
-            <span className="rotate-45 size-3 bg-bg" />
-          </span>
-        ))}
+        <TickerTrack items={titles} reverse />
       </div>
       <div className={`${band} top-14.5 -rotate-2 bg-acc`}>
-        {slogans.map((word, i) => (
-          <span key={i} className="flex items-center gap-8">
-            {word}
-            <span className="size-0 border-x-8 border-b-14 border-x-transparent border-b-bg" />
-          </span>
-        ))}
+        <TickerTrack items={titles.length ? titles : words} triangle />
       </div>
+    </div>
+  );
+}
+
+function TickerTrack({ items, reverse = false, triangle = false }: { items: string[]; reverse?: boolean; triangle?: boolean }) {
+  // Two identical groups keep the wrap seamless; each covers at least the band.
+  const repeated = Array.from({ length: Math.max(1, Math.ceil(8 / (items.length || 1))) }, () => items).flat();
+
+  return (
+    <div className={`flex w-max motion-safe:animate-ticker ${reverse ? "motion-safe:[animation-direction:reverse]" : ""}`}>
+      {[0, 1].map((copy) => (
+        <div key={copy} className="flex min-w-[110vw] shrink-0 items-center justify-around gap-8 pr-8">
+          {repeated.map((item, index) => (
+            <span key={index} className="flex shrink-0 items-center gap-8">
+              {item}
+              <span className={triangle ? "size-0 shrink-0 border-x-8 border-b-14 border-x-transparent border-b-bg" : "size-3 shrink-0 rotate-45 bg-bg"} />
+            </span>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }

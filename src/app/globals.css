@@ -74,3 +74,12 @@ body {
     50% { transform: translateY(5px); }
   }
 }
+
+/* Duplicate ticker groups meet exactly at the halfway point of the track. */
+@theme {
+  --animate-ticker: ticker 40s linear infinite;
+
+  @keyframes ticker {
+    to { transform: translateX(-50%); }
+  }
+}

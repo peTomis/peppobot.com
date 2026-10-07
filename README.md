@@ -156,3 +156,46 @@ npm run lint
 3. Implement the routes listed above. Use static generation for `/games/[slug]` with `generateStaticParams`.
 4. Replace placeholder art with real cover art and screenshots, and the gamertag URLs and handles with real ones.
 5. Add per-page metadata and Open Graph images, a sitemap and RSS for new reports.
+
+## MongoDB game API
+
+Copy `.env.example` to `.env.local` and set `MONGODB_URI` and `MONGODB_DB`.
+Configure the same server-only variables in your hosting environment. Restart the
+server after changing them. The client connects lazily and reuses its connection
+pool; a database connection is not needed to build the site.
+
+The public, read-only endpoints are outside the language prefixes:
+
+- `GET /api/games?limit=50&offset=0` returns `{ games, limit, offset }`, sorted by
+  `finished` descending, then `id`. Limit is 1–100; offset is a non-negative integer.
+- `GET /api/games/hades2` returns `{ game }`, looking up the string `id` field
+  (not MongoDB's `_id`). Missing games return 404.
+- Invalid pagination returns 400; unavailable or unconfigured MongoDB returns 503
+  with a generic error, without connection details.
+
+Use the `games` collection with documents matching `Game` in
+`src/content/games.ts`. Only those public fields are returned, excluding `_id`.
+Create a unique `{ id: 1 }` index and a `{ finished: -1, id: 1 }` index when
+provisioning the collection. No seed data is inserted automatically.
+
+```ts
+const response = await fetch("/api/games?limit=20&offset=0");
+if (!response.ok) throw new Error("Unable to load games");
+const { games } = await response.json();
+```
+
+Server Components can import `getGames()` or `getGame(id)` from `@/lib/games`
+directly. The existing pages still use the static sample data until connected to
+these helpers. MongoDB credentials and helpers are server-only.
+
+`GET /api/games/metrics` returns `{ count, hours, avgScore }` across the entire games
+collection, including all statuses for count and hours. `avgScore` averages the stored
+`average` field, including only Completed games (excluding Playing and Dropped). An empty collection returns zero count
+and hours and a null average. This dedicated aggregation is independent of game
+list pagination. The home
+page fetches these metrics on mount; unavailable values display as dashes.
+
+Home game titles are fetched on the server with `getGames()` (the first 50 recent
+games), streamed behind a Suspense boundary. Metrics remain independent of this
+list. Metrics use a server cache revalidated after 60 seconds and a 60-second
+browser/shared HTTP cache; errors are not HTTP-cached.
