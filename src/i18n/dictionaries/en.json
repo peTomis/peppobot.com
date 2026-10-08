@@ -51,6 +51,7 @@
   },
   "library": {
     "tba": "TBA",
+    "loading": "Loading games…",
     "archive": "PB-0001 // THE ARCHIVE",
     "every": "Every",
     "game": "game",

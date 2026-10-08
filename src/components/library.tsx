@@ -184,6 +184,32 @@ export async function LibraryResults({ searchParams, lang, t }: { searchParams: 
   );
 }
 
+// More placeholders than the widest row holds; rows after the first collapse and are clipped.
+const PLACEHOLDER_CARDS = 6;
+
+/** While the results load: one row of grid cards with pulsing placeholders. */
+export function ResultsFallback({ t }: { t: Strings }) {
+  return (
+    <div aria-busy>
+      <span className="sr-only">{t.loading}</span>
+      <ul aria-hidden className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,230px),1fr))] gap-x-6 overflow-hidden [grid-auto-rows:0]">
+        {Array.from({ length: PLACEHOLDER_CARDS }, (_, index) => (
+          <li key={index} style={{ animationDelay: `${index * 120}ms` }} className="flex flex-col gap-4 animate-pulse">
+            <div className="relative">
+              <div className="aspect-[3/4] bg-[repeating-linear-gradient(135deg,#2a1b40_0_10px,#170f24_10px_20px)] [clip-path:polygon(0_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%)]" />
+              <div className="hex absolute -top-3 -right-2.5 h-13.5 w-15.5 bg-surface-hover" />
+            </div>
+            <div className="flex flex-col gap-2.5">
+              <span className="h-5 w-3/4 bg-surface" />
+              <span className="h-3 w-1/2 bg-surface" />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 const listColumns = "grid grid-cols-[56px_minmax(0,2.4fr)_minmax(0,1fr)_minmax(0,1fr)_72px_130px_64px] gap-4";
 
 function ListTable({ games, lang, offset, score, t }: { games: Game[]; lang: Locale; offset: number; score: Intl.NumberFormat; t: Strings }) {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { DotHex } from "@/components/dot-hex";
-import { ControlsFace, CounterFace, DEFAULT_STATE, LibraryControls, LibraryCounter, LibraryResults } from "@/components/library";
+import { ControlsFace, CounterFace, DEFAULT_STATE, LibraryControls, LibraryCounter, LibraryResults, ResultsFallback } from "@/components/library";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localizedAlternates } from "@/i18n/metadata";
 
@@ -40,7 +40,7 @@ export default async function LibraryPage({ searchParams }: PageProps<"/[lang]/l
         <LibraryControls searchParams={searchParams} lang={lang} t={t} />
       </Suspense>
 
-      <Suspense>
+      <Suspense fallback={<ResultsFallback t={t} />}>
         <LibraryResults searchParams={searchParams} lang={lang} t={t} />
       </Suspense>
     </main>
