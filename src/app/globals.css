@@ -42,6 +42,12 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
+/* Images can't be selected or dragged out of the page; `draggable={false}` on each covers Firefox. */
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 ::selection {
   background: var(--acc);
   color: var(--bg);

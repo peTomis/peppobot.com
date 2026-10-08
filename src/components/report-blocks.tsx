@@ -101,7 +101,7 @@ function Picture({ image, lang, className, sizes }: { image: ReportImage; lang: 
   }
   return (
     <div className={`relative ${className}`}>
-      <Image src={image.src} alt={alt} fill sizes={sizes} className="object-cover" />
+      <Image draggable={false} src={image.src} alt={alt} fill sizes={sizes} className="object-cover" />
     </div>
   );
 }

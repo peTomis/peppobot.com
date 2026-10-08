@@ -137,7 +137,7 @@ export function TopBar({ pathname, lang, nav, strings: t }: TopBarProps & { path
 function LogoBadge() {
   return (
     <span className="grid size-10.5 place-items-center border border-acc bg-black">
-      <Image src="/peppobot.png" alt="Peppobot" width={32} height={32} priority className="invert mix-blend-screen" />
+      <Image draggable={false} src="/peppobot.png" alt="Peppobot" width={32} height={32} priority className="invert mix-blend-screen" />
     </span>
   );
 }

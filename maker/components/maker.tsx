@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { GENRES, PLATFORMS, STATUSES, type GameStatus } from "@/content/games";
+import { GENRES_BY_NAME, PLATFORMS, STATUSES, type GameStatus } from "@/content/games";
 import en from "@/i18n/dictionaries/en.json";
 import type { Locale } from "@/i18n/config";
 import { saveGame } from "../app/actions";
@@ -10,11 +10,11 @@ import { averageOf, fromDateInput, previewGame, toDateInput, type Draft } from "
 import type { GameEntry } from "../lib/games";
 import type { PreviewMessage } from "../lib/preview";
 import { BlocksEditor } from "./blocks-editor";
-import { buttonClass, Field, inputClass, labelClass, NumberInput, Section, Select, TextInput, TranslatedInput, TranslatedList } from "./fields";
+import { buttonClass, Combobox, Field, inputClass, labelClass, NumberInput, Section, Select, TextInput, TranslatedInput, TranslatedList } from "./fields";
 import { PreviewFrame, type Viewport } from "./preview-frame";
 
 const PLATFORM_OPTIONS = Object.values(PLATFORMS).map((platform) => ({ value: platform.id, label: platform.name }));
-const GENRE_OPTIONS = Object.values(GENRES).map((genre) => ({ value: genre.id, label: genre.name }));
+const GENRE_OPTIONS = GENRES_BY_NAME.map((genre) => ({ value: genre.id, label: genre.name }));
 const STATUS_OPTIONS = STATUSES.map((status) => ({ value: status, label: status }));
 const AXES = en.report.axes.map((axis) => axis.name);
 
@@ -65,25 +65,18 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
     });
 
   const average = averageOf(draft.scores);
+  const gameOptions = games.map((game) => ({ value: game._id, label: `${game.title || "(untitled)"} · ${game.status}${game.dlc ? " · DLC" : ""}` }));
   // A DLC belongs to a main game, never to itself or to another DLC.
-  const mainGameOptions = [
-    { value: "", label: "— Pick the main game —" },
-    ...games.filter((game) => game._id !== id && (!game.dlc || game._id === draft.mainGame)).map((game) => ({ value: game._id, label: game.title || "(untitled)" })),
-  ];
+  const mainGameOptions = games.filter((game) => game._id !== id && (!game.dlc || game._id === draft.mainGame)).map((game) => ({ value: game._id, label: game.title || "(untitled)" }));
 
   return (
     <div className="grid h-dvh grid-cols-[minmax(420px,1fr)_minmax(0,1.2fr)] overflow-hidden">
       <div className="flex flex-col min-h-0 border-r border-line">
         <header className="flex flex-wrap items-center gap-3 px-5 py-3 border-b border-line bg-surface">
           <span className="font-display text-base font-bold tracking-[0.14em] text-acc uppercase">Maker</span>
-          <select className={`${inputClass} w-auto flex-1`} value={id ?? ""} onChange={(event) => open(event.target.value)} aria-label="Game">
-            <option value="">— New game —</option>
-            {games.map((game) => (
-              <option key={game._id} value={game._id}>
-                {game.title || "(untitled)"} · {game.status}
-              </option>
-            ))}
-          </select>
+          <div className="flex-1 min-w-0">
+            <Combobox value={id ?? ""} options={gameOptions} placeholder="Search games…" onChange={open} />
+          </div>
           <button type="button" className={buttonClass} onClick={() => open("")}>
             New
           </button>
@@ -116,7 +109,7 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
             </label>
             {draft.dlc && (
               <Field label="Main game">
-                <Select value={draft.mainGame} options={mainGameOptions} onChange={(value) => set("mainGame", value)} />
+                <Combobox value={draft.mainGame} options={mainGameOptions} placeholder="Type to search…" onChange={(value) => set("mainGame", value)} />
               </Field>
             )}
             <div className="flex flex-col gap-1.5 @lg:col-span-2">

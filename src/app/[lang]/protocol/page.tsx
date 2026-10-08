@@ -115,7 +115,7 @@ export default async function ProtocolPage() {
           <SectionHeading id="about-pilot" index="04" first={t.about[0]} second={t.about[1]} accent="acc2" small />
           <div className="flex flex-col gap-5 bg-acc2 p-9 text-bg [clip-path:polygon(32px_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%,0_32px)]">
             <span className="grid hex h-20.75 w-24 place-items-center bg-bg">
-              <Image src="/peppobot.png" alt="" width={56} height={56} className="invert mix-blend-screen" />
+              <Image draggable={false} src="/peppobot.png" alt="" width={56} height={56} className="invert mix-blend-screen" />
             </span>
             <p className="font-display text-[34px] leading-[0.95] font-bold uppercase">
               {t.aboutTitle[0]}

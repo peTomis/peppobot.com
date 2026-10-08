@@ -66,7 +66,7 @@ function ReportCard({ game, lang, accent }: { game: Game; lang: Locale; accent: 
         aria-hidden
         className="relative grid aspect-[4/3] place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_10px,#170f24_10px_20px)] font-mono text-[10px] tracking-[0.1em] text-fg-faint [clip-path:polygon(0_0,100%_0,100%_calc(100%-36px),calc(100%-36px)_100%,0_100%)]"
       >
-        {game.cover ? <Image src={game.cover} alt="" fill sizes="(min-width: 1024px) 400px, 100vw" className="object-cover" /> : "KEY ART"}
+        {game.cover ? <Image draggable={false} src={game.cover} alt="" fill sizes="(min-width: 1024px) 400px, 100vw" className="object-cover" /> : "KEY ART"}
         <div className="absolute bottom-0 left-0 w-full h-2 bg-(--c)" />
       </div>
       <div className="flex items-start gap-4">

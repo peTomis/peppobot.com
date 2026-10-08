@@ -202,7 +202,8 @@
       "2": ["Characters", "Combat system"],
       "3": ["Build variety", "Combat feel"],
       "4": ["Endgame", "World"],
-      "5": ["Creativity", "Freedom"]
+      "5": ["Creativity", "Freedom"],
+      "6": ["Level design", "Controls"]
     },
     "tiers": ["Rating", "tiers"],
     "tierNotes": {

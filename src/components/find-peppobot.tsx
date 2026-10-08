@@ -41,7 +41,7 @@ export async function FindPeppobot() {
                   className={`flex items-center gap-4 bg-bg px-4.5 py-4 text-fg [clip-path:polygon(0_0,calc(100%-18px)_0,100%_18px,100%_100%,0_100%)]${tag.url ? " hover:bg-surface-hover hover:text-fg" : ""}`}
                 >
                   <span className="hex grid h-11.25 w-13 shrink-0 place-items-center bg-(--c)">
-                    <Image src={`/icons/${tag.icon}.svg`} alt="" width={22} height={22} className={tag.icon === "epicgames" ? "brightness-0" : "brightness-0 invert"} />
+                    <Image draggable={false} src={`/icons/${tag.icon}.svg`} alt="" width={22} height={22} className={tag.icon === "epicgames" ? "brightness-0" : "brightness-0 invert"} />
                   </span>
                   <span className="flex flex-col min-w-0 gap-1">
                     <span className="font-mono text-[10px] tracking-[0.16em] text-fg-dim uppercase">{tag.name}</span>

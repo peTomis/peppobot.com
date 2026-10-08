@@ -39,7 +39,7 @@ const dotHexMask = (radius: number) => `url("data:image/svg+xml,${encodeURICompo
 export function DotHexImage({ src, sizes, radius = DEFAULT_RADIUS, className }: { src: string; sizes: string; radius?: number; className?: string }) {
   return (
     <div aria-hidden style={{ maskImage: dotHexMask(radius), maskSize: "100% 100%" }} className={`aspect-[86.6/100] ${className ?? ""}`}>
-      <Image src={src} alt="" fill sizes={sizes} className="object-cover" />
+      <Image draggable={false} src={src} alt="" fill sizes={sizes} className="object-cover" />
     </div>
   );
 }

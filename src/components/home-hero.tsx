@@ -39,7 +39,7 @@ export async function HomeHero() {
                   </textPath>
                 </text>
               </svg>
-              <Image src="/peppobot.png" alt="" width={400} height={400} priority className="relative h-auto w-[54%] invert mix-blend-screen" />
+              <Image draggable={false} src="/peppobot.png" alt="" width={400} height={400} priority className="relative h-auto w-[54%] invert mix-blend-screen" />
             </div>
             <div className="hidden desk:block absolute top-[6%] left-1/2 -translate-x-1/2 bg-acc px-3 py-1.5 font-mono text-xs tracking-[0.2em] whitespace-nowrap text-bg">{t.badge}</div>
           </div>

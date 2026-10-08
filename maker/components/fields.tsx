@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { locales, type Locale } from "@/i18n/config";
 import type { Translated } from "@/i18n/translations";
 
@@ -61,6 +61,87 @@ export function Select<T extends string | number>({ value, options, onChange }: 
         </option>
       ))}
     </select>
+  );
+}
+
+/** A select you can type in: the text filters the options, arrows and Enter pick one, Escape gives up. */
+export function Combobox({ value, options, onChange, placeholder }: { value: string; options: { value: string; label: string }[]; onChange: (value: string) => void; placeholder?: string }) {
+  const listId = useId();
+  const [query, setQuery] = useState<string | null>(null);
+  const [active, setActive] = useState(0);
+  const open = query != null;
+  const selected = options.find((option) => option.value === value);
+  const search = query?.trim().toLowerCase() ?? "";
+  const matches = search ? options.filter((option) => option.label.toLowerCase().includes(search)) : options;
+
+  const pick = (option: { value: string } | undefined) => {
+    setQuery(null);
+    if (option && option.value !== value) onChange(option.value);
+  };
+
+  return (
+    <div className="relative w-full min-w-0">
+      <input
+        role="combobox"
+        aria-expanded={open}
+        aria-controls={listId}
+        aria-activedescendant={open && matches[active] ? `${listId}-${active}` : undefined}
+        className={inputClass}
+        value={query ?? selected?.label ?? ""}
+        placeholder={placeholder}
+        onFocus={(event) => {
+          setQuery("");
+          setActive(0);
+          event.target.select();
+        }}
+        onBlur={() => setQuery(null)}
+        onChange={(event) => {
+          setQuery(event.target.value);
+          setActive(0);
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+            event.preventDefault();
+            if (!open) return setQuery("");
+            const step = event.key === "ArrowDown" ? 1 : -1;
+            setActive((index) => (matches.length ? (index + step + matches.length) % matches.length : 0));
+          } else if (event.key === "Enter" && open) {
+            event.preventDefault();
+            pick(matches[active]);
+            event.currentTarget.blur();
+          } else if (event.key === "Escape" && open) {
+            setQuery(null);
+            event.currentTarget.blur();
+          }
+        }}
+      />
+      {open && (
+        <ul id={listId} role="listbox" className="absolute top-full right-0 left-0 z-20 mt-1 max-h-72 overflow-y-auto border border-line bg-surface shadow-lg">
+          {matches.length ? (
+            matches.map((option, index) => (
+              <li
+                key={option.value}
+                id={`${listId}-${index}`}
+                role="option"
+                aria-selected={option.value === value}
+                // mousedown, not click: picking must happen before the input's blur closes the list.
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                  pick(option);
+                  (document.activeElement as HTMLElement | null)?.blur();
+                }}
+                onMouseEnter={() => setActive(index)}
+                className={`cursor-pointer px-3 py-2 text-sm ${index === active ? "bg-bg text-fg" : "text-fg-muted"} ${option.value === value ? "text-acc!" : ""}`}
+              >
+                {option.label}
+              </li>
+            ))
+          ) : (
+            <li className="px-3 py-2 text-sm text-fg-faint">No match</li>
+          )}
+        </ul>
+      )}
+    </div>
   );
 }
 

@@ -213,7 +213,7 @@ function GridCard({ game, lang, score, t }: { game: Game; lang: Locale; score: I
           aria-hidden
           className="relative grid aspect-[3/4] place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_10px,#170f24_10px_20px)] p-3 text-center font-mono text-[10px] tracking-[0.1em] text-fg-faint [clip-path:polygon(0_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%)]"
         >
-          {game.cover ? <Image src={game.cover} alt="" fill sizes="(min-width: 1024px) 240px, 50vw" className="object-cover" /> : "COVER ART"}
+          {game.cover ? <Image draggable={false} src={game.cover} alt="" fill sizes="(min-width: 1024px) 240px, 50vw" className="object-cover" /> : "COVER ART"}
           <div style={{ background: STATUS_COLORS[game.status] }} className="absolute bottom-0 left-0 w-full h-2" />
         </div>
         <ScoreHex game={game} score={score} className="absolute -top-3 -right-2.5 h-13.5 w-15.5 text-[17px]" />

@@ -63,7 +63,7 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
         <div className="flex flex-wrap items-center gap-14">
           <div className="relative isolate flex-[0_0_min(100%,340px)]">
             <div aria-hidden className={`relative aspect-[3/4] ${placeholder} [clip-path:polygon(0_0,100%_0,100%_calc(100%-48px),calc(100%-48px)_100%,0_100%)]`}>
-              {game.cover ? <Image src={game.cover} alt="" fill priority sizes="340px" className="object-cover" /> : "COVER ART"}
+              {game.cover ? <Image draggable={false} src={game.cover} alt="" fill priority sizes="340px" className="object-cover" /> : "COVER ART"}
               <div style={{ background: statusColor }} className="absolute bottom-0 left-0 w-full h-2.5" />
             </div>
             <div

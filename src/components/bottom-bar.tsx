@@ -26,7 +26,7 @@ export async function BottomBar() {
       {/* Mobile */}
       <div className="flex flex-col items-center gap-3.5 py-8 text-center desk:hidden">
         <span className="grid h-12 hex w-14 place-items-center bg-bg">
-          <Image src="/peppobot.png" alt="" width={30} height={30} className="invert mix-blend-screen" />
+          <Image draggable={false} src="/peppobot.png" alt="" width={30} height={30} className="invert mix-blend-screen" />
         </span>
         <span className="font-display text-xl font-bold tracking-[0.16em]">PEPPOBOT</span>
         <span
