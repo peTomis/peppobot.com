@@ -23,7 +23,7 @@ Read `README.md` first. Two Next.js apps share this repo, its `node_modules` and
 - Platforms and genres are stored as numeric ids. Never renumber the existing ones in `PLATFORMS` / `GENRES`. Add new ids at the end. A new genre also needs its two axis criteria in `protocol.genreAxes` in both dictionaries.
 - Content texts are `Translated` (`{ key, value }[]`) and are read with `pickTranslation()`. UI strings go in `src/i18n/dictionaries/{en,it}.json`, which must have the same keys (`en.json` defines the type).
 - Code under `src/lib/` is `server-only`. Client components receive data and strings as props.
-- The `data` collection (telemetry and home KPIs) is precomputed. Nothing in this repo writes it, so do not add per-request aggregations over `games` to replace it.
+- The `data` collection (telemetry and home KPIs) is precomputed by the maker after every save (`computeData` in `maker/lib/data.ts`). Do not add per-request aggregations over `games` on the site. When you change `Data` or how a figure is defined, update `computeData` too.
 - Image hosts are listed in both `next.config.ts` and `maker/next.config.ts`. Keep the two lists in sync.
 - After changing dependencies, make sure `npm ci` still works with the npm version Amplify uses. See "Deployment" in the README.
 - Run `npm run lint` and `npx tsc --noEmit` (root) plus `npx tsc --noEmit -p maker` before you finish.

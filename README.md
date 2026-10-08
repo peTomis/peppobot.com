@@ -2,15 +2,15 @@
 
 Source for **[www.peppobot.com](https://www.peppobot.com)**: Peppobot's personal video game log and review site.
 
-> **PEPPOBOT — PILOT LOG // GAME REPORTS**
+> **PEPPOBOT — GAME LOG // DIAGNOSTIC REPORTS**
 > _Games played. Reports filed._
 
 The repository holds two Next.js apps that share code and one MongoDB database:
 
-| App          | Folder                   | Runs                     | Purpose                                                                                    |
-| ------------ | ------------------------ | ------------------------ | ------------------------------------------------------------------------------------------ |
-| **Site**     | repo root (`src/`)       | AWS Amplify (production) | The public website. Reads only.                                                             |
-| **Maker**    | [`maker/`](maker/)       | **Locally only**         | Editor for creating and updating games, with a live preview of the site's report page.     |
+| App       | Folder             | Runs                     | Purpose                                                                                |
+| --------- | ------------------ | ------------------------ | -------------------------------------------------------------------------------------- |
+| **Site**  | repo root (`src/`) | AWS Amplify (production) | The public website. Reads only.                                                        |
+| **Maker** | [`maker/`](maker/) | **Locally only**         | Editor for creating and updating games, with a live preview of the site's report page. |
 
 The maker is never deployed. `next build` only builds the site: the root `tsconfig.json` excludes `maker/`, and the maker has no build or start script.
 
@@ -22,27 +22,26 @@ Peppobot is a human gamer with a "robot persona". He keeps a public log of every
 
 ### Core concepts
 
-| Concept      | Meaning                                                                                                                                                                                         |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Game**     | One logged title. Type `Game` in [`src/content/games.ts`](src/content/games.ts).                                                                                                                |
-| **Status**   | `Playing`, `Completed`, `Dropped`, `Not Started`. Only ended runs (`Completed` / `Dropped`) show scores, an end date, pros and cons; `normalizeGame()` hides those fields for other statuses. |
-| **Six axes** | Rated 0–10, in this order: **Gameplay**, **Visuals**, **Audio**, **Genre I**, **Genre II**, **Signature**. The two genre axes use criteria set per genre (see the protocol page).                |
-| **Average**  | The plain average of the six axes, to one decimal. It is stored on the game (`average`) when the maker saves it, and is null until all six axes are scored.                                     |
-| **Tiers**    | `OVERCLOCKED` 9.0+ · `OPTIMAL` 8.0–8.9 · `STABLE` 7.0–7.9 · `GLITCHED` 5.0–6.9 · `CORRUPTED` 0–4.9 (`TIERS` in `games.ts`).                                                                    |
-| **Queue**    | Games with status `Not Started`. The home page shows the oldest one as "next in queue".                                                                                                         |
-| **Platform / Genre** | Stored as numeric ids. The names and logos come from `PLATFORMS` and `GENRES` in `games.ts`. A game has one main `platform` and an optional `alsoPlayedOn` list.                        |
+| Concept              | Meaning                                                                                                                                                                                       |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Game**             | One logged title. Type `Game` in [`src/content/games.ts`](src/content/games.ts).                                                                                                              |
+| **Status**           | `Playing`, `Completed`, `Dropped`, `Not Started`. Only ended runs (`Completed` / `Dropped`) show scores, an end date, pros and cons; `normalizeGame()` hides those fields for other statuses. |
+| **Six axes**         | Rated 0–10, in this order: **Gameplay**, **Visuals**, **Audio**, **Genre I**, **Genre II**, **Signature**. The two genre axes use criteria set per genre (see the protocol page).             |
+| **Average**          | The plain average of the six axes, to one decimal. It is stored on the game (`average`) when the maker saves it, and is null until all six axes are scored.                                   |
+| **Tiers**            | `OVERCLOCKED` 9.0+ · `OPTIMAL` 8.0–8.9 · `STABLE` 7.0–7.9 · `GLITCHED` 5.0–6.9 · `CORRUPTED` 0–4.9 (`TIERS` in `games.ts`).                                                                   |
+| **Platform / Genre** | Stored as numeric ids. The names and logos come from `PLATFORMS` and `GENRES` in `games.ts`. A game has one main `platform` and an optional `alsoPlayedOn` list.                              |
 
 ### Pages
 
 Every page is under a language prefix (`/en/…`, `/it/…`).
 
-| Route                  | Contents                                                                                                                                                       |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/[lang]`              | Hero with KPI chips (from `/api/data`), now playing, latest reports (last 3 completed), hall of fame (top 5 completed by average) and next in queue.           |
-| `/[lang]/library`      | Search (title, developer, genre, platform), status filter, sort (recent / score / hours / A–Z) and pagination at 12 per page. State lives in the URL query.   |
+| Route                  | Contents                                                                                                                                                                                  |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/[lang]`              | Hero with KPI chips (from `/api/data`), now playing, latest reports (last 3 completed), hall of fame (top 5 completed by average) and next in queue.                                      |
+| `/[lang]/library`      | Search (title, developer, genre, platform), status filter, sort (recent / score / hours / A–Z) and pagination at 12 per page. State lives in the URL query.                               |
 | `/[lang]/library/[id]` | Game report: score badge, radar and per-axis bars, report blocks, pros and cons, pilot data sidebar, links to the previous and next report. `id` is the game's slug or its MongoDB `_id`. |
-| `/[lang]/telemetry`    | Site-wide figures from the `data` document: KPIs, axis profile, tier distribution, hours by platform, genre scan.                                              |
-| `/[lang]/protocol`     | Scoring method: the six axes, genre calibration table, tiers, about the pilot. Fully static.                                                                   |
+| `/[lang]/telemetry`    | Site-wide figures from the `data` document: KPIs, axis profile, tier distribution, hours by platform, genre scan.                                                                         |
+| `/[lang]/protocol`     | Scoring method: the six axes, genre calibration table, tiers, about the pilot. Fully static.                                                                                              |
 
 Every page also has the top bar (desktop nav, mobile menu, EN/IT switch), the "Find Peppobot" gamertag band and the bottom bar.
 
@@ -68,7 +67,7 @@ Dates (`releasedOn`, `finishedOn`) are Unix timestamps in milliseconds, read in 
 
 One document with site-wide figures, typed `Data` in [`src/content/data.ts`](src/content/data.ts): count, hours, average score, completed count, axis averages, tier counts, hours per platform and genre averages. Score figures count completed games only. The home KPIs and the telemetry page read this document as it is and do not aggregate the games.
 
-> Nothing in this repository writes the `data` document. It has to be recomputed outside the repo when games change.
+> The maker recomputes the `data` document from every game after each save (`maker/lib/data.ts`). Edits made to `games` outside the maker leave it stale until the next save. The site caches it for up to 60 seconds.
 
 ### Server helpers and API
 
@@ -160,4 +159,4 @@ public/                     logo and platform icons (shared with the maker by sy
 
 ## Deployment
 
-The site is deployed on **AWS Amplify** from `main`. Amplify runs `npm ci`, so `package-lock.json` must be in sync with `package.json` under Amplify's npm version. If Amplify uses an older npm than your machine, regenerate the lockfile with that version, for example `npx npm@10 install --package-lock-only`, or use the same Node version on both. Set `MONGODB_URI` and `MONGODB_DB` as environment variables in Amplify.
+The site is deployed on **AWS Amplify** from `main`. Amplify runs `npm ci`, so `package-lock.json` must be in sync with `package.json` under Amplify's npm version. If Amplify uses an older npm than your machine, regenerate the lockfile with that version, for example `npx npm@10 install --package-lock-only`, or use the same Node version on both. Set `MONGODB_URI` and `MONGODB_DB` as environment variables in Amplify. Amplify only makes them available while the app builds, so [`amplify.yml`](amplify.yml) copies them into `.env.production`, where the server can read them at runtime.

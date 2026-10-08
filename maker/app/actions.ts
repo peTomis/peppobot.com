@@ -2,9 +2,11 @@
 
 import { ObjectId } from "mongodb";
 import { getDatabase } from "@/lib/mongodb";
+import { refreshData } from "../lib/data";
 import { toFields, type Draft } from "../lib/draft";
 
-export type SaveResult = { ok: true; id: string } | { ok: false; error: string };
+/** `warning`: the game was saved, but something after it failed. */
+export type SaveResult = { ok: true; id: string; warning?: string } | { ok: false; error: string };
 
 /** Creates the game (`id` null) or updates it. Fields not edited by the maker are left as they are. */
 export async function saveGame(id: string | null, draft: Draft): Promise<SaveResult> {
@@ -23,11 +25,21 @@ export async function saveGame(id: string | null, draft: Draft): Promise<SaveRes
     if (taken) return { ok: false, error: `Another game already uses the URL id "${slug}".` };
   }
 
+  let saved: string;
   if (!_id) {
     const { insertedId } = await collection.insertOne(slug ? { ...fields, id: slug } : fields);
-    return { ok: true, id: insertedId.toHexString() };
+    saved = insertedId.toHexString();
+  } else {
+    const result = await collection.updateOne({ _id }, slug ? { $set: { ...fields, id: slug } } : { $set: fields, $unset: { id: "" } });
+    if (!result.matchedCount) return { ok: false, error: "This game no longer exists." };
+    saved = _id.toHexString();
   }
-  const result = await collection.updateOne({ _id }, slug ? { $set: { ...fields, id: slug } } : { $set: fields, $unset: { id: "" } });
-  if (!result.matchedCount) return { ok: false, error: "This game no longer exists." };
-  return { ok: true, id: _id.toHexString() };
+
+  // The site's telemetry and home KPIs read the precomputed `data` document.
+  try {
+    await refreshData();
+  } catch {
+    return { ok: true, id: saved, warning: "Saved, but the site figures (data) could not be updated. The next save will retry." };
+  }
+  return { ok: true, id: saved };
 }

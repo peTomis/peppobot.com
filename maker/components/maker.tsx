@@ -53,6 +53,7 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
       setError(null);
       const result = await saveGame(id, draft);
       if (!result.ok) return setError(result.error);
+      setError(result.warning ?? null);
       setSaved(draft);
       if (result.id !== id) router.replace(`/?id=${result.id}`);
       else router.refresh();
