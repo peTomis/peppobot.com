@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Peppobot — Diario di bordo // Report di gioco",
+    "title": "Peppobot",
     "description": "Ogni gioco affrontato da Peppobot. Valutato su sei assi, recensito senza filtri, tracciato ora per ora."
   },
   "nav": {
@@ -10,51 +10,52 @@
     "protocol": "Protocollo"
   },
   "topBar": {
-    "tagline": "DIARIO DI BORDO // REPORT DI GIOCO",
+    "tagline": "DIARIO DI GIOCO // DIAGNOSTICA",
     "online": "ONLINE",
     "openMenu": "Apri menu",
     "closeMenu": "Chiudi menu",
     "language": "Lingua"
   },
   "hero": {
-    "eyebrow": "SUL PEZZO · DAL 1999",
-    "titleGames": "Giochi",
-    "titlePlayed": "giocati.",
-    "titleReports": "Recensioni",
-    "titleFiled": "archiviate.",
-    "intro": "Ogni gioco affrontato da Peppobot. Valutato su sei assi, recensito senza filtri, tracciato ora per ora.",
-    "openLibrary": "Libreria",
-    "scoringProtocol": "Il mio Protocollo",
-    "kpiLogged": "REGISTRATI",
-    "kpiHours": "ORE",
+    "badge": "PB-0001 // PILOTATO DA UN UMANO",
+    "eyebrow": "PB-0001 // AGGIORNATO · DAL 1999",
+    "titleGames": "Games",
+    "titlePlayed": "played.",
+    "titleReports": "Reports",
+    "titleFiled": "filed.",
+    "intro": "Un finto robot con VERE opinioni sui videogiochi. Diagnostica con sei assi, infinite ore di gioco ed un tocco di discutibili opinioni umane.",
+    "openLibrary": "Accedi all'archivio",
+    "scoringProtocol": "Protocollo di voto",
+    "kpiLogged": "GIOCHI",
+    "kpiHours": "ORE GIOCATE",
     "kpiAvgScore": "VOTO MEDIO",
-    "ticker": ["In gioco", "Recensioni archiviate", "Sei assi", "Senza filtri"]
+    "ticker": ["In gioco", "Report archiviati", "Sei assi", "Senza filtri"]
   },
   "nowPlaying": {
     "now": "Ora",
     "playing": "in gioco",
-    "activeRun": "GIOCO",
-    "activeRuns": "GIOCHI",
+    "activeRun": "RUN ATTIVA",
+    "activeRuns": "RUN ATTIVE",
     "progress": "PROGRESSO"
   },
   "latestReports": {
-    "latest": "Ultime",
-    "reports": "recensioni",
-    "allReports": "Tutte le recensioni"
+    "latest": "Ultimi",
+    "reports": "report",
+    "allReports": "Tutti i report"
   },
   "hallOfFame": {
     "hallOf": "Hall of",
     "fame": "fame",
     "nextInQueue": "PROSSIMO IN CODA",
-    "tba": "TBA"
+    "tba": "DA ANNUNCIARE"
   },
   "library": {
-    "archive": "L'ARCHIVIO",
+    "archive": "PB-0001 // L'ARCHIVIO",
     "every": "Ogni",
     "game": "gioco",
     "logged": "registrato.",
     "of": "SU",
-    "entries": "TITOLI",
+    "entries": "VOCI",
     "search": "Cerca titolo, sviluppatore, genere, piattaforma…",
     "searchLabel": "Cerca nella libreria",
     "sortBy": "ORDINA PER",
@@ -66,10 +67,10 @@
     },
     "all": "Tutti",
     "statuses": {
-      "Playing": "Smanettandoci",
+      "Playing": "In corso",
       "Completed": "Completato",
       "Dropped": "Abbandonato",
-      "Not Started": "dolce attesa"
+      "Not Started": "Da iniziare"
     },
     "grid": "GRIGLIA",
     "list": "LISTA",
@@ -84,7 +85,7 @@
     "prev": "Prec",
     "next": "Succ",
     "page": "PAGINA",
-    "noMatches": "Nessun risultato in memoria"
+    "noMatches": "Nessun risultato nella memoria"
   },
   "report": {
     "back": "Libreria · Report",
@@ -92,10 +93,10 @@
     "outOf": "/ 10",
     "inProgress": "IN CORSO — RUN AL",
     "notStarted": "NON ANCORA INIZIATO",
-    "scoreMatrix": ["PARZIALE", "voti"],
+    "scoreMatrix": ["Matrice", "dei voti"],
     "fullReport": ["Report", "completo"],
-    "pros": "+ Punti di forza",
-    "cons": "− Tasti dolenti",
+    "pros": "+ Test superati",
+    "cons": "− Errori rilevati",
     "pilotData": "Dati pilota",
     "rows": {
       "status": "STATO",
@@ -104,8 +105,9 @@
       "playtime": "TEMPO DI GIOCO",
       "logged": "REGISTRATO",
       "released": "USCITA",
+      "signature": "ESCLUSIVO",
       "progress": "PROGRESSO",
-      "tier": "TIER"
+      "tier": "FASCIA"
     },
     "previous": "REPORT PRECEDENTE",
     "next": "REPORT SUCCESSIVO",
@@ -137,16 +139,16 @@
     ]
   },
   "telemetry": {
-    "diagnostics": "DIAGNOSTICA",
-    "title": ["Dati sul", "pilota."],
+    "diagnostics": "PB-0001 // DIAGNOSTICA",
+    "title": ["Telemetria", "dell'operatore."],
     "kpis": {
       "logged": "GIOCHI REGISTRATI",
       "hours": "ORE GIOCATE",
       "completed": "COMPLETATI",
       "avgScore": "VOTO MEDIO"
     },
-    "profile": ["Profilo", "pilota"],
-    "profileIntro": "L'impronta dei gusti di Peppobot: i sei assi mediati su ogni run completata.",
+    "profile": ["Profilo", "dell'operatore"],
+    "profileIntro": "Ogni run completata lascia una traccia. Le medie sui sei assi rivelano le abitudini di voto dell'operatore. I calcoli sono meccanici. Il gusto è inconfondibilmente umano.",
     "tiers": ["Fasce", "di voto"],
     "platforms": ["Ore per", "piattaforma"],
     "genres": ["Scansione", "generi"],
@@ -156,36 +158,40 @@
     }
   },
   "protocol": {
-    "howScores": "COME VENGONO CALCOLATI I VOTI",
+    "howScores": "PB-0001 // METODOLOGIA DI VOTO",
     "title": ["Protocollo", "di voto."],
-    "intro": "Ogni gioco è valutato da 0 a 10 su sei assi. Il voto finale è la media semplice: niente pesi nascosti, nessuna pressione dagli editori. I giochi ancora in corso non hanno voto finché non scorrono i titoli di coda.",
+    "intro": "Sei assi diagnostici. Voti da 0 a 10. Una semplice media. Il robot si occupa dei calcoli. L'umano risponde delle opinioni discutibili. I voti finali arrivano solo dopo una run completata o una tappa significativa della recensione.",
     "axes": ["Sei", "assi"],
     "axisCards": [
       {
         "name": "Gameplay",
-        "note": "La sensazione momento per momento: controlli, sistemi, combattimento, enigmi. Si gioca bene?"
+        "note": "Controlli, meccaniche, combattimento, enigmi e sensazione momento per momento. È davvero divertente da pilotare?"
       },
       {
         "name": "Grafica",
-        "note": "Prima la direzione artistica, poi la tecnica. Ha un aspetto unico?"
+        "note": "Direzione artistica, animazioni, leggibilità ed esecuzione tecnica. Più poligoni non significano automaticamente più personalità."
       },
       {
         "name": "Audio",
-        "note": "Colonna sonora, sound design e doppiaggio. Mi resta in testa?"
+        "note": "Musica, sound design e doppiaggio. Arricchisce l'esperienza o occupa solo banda?"
       },
       {
         "name": "Genere · I",
-        "note": "Il primo criterio specifico del genere del gioco — vedi la tabella sotto."
+        "note": "Il test principale specifico per il genere. Tipi di gioco diversi richiedono diagnostiche diverse."
       },
       {
         "name": "Genere · II",
-        "note": "Il secondo criterio specifico del genere del gioco — vedi la tabella sotto."
+        "note": "Il test secondario specifico per il genere. Perché, a quanto pare, una sola ossessione di genere non bastava."
       },
       {
         "name": "Esclusivo",
-        "note": "Unico per questo gioco: l'elemento che lo definisce, valutato a parte. Ogni gioco ne ha uno diverso."
+        "note": "La qualità che definisce questo gioco in particolare, valutata secondo le sue regole. Ogni titolo riceve una diagnostica su misura."
       }
     ],
+    "calibration": {
+      "title": ["Calibrazione", "di genere"],
+      "text": "Non tutti i giochi girano sullo stesso hardware. O con le stesse aspettative. Gli assi 04 e 05 si adattano al genere. Gli altri quattro restano costanti."
+    },
     "genreAxesHead": ["Genere", "Genere · I", "Genere · II"],
     "genreAxes": {
       "1": ["Narrativa", "Progressione"],
@@ -195,24 +201,28 @@
     },
     "tiers": ["Fasce", "di voto"],
     "tierNotes": {
-      "OVERCLOCKED": "Da classifica di sempre. Giocalo subito.",
-      "OPTIMAL": "Eccellente, piccoli difetti.",
-      "STABLE": "Buono, vale il tuo tempo.",
-      "GLITCHED": "Altalenante. Solo per fan.",
-      "CORRUPTED": "Lascia perdere."
+      "OVERCLOCKED": "Supera ogni aspettativa. Salvato per sempre nella memoria centrale.",
+      "OPTIMAL": "Prestazioni eccezionali. Rilevate anomalie minori.",
+      "STABLE": "Prestazioni solide. Consigliato per l'uso.",
+      "GLITCHED": "Output incostante. Procedere a proprio rischio.",
+      "CORRUPTED": "Rilevati errori critici. Raccomandazione annullata."
     },
     "about": ["Chi è il", "pilota"],
-    "aboutTitle": ["Pilota umano.", "Pazienza da robot."],
-    "aboutText": "Peppobot è un umano con la pazienza di un robot per le schermate di completamento. Gioca soprattutto GDR, roguelike e qualsiasi cosa abbia un buon parry. Le recensioni si scrivono dopo i titoli di coda, mai prima."
+    "aboutTitle": ["Umano vero.", "Robot finto."],
+    "aboutText": [
+      "Peppobot è un robot immaginario, pilotato da un umano molto reale con un debole per GDR, roguelike e parry al millisecondo.",
+      "La sua missione: giocare, raccogliere dati, analizzare tutto fin troppo e, ogni tanto, ricordarsi che i videogiochi dovrebbero essere divertenti.",
+      "I calcoli sono precisi. Le opinioni sono del tutto umane."
+    ]
   },
   "findPeppobot": {
     "find": "Trova",
-    "tagline": "AGGIUNGIMI · GUARDAMI · SFIDAMI"
+    "tagline": "CONNETTITI · GUARDA · SFIDAMI"
   },
   "bottomBar": {
-    "madeBy": "Realizzato da",
-    "credits": "SCRITTO DA UN FINTO ROBOT, PER UMANI VERI",
+    "madeBy": "PROGETTATO DA",
+    "credits": "ROBOT FINTO. OPINIONI VERE. GUSTI DISCUTIBILI.",
     "build": "BUILD 4.2.0",
-    "patched": "VOTI DEFINITIVI FINO AL PROSSIMO PATCH"
+    "patched": "TUTTI I VERDETTI SONO DEFINITIVI FINO AL PROSSIMO PATCH"
   }
 }

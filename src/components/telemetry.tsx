@@ -58,8 +58,10 @@ export async function TelemetrySections({ lang, t, axisNames }: { lang: Locale; 
     <>
       <section aria-labelledby="pilot-profile" className="grid items-center grid-cols-1 gap-16 desk:grid-cols-2">
         <div className="flex flex-col gap-6">
-          <SectionHeading id="pilot-profile" index="01" first={t.profile[0]} second={t.profile[1]} accent="acc2" small />
-          <p className="max-w-105 text-[17px] leading-[1.6] text-fg-muted">{t.profileIntro}</p>
+          <SectionHeading id="pilot-profile" index="01" first={t.profile[0]} second={t.profile[1]} accent="acc3" small />
+          <p className="bg-acc3 p-9 text-[17px] leading-[1.6] font-medium text-pretty text-bg [clip-path:polygon(32px_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%,0_32px)]">
+            {t.profileIntro}
+          </p>
           <dl className="grid grid-cols-2 gap-2">
             {axisNames.map((name, index) => (
               <div key={name} className="flex items-center justify-between px-4 py-3 bg-surface">
@@ -93,9 +95,10 @@ export async function TelemetrySections({ lang, t, axisNames }: { lang: Locale; 
 
         <section aria-labelledby="platform-hours" className="flex flex-col gap-7">
           <SectionHeading id="platform-hours" index="03" first={t.platforms[0]} second={t.platforms[1]} accent="acc2" small />
-          <ul className="flex flex-col gap-2.5">
+          {/* The logo column is as wide as the widest logo shown; the bars take the rest. */}
+          <ul className="grid grid-cols-[max-content_minmax(0,1fr)_max-content] gap-x-3.5 gap-y-2.5">
             {data.platformHours.map((row) => (
-              <li key={row.platform} className="grid grid-cols-[110px_minmax(0,1fr)_56px] items-center gap-3.5">
+              <li key={row.platform} className="grid items-center col-span-3 grid-cols-subgrid">
                 <span className="flex items-center text-sm font-bold tracking-widest uppercase font-display">
                   <PlatformLogo platform={row.platform} />
                 </span>
@@ -110,7 +113,7 @@ export async function TelemetrySections({ lang, t, axisNames }: { lang: Locale; 
       </div>
 
       <section aria-labelledby="genre-scan" className="flex flex-col gap-7">
-        <SectionHeading id="genre-scan" index="04" first={t.genres[0]} second={t.genres[1]} accent="acc3" small />
+        <SectionHeading id="genre-scan" index="04" first={t.genres[0]} second={t.genres[1]} accent="acc" small />
         <ul className="grid grid-cols-2 gap-x-4 gap-y-7 desk:grid-cols-[repeat(auto-fill,minmax(min(100%,180px),1fr))]">
           {data.genres.map((genre, index) => (
             <li key={genre.genre} className="flex flex-col items-center gap-3 text-center">

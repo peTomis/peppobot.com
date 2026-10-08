@@ -10,23 +10,24 @@
     "protocol": "Protocol"
   },
   "topBar": {
-    "tagline": "PILOT LOG // GAME REPORTS",
+    "tagline": "GAME LOG // DIAGNOSTIC REPORTS",
     "online": "ONLINE",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "language": "Language"
   },
   "hero": {
-    "eyebrow": "UPDATED · SINCE 1999",
+    "badge": "PB-0001 // HUMAN OPERATED",
+    "eyebrow": "PB-0001 // UPDATED · SINCE 1999",
     "titleGames": "Games",
     "titlePlayed": "played.",
     "titleReports": "Reports",
     "titleFiled": "filed.",
-    "intro": "Every game Peppobot runs. Scored on six axes, reviewed without filters, tracked to the hour.",
-    "openLibrary": "Open library",
+    "intro": "A fake robot with REAL gaming opinions. Six-axis diagnostics, countless hours logged, questionable human judgment.",
+    "openLibrary": "Access the archive",
     "scoringProtocol": "Scoring protocol",
-    "kpiLogged": "LOGGED",
-    "kpiHours": "HOURS",
+    "kpiLogged": "GAMES LOGGED",
+    "kpiHours": "HOURS PLAYED",
     "kpiAvgScore": "AVG SCORE",
     "ticker": ["Now playing", "Reports filed", "Six axes", "No filters"]
   },
@@ -49,7 +50,7 @@
     "tba": "TBA"
   },
   "library": {
-    "archive": "THE ARCHIVE",
+    "archive": "PB-0001 // THE ARCHIVE",
     "every": "Every",
     "game": "game",
     "logged": "logged.",
@@ -104,6 +105,7 @@
       "playtime": "PLAYTIME",
       "logged": "LOGGED",
       "released": "RELEASED",
+      "signature": "SIGNATURE",
       "progress": "PROGRESS",
       "tier": "TIER"
     },
@@ -137,16 +139,16 @@
     ]
   },
   "telemetry": {
-    "diagnostics": "DIAGNOSTICS",
-    "title": ["Pilot", "telemetry."],
+    "diagnostics": "PB-0001 // DIAGNOSTICS",
+    "title": ["OPERATOR", "telemetry."],
     "kpis": {
       "logged": "GAMES LOGGED",
       "hours": "HOURS PLAYED",
       "completed": "COMPLETED",
       "avgScore": "AVG SCORE"
     },
-    "profile": ["Pilot", "profile"],
-    "profileIntro": "Peppobot's taste fingerprint — the six axes averaged across every completed run.",
+    "profile": ["OPERATOR", "profile"],
+    "profileIntro": "Every completed run leaves a trace. Six-axis averages reveal the operator's scoring habits. The math is mechanical. The taste is unmistakably human.",
     "tiers": ["Rating", "tiers"],
     "platforms": ["Hours by", "platform"],
     "genres": ["Genre", "scan"],
@@ -156,36 +158,40 @@
     }
   },
   "protocol": {
-    "howScores": "HOW SCORES ARE COMPUTED",
+    "howScores": "PB-0001 // SCORING METHODOLOGY",
     "title": ["Scoring", "protocol."],
-    "intro": "Every game is rated 0–10 on six axes. The final score is the plain average — no hidden weights, no publisher pressure. Games still in progress get no score until the credits roll.",
+    "intro": "Six diagnostic axes. Scores from 0 to 10. One simple average. The robot handles the math. The human is responsible for the questionable opinions. Final scores are issued only after a completed run or a meaningful review milestone.",
     "axes": ["Six", "axes"],
     "axisCards": [
       {
         "name": "Gameplay",
-        "note": "Moment-to-moment feel: controls, systems, combat, puzzles. Does it play well?"
+        "note": "Controls, mechanics, combat, puzzles, and moment-to-moment feel. Is the game actually fun to operate?"
       },
       {
         "name": "Visuals",
-        "note": "Art direction first, raw tech second. Does it look like nothing else?"
+        "note": "Art direction, animation, readability, and technical execution. More polygons do not automatically mean more personality."
       },
       {
         "name": "Audio",
-        "note": "Soundtrack, sound design and voice work. Does it stay in my head?"
+        "note": "Music, sound design, and voice performances. Does it enhance the experience or just occupy bandwidth?"
       },
       {
         "name": "Genre · I",
-        "note": "The first criterion specific to the game's genre — see the table below."
+        "note": "The primary genre-specific test. Different kinds of games require different diagnostics."
       },
       {
         "name": "Genre · II",
-        "note": "The second criterion specific to the game's genre — see the table below."
+        "note": "The secondary genre-specific test. Because a single genre-specific obsession was apparently insufficient."
       },
       {
         "name": "Signature",
-        "note": "Exclusive to this game: the one thing that defines it, scored on its own. Every game gets a different one."
+        "note": "The defining quality of this particular game, evaluated on its own terms. Every title gets a custom diagnostic."
       }
     ],
+    "calibration": {
+      "title": ["Genre", "calibration"],
+      "text": "Not every game runs on the same hardware. Or the same expectations. Axes 04 and 05 adapt to the genre. The other four stay consistent."
+    },
     "genreAxesHead": ["Genre", "Genre · I", "Genre · II"],
     "genreAxes": {
       "1": ["Narrative", "Progression"],
@@ -195,24 +201,28 @@
     },
     "tiers": ["Rating", "tiers"],
     "tierNotes": {
-      "OVERCLOCKED": "All-time list. Play it now.",
-      "OPTIMAL": "Excellent, small flaws.",
-      "STABLE": "Good, worth your time.",
-      "GLITCHED": "Uneven. Fans only.",
-      "CORRUPTED": "Skip it."
+      "OVERCLOCKED": "Exceeds all expectations. Permanently stored in core memory.",
+      "OPTIMAL": "Outstanding performance. Minor anomalies detected.",
+      "STABLE": "Solid performance. Recommended for deployment.",
+      "GLITCHED": "Inconsistent output. Proceed at your own risk.",
+      "CORRUPTED": "Critical failures detected. Recommendation aborted."
     },
     "about": ["About the", "pilot"],
-    "aboutTitle": ["Human pilot.", "Robot patience."],
-    "aboutText": "Peppobot is a human with a robot's patience for completion screens. Plays mostly RPGs, roguelikes and anything with a good parry. Reviews are written after the credits, never before."
+    "aboutTitle": ["Real human.", "Fake robot."],
+    "aboutText": [
+      "Peppobot is a fictional robot operated by a very real human with a weakness for RPGs, roguelikes, and perfectly timed parries.",
+      "Its mission: play games, collect data, overanalyze everything, and occasionally remember that gaming is supposed to be fun.",
+      "The calculations are accurate. The opinions are entirely human."
+    ]
   },
   "findPeppobot": {
     "find": "Find",
-    "tagline": "ADD ME · WATCH ME · CHALLENGE ME"
+    "tagline": "CONNECT · SPECTATE · CHALLENGE"
   },
   "bottomBar": {
-    "madeBy": "Made by",
-    "credits": "WRITTEN BY A FAKE ROBOT, FOR REAL HUMANS",
+    "madeBy": "ENGINEERED BY",
+    "credits": "FAKE ROBOT. REAL OPINIONS. QUESTIONABLE TASTE.",
     "build": "BUILD 4.2.0",
-    "patched": "ALL SCORES FINAL UNTIL PATCHED"
+    "patched": "ALL VERDICTS FINAL UNTIL PATCHED"
   }
 }

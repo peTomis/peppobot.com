@@ -41,7 +41,7 @@ export async function HomeHero() {
               </svg>
               <Image src="/peppobot.png" alt="" width={400} height={400} priority className="relative h-auto w-[54%] invert mix-blend-screen" />
             </div>
-            <div className="hidden desk:block absolute top-[6%] left-1/2 -translate-x-1/2 bg-acc px-3 py-1.5 font-mono text-xs tracking-[0.2em] whitespace-nowrap text-bg">PB-0001 // PILOT</div>
+            <div className="hidden desk:block absolute top-[6%] left-1/2 -translate-x-1/2 bg-acc px-3 py-1.5 font-mono text-xs tracking-[0.2em] whitespace-nowrap text-bg">{t.badge}</div>
           </div>
           <DotHex fill="var(--acc)" className="absolute top-[90.4%] left-[8.3%] -z-10 h-auto w-[29.4%] overflow-visible motion-safe:animate-bob-dots" />
         </div>

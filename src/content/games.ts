@@ -88,6 +88,8 @@ export type Game = {
   pros: Translated[] | null;
   /** Only for finished runs (Completed or Dropped), null otherwise; only loaded on the game page. */
   cons: Translated[] | null;
+  /** What only this game does, scored on the Signature axis. Expected on finished runs (Completed or Dropped), optional otherwise; null when missing. Only loaded on the game page. */
+  signature: Translated | null;
   /** Only for finished runs (Completed or Dropped); null while playing. */
   scores: Scores | null;
   /** Only for finished runs (Completed or Dropped); null while playing. */

@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import { GENRES, PLATFORMS, releaseYear, STATUS_COLORS, tierOf, type GameReport as Report, type ReportLink } from "@/content/games";
 import { localizePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import type { Translated } from "@/i18n/translations";
+import { pickTranslation, type Translated } from "@/i18n/translations";
 import { DotHex } from "./dot-hex";
 import { gameHref } from "./nav";
 import { PlatformLogo } from "./platform-logo";
@@ -20,9 +20,10 @@ const placeholder = "grid place-items-center bg-[repeating-linear-gradient(135de
 /** Full game report: hero, score matrix, written report with pilot data, and neighbouring reports. */
 export function GameReport({ report, lang, t, statuses, genreAxes }: { report: Report; lang: Locale; t: Strings; statuses: Statuses; genreAxes: GenreAxes }) {
   const { game } = report;
-  // The genre axes take the names of the game's genre criteria.
+  // The genre axes take the names of the game's genre criteria, the signature axis the game's own.
   const criteria: readonly string[] = genreAxes[game.genre] ?? [];
-  const axisNames = t.axes.map((axis, index) => (index === 3 || index === 4 ? (criteria[index - 3] ?? axis.name) : axis.name));
+  const signature = pickTranslation(game.signature, lang)?.value;
+  const axisNames = t.axes.map((axis, index) => (index === 3 || index === 4 ? (criteria[index - 3] ?? axis.name) : index === 5 ? (signature ?? axis.name) : axis.name));
   const one = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const tier = game.average != null ? tierOf(game.average) : null;
   const statusColor = STATUS_COLORS[game.status];
@@ -37,6 +38,7 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
     { k: t.rows.developer, v: game.dev },
     { k: t.rows.playtime, v: `${game.hours} h` },
     { k: t.rows.released, v: year },
+    { k: t.rows.signature, v: game.signature?.length ? <TranslatedText text={game.signature} lang={lang} as="span" /> : null },
     { k: t.rows.logged, v: logged },
     { k: t.rows.progress, v: game.progress != null ? `${game.progress}%` : null },
     { k: t.rows.tier, v: tier?.label },

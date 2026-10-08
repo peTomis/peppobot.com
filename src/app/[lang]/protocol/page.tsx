@@ -54,6 +54,15 @@ export default async function ProtocolPage() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section aria-labelledby="genre-calibration" className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6">
+          <SectionHeading id="genre-calibration" index="02" first={t.calibration.title[0]} second={t.calibration.title[1]} accent="acc" small />
+          <p className="bg-acc p-9 text-[17px] leading-[1.6] font-medium text-pretty text-bg [clip-path:polygon(32px_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%,0_32px)]">
+            {t.calibration.text}
+          </p>
+        </div>
         <table className="flex flex-col gap-1">
           <thead className="contents">
             <tr className="grid grid-cols-3 gap-3 px-4.5 pb-2 font-mono text-[10px] font-bold tracking-[0.14em] text-fg-dim uppercase">
@@ -84,7 +93,7 @@ export default async function ProtocolPage() {
 
       <div className="grid items-start grid-cols-1 gap-16 desk:grid-cols-2">
         <section aria-labelledby="rating-tiers" className="flex flex-col gap-7">
-          <SectionHeading id="rating-tiers" index="02" first={t.tiers[0]} second={t.tiers[1]} accent="acc" small />
+          <SectionHeading id="rating-tiers" index="03" first={t.tiers[0]} second={t.tiers[1]} accent="acc" small />
           <ul className="flex flex-col gap-2.5">
             {TIERS.map((tier, index) => (
               <li key={tier.label} className="grid grid-cols-[96px_minmax(0,1fr)] items-center gap-5 bg-surface py-3.5 pr-5 pl-3.5">
@@ -103,7 +112,7 @@ export default async function ProtocolPage() {
         </section>
 
         <section aria-labelledby="about-pilot" className="flex flex-col gap-7">
-          <SectionHeading id="about-pilot" index="03" first={t.about[0]} second={t.about[1]} accent="acc2" small />
+          <SectionHeading id="about-pilot" index="04" first={t.about[0]} second={t.about[1]} accent="acc2" small />
           <div className="flex flex-col gap-5 bg-acc2 p-9 text-bg [clip-path:polygon(32px_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%,0_32px)]">
             <span className="grid hex h-20.75 w-24 place-items-center bg-bg">
               <Image src="/peppobot.png" alt="" width={56} height={56} className="invert mix-blend-screen" />
@@ -113,7 +122,13 @@ export default async function ProtocolPage() {
               <br />
               {t.aboutTitle[1]}
             </p>
-            <p className="text-base leading-[1.6] font-medium">{t.aboutText}</p>
+            <div className="flex flex-col gap-3">
+              {t.aboutText.map((paragraph) => (
+                <p key={paragraph} className="text-base leading-[1.6] font-medium">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </div>
         </section>
       </div>
