@@ -15,6 +15,7 @@
 
 # next.js
 /.next/
+/maker/.next/
 /out/
 
 # production

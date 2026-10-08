@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Claude Design source files (reference only, not app code).
     "design/**",
+    // The maker app's build output.
+    "maker/.next/**",
   ]),
 ]);
 

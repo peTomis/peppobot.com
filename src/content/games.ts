@@ -117,6 +117,29 @@ export type Game = {
   average: number | null;
 };
 
+/** A game as stored: optional fields may be missing, and fields that do not apply to the status may still be set. */
+export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover"> & Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover">>;
+
+/** The game as pages show it; `fallbackId` is used when the game has no `id` of its own. */
+export function normalizeGame(game: GameFields, fallbackId: string): Game {
+  // Only ended runs have a score, an end date, pros and cons, whatever the document holds.
+  const ended = game.status === "Completed" || game.status === "Dropped";
+  return {
+    ...game,
+    id: game.id || fallbackId,
+    finishedOn: ended ? (game.finishedOn ?? null) : null,
+    progress: game.status === "Not Started" ? null : (game.progress ?? null),
+    scores: ended ? game.scores : null,
+    average: ended ? game.average : null,
+    pros: ended ? (game.pros ?? null) : null,
+    cons: ended ? (game.cons ?? null) : null,
+    description: game.description ?? [],
+    cover: game.cover ?? null,
+    signature: game.signature ?? null,
+    blocks: game.blocks?.length ? game.blocks : null,
+  };
+}
+
 /** Release year, read in UTC so a New Year's Day release never shifts a year. */
 export const releaseYear = (game: Pick<Game, "releasedOn">) => (game.releasedOn != null ? new Date(game.releasedOn).getUTCFullYear() : null);
 

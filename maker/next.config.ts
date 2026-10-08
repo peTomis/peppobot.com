@@ -1,11 +1,10 @@
+import path from "node:path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  // Let phones on the LAN load dev assets (JS, HMR) so the page hydrates.
-  allowedDevOrigins: ["192.168.1.13"],
-  cacheComponents: true,
-  // Hosts next/image may load and resize.
+  // The dev badge would sit on top of the editor and the preview.
+  devIndicators: false,
+  // Same image hosts as the site's next.config.ts (keep them in sync), so covers and report images load in the preview.
   images: {
     remotePatterns: [
       // Uploaded images: S3 bucket behind CloudFront.
@@ -15,8 +14,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "fastly.picsum.photos" },
     ],
   },
-  partialPrefetching: true,
   turbopack: {
+    // The repository root: the maker imports the site's components from ../src and uses its node_modules.
+    root: path.join(__dirname, ".."),
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],

@@ -1,6 +1,6 @@
 import "server-only";
 import { ObjectId, type WithId } from "mongodb";
-import { GENRES, PLATFORMS, type Game, type GameReport, type LibraryPage, type LibraryQuery, type LibrarySort } from "@/content/games";
+import { GENRES, normalizeGame, PLATFORMS, type Game, type GameFields, type GameReport, type LibraryPage, type LibraryQuery, type LibrarySort } from "@/content/games";
 import { getDatabase } from "@/lib/mongodb";
 
 // Explicit public fields: additional database fields never leak into API responses.
@@ -25,26 +25,10 @@ const projection = {
 // The report body is heavy: only the game page asks for it.
 const reportProjection = { ...projection, pros: 1, cons: 1, signature: 1, blocks: 1 };
 
-// Pros, cons, signature and blocks are only projected for the game page.
-type GameDocument = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks"> & Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks">>;
+type GameDocument = GameFields;
 
 function toGame({ _id, ...game }: WithId<GameDocument>): Game {
-  // Only ended runs have a score, an end date, pros and cons, whatever the document holds.
-  const ended = game.status === "Completed" || game.status === "Dropped";
-  return {
-    ...game,
-    id: game.id || _id.toHexString(),
-    finishedOn: ended ? (game.finishedOn ?? null) : null,
-    progress: game.status === "Not Started" ? null : (game.progress ?? null),
-    scores: ended ? game.scores : null,
-    average: ended ? game.average : null,
-    pros: ended ? (game.pros ?? null) : null,
-    cons: ended ? (game.cons ?? null) : null,
-    description: game.description ?? [],
-    cover: game.cover ?? null,
-    signature: game.signature ?? null,
-    blocks: game.blocks?.length ? game.blocks : null,
-  };
+  return normalizeGame(game, _id.toHexString());
 }
 
 export async function getGames(limit = 50, offset = 0): Promise<Game[]> {
