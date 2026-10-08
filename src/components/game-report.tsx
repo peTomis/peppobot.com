@@ -17,6 +17,9 @@ type Strings = Dictionary["report"];
 type Statuses = Dictionary["library"]["statuses"];
 type GenreAxes = Dictionary["protocol"]["genreAxes"];
 
+/** Spinning hexagon shown where an image is still loading. */
+const loader = <span className="hex h-10 w-11.5 animate-[spin_1.4s_linear_infinite] bg-acc2" />;
+
 const placeholder = "grid place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_12px,#170f24_12px_24px)] p-4 text-center font-mono text-[11px] tracking-[0.12em] text-fg-dim uppercase";
 
 /** Full game report: hero, score matrix, written report with pilot data, and neighbouring reports. */
@@ -63,7 +66,15 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
         <div className="flex flex-wrap items-center gap-14">
           <div className="relative isolate flex-[0_0_min(100%,340px)]">
             <div aria-hidden className={`relative aspect-[3/4] ${placeholder} [clip-path:polygon(0_0,100%_0,100%_calc(100%-48px),calc(100%-48px)_100%,0_100%)]`}>
-              {game.cover ? <Image draggable={false} src={game.cover} alt="" fill priority sizes="340px" className="object-cover" /> : "COVER ART"}
+              {game.cover ? (
+                <>
+                  {/* Behind the image, so it shows until the image has loaded. */}
+                  {loader}
+                  <Image draggable={false} src={game.cover} alt="" fill priority sizes="340px" className="object-cover" />
+                </>
+              ) : (
+                "COVER ART"
+              )}
               <div style={{ background: statusColor }} className="absolute bottom-0 left-0 w-full h-2.5" />
             </div>
             <div
@@ -184,6 +195,52 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
           {report.next && <Neighbour link={report.next} label={t.next} lang={lang} direction="next" />}
         </nav>
       )}
+    </div>
+  );
+}
+
+const SKELETON_ROWS = ["status", "platform", "developer", "playtime", "released"] as const;
+
+/** Stands in for the report while it loads: the hero with a loading cover, and the operator data with empty values. */
+export function GameReportSkeleton({ t }: { t: Strings }) {
+  const bar = "animate-pulse bg-surface";
+  return (
+    <div aria-busy className="flex flex-col gap-24">
+      <span className="sr-only">{t.loading}</span>
+      <div aria-hidden className="flex flex-col gap-10">
+        <span className="self-start bg-surface py-2.5 pr-4.5 pl-6.5 font-display text-[13px] font-bold tracking-[0.14em] text-fg uppercase [clip-path:polygon(12px_0,100%_0,100%_100%,12px_100%,0_50%)]">
+          {t.back}
+        </span>
+        <div className="flex flex-wrap items-center gap-14">
+          <div className="relative isolate flex-[0_0_min(100%,340px)]">
+            <div className={`aspect-[3/4] ${placeholder} [clip-path:polygon(0_0,100%_0,100%_calc(100%-48px),calc(100%-48px)_100%,0_100%)]`}>{loader}</div>
+            <div className="hex absolute -top-7 right-0 h-32.5 w-37.5 animate-pulse bg-surface-hover desk:-right-7" />
+            <DotHex fill="var(--acc)" className="absolute -bottom-8 -left-6 -z-1 h-auto w-27.5" />
+          </div>
+          <div className="flex min-w-0 flex-[1_1_360px] flex-col gap-6">
+            <div className="flex gap-2">
+              {[20, 14, 12, 18].map((width, index) => (
+                <span key={index} style={{ width: `${width * 4}px` }} className={`h-7.5 ${bar}`} />
+              ))}
+            </div>
+            <span className={`h-[clamp(40px,5.4vw,79px)] w-4/5 ${bar}`} />
+            <span className={`h-4 w-48 ${bar}`} />
+            <div className="flex flex-col gap-3">
+              <span className={`h-6 w-full ${bar}`} />
+              <span className={`h-6 w-2/3 ${bar}`} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside aria-hidden className="flex flex-col gap-1 bg-acc2 p-7 text-bg [clip-path:polygon(28px_0,100%_0,100%_100%,0_100%,0_28px)]">
+        <span className="pb-2.5 font-display text-[22px] font-bold tracking-[0.06em] uppercase">{t.pilotData}</span>
+        {SKELETON_ROWS.map((row) => (
+          <div key={row} className="flex items-center justify-between gap-3 bg-bg/12 px-3 py-2.5 font-mono text-xs font-bold">
+            <span className="tracking-[0.12em]">{t.rows[row]}</span>
+            <span className="h-3 w-20 animate-pulse bg-bg/25" />
+          </div>
+        ))}
+      </aside>
     </div>
   );
 }

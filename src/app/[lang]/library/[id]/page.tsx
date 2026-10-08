@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { cache, Suspense } from "react";
-import { GameReport } from "@/components/game-report";
+import { GameReport, GameReportSkeleton } from "@/components/game-report";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localizedAlternates } from "@/i18n/metadata";
 import { pickTranslation } from "@/i18n/translations";
@@ -23,10 +23,12 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/library/[i
   return { title: report.game.title, description, alternates: await localizedAlternates(`/library/${id}`) };
 }
 
-export default function GamePage({ params }: PageProps<"/[lang]/library/[id]">) {
+// The skeleton is prerendered; the report streams in once the game is loaded.
+export default async function GamePage({ params }: PageProps<"/[lang]/library/[id]">) {
+  const { report: t } = await getDictionary();
   return (
     <main className="w-full px-6 pt-10 pb-16 mx-auto flex-1 max-w-310">
-      <Suspense>
+      <Suspense fallback={<GameReportSkeleton t={t} />}>
         <Report params={params} />
       </Suspense>
     </main>
