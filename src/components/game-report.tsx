@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { GENRES, PLATFORMS, releaseYear, STATUS_COLORS, tierOf, type GameReport as Report, type ReportLink } from "@/content/games";
@@ -8,6 +9,7 @@ import { DotHex } from "./dot-hex";
 import { gameHref } from "./nav";
 import { PlatformLogo } from "./platform-logo";
 import { Radar } from "./radar";
+import { ReportBlocks } from "./report-blocks";
 import { SectionHeading } from "./section-heading";
 import { TranslatedText } from "./translated-text";
 
@@ -28,9 +30,9 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
   const tier = game.average != null ? tierOf(game.average) : null;
   const statusColor = STATUS_COLORS[game.status];
   const platform = PLATFORMS[game.platform] ? <PlatformLogo platform={game.platform} /> : null;
-  const year = releaseYear(game);
+  const year = releaseYear(game) ?? t.tba;
   const logged = game.finishedOn != null && new Intl.DateTimeFormat(lang, { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" }).format(game.finishedOn);
-  const hasReport = Boolean(game.pros?.length || game.cons?.length);
+  const hasReport = Boolean(game.blocks || game.pros?.length || game.cons?.length);
 
   const data = [
     { k: t.rows.status, v: statuses[game.status] },
@@ -61,7 +63,7 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
         <div className="flex flex-wrap items-center gap-14">
           <div className="relative isolate flex-[0_0_min(100%,340px)]">
             <div aria-hidden className={`relative aspect-[3/4] ${placeholder} [clip-path:polygon(0_0,100%_0,100%_calc(100%-48px),calc(100%-48px)_100%,0_100%)]`}>
-              COVER ART
+              {game.cover ? <Image src={game.cover} alt="" fill priority sizes="340px" className="object-cover" /> : "COVER ART"}
               <div style={{ background: statusColor }} className="absolute bottom-0 left-0 w-full h-2.5" />
             </div>
             <div
@@ -138,10 +140,13 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
         {hasReport && (
           <article aria-labelledby="full-report" className="flex min-w-0 flex-1 flex-col gap-8">
             <SectionHeading id="full-report" index={nextIndex()} first={t.fullReport[0]} second={t.fullReport[1]} accent="acc" small />
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-3 pt-2">
-              {game.pros?.length ? <Verdicts title={t.pros} items={game.pros} lang={lang} className="bg-acc" /> : null}
-              {game.cons?.length ? <Verdicts title={t.cons} items={game.cons} lang={lang} className="bg-acc3" /> : null}
-            </div>
+            {game.blocks && <ReportBlocks blocks={game.blocks} lang={lang} />}
+            {Boolean(game.pros?.length || game.cons?.length) && (
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-3 pt-2">
+                {game.pros?.length ? <Verdicts title={t.pros} items={game.pros} lang={lang} className="bg-acc" /> : null}
+                {game.cons?.length ? <Verdicts title={t.cons} items={game.cons} lang={lang} className="bg-acc3" /> : null}
+              </div>
+            )}
           </article>
         )}
         <aside className={`flex flex-col gap-1 bg-acc2 p-7 text-bg [clip-path:polygon(28px_0,100%_0,100%_100%,0_100%,0_28px)] ${hasReport ? "desk:sticky desk:top-24 desk:w-80 desk:shrink-0" : "desk:w-full"}`}>

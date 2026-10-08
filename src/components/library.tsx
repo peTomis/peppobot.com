@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
 import { cache, type CSSProperties, type ReactNode } from "react";
@@ -7,6 +8,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { getLibraryPage } from "@/lib/games";
 import { LibrarySearch, LibrarySearchFallback } from "./library-search";
 import { gameHref } from "./nav";
+import { PlatformLogo } from "./platform-logo";
 
 type Strings = Dictionary["library"];
 type View = "grid" | "list";
@@ -203,7 +205,7 @@ function StatusTag({ status, t, className = "" }: { status: GameStatus; t: Strin
 }
 
 function GridCard({ game, lang, score, t }: { game: Game; lang: Locale; score: Intl.NumberFormat; t: Strings }) {
-  const meta = [PLATFORMS[game.platform]?.name, GENRES[game.genre]?.name, releaseYear(game)].filter(Boolean).join(" · ");
+  const meta = [GENRES[game.genre]?.name, releaseYear(game) ?? t.tba].filter(Boolean).join(" · ");
   return (
     <Link href={gameHref(lang, game.id)} className="flex flex-col gap-4 text-fg hover:text-fg motion-safe:transition-transform hover:-translate-y-1">
       <div className="relative">
@@ -211,7 +213,7 @@ function GridCard({ game, lang, score, t }: { game: Game; lang: Locale; score: I
           aria-hidden
           className="relative grid aspect-[3/4] place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_10px,#170f24_10px_20px)] p-3 text-center font-mono text-[10px] tracking-[0.1em] text-fg-faint [clip-path:polygon(0_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%)]"
         >
-          COVER ART
+          {game.cover ? <Image src={game.cover} alt="" fill sizes="(min-width: 1024px) 240px, 50vw" className="object-cover" /> : "COVER ART"}
           <div style={{ background: STATUS_COLORS[game.status] }} className="absolute bottom-0 left-0 w-full h-2" />
         </div>
         <ScoreHex game={game} score={score} className="absolute -top-3 -right-2.5 h-13.5 w-15.5 text-[17px]" />
@@ -219,7 +221,15 @@ function GridCard({ game, lang, score, t }: { game: Game; lang: Locale; score: I
       </div>
       <div className="flex flex-col gap-1.5">
         <h2 className="font-display text-xl leading-[1.05] font-bold uppercase">{game.title}</h2>
-        <div className="font-mono text-[11px] tracking-widest text-fg-dim uppercase">{meta}</div>
+        <div className="flex flex-wrap items-center gap-x-2 font-mono text-[11px] tracking-widest text-fg-dim uppercase">
+          {PLATFORMS[game.platform] && (
+            <>
+              <PlatformLogo platform={game.platform} className="h-3" />
+              {meta && <span aria-hidden>·</span>}
+            </>
+          )}
+          {meta}
+        </div>
       </div>
     </Link>
   );
@@ -248,7 +258,11 @@ function ListTable({ games, lang, offset, score, t }: { games: Game[]; lang: Loc
                 </div>
                 <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px] font-bold tracking-widest uppercase">
                   <StatusTag status={game.status} t={t} className="px-2! py-1!" />
-                  {PLATFORMS[game.platform] && <span className="px-2 py-1 bg-bg text-fg-dim">{PLATFORMS[game.platform].name}</span>}
+                  {PLATFORMS[game.platform] && (
+                    <span className="flex items-center self-stretch px-2 py-1 bg-bg text-fg-dim">
+                      <PlatformLogo platform={game.platform} className="h-3" />
+                    </span>
+                  )}
                   <span className="px-2 py-1 bg-bg text-fg-dim">{game.hours}h</span>
                 </div>
                 <div className="text-xs text-fg-dim">{GENRES[game.genre]?.name}</div>
@@ -288,8 +302,8 @@ function ListTable({ games, lang, offset, score, t }: { games: Game[]; lang: Loc
                 </Link>
                 <div className="text-[13px] text-fg-dim">{game.dev}</div>
               </div>
-              <span role="cell" className="font-mono text-xs text-fg-muted">
-                {PLATFORMS[game.platform]?.name}
+              <span role="cell" className="flex items-center font-mono text-xs text-fg-muted">
+                {PLATFORMS[game.platform] && <PlatformLogo platform={game.platform} />}
               </span>
               <span role="cell" className="font-mono text-xs text-fg-muted">
                 {GENRES[game.genre]?.name}

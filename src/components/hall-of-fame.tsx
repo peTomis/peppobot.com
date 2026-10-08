@@ -5,7 +5,7 @@ import { GENRES, PLATFORMS, releaseYear } from "@/content/games";
 import type { Locale } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { getNextInQueue, getTopRated } from "@/lib/games";
-import { DotHex } from "./dot-hex";
+import { DotHex, DotHexImage } from "./dot-hex";
 import { gameHref } from "./nav";
 import { PlatformLogo } from "./platform-logo";
 import { SectionHeading } from "./section-heading";
@@ -30,6 +30,9 @@ export async function HallOfFame() {
   );
 }
 
+// Bigger dots than the default, so the cover reads through the mask.
+const DOT_RADIUS = 2.8;
+
 async function NextInQueue({ lang, label, tba }: { lang: Locale; label: string; tba: string }) {
   // MongoDB's driver reads the clock; defer its work until a request arrives.
   await connection();
@@ -38,7 +41,11 @@ async function NextInQueue({ lang, label, tba }: { lang: Locale; label: string; 
 
   return (
     <aside className="relative flex min-h-105 flex-col justify-between gap-10 overflow-hidden bg-acc2 p-10 text-bg [clip-path:polygon(40px_0,100%_0,100%_calc(100%-40px),calc(100%-40px)_100%,0_100%,0_40px)]">
-      <DotHex fill="var(--bg)" className="absolute -top-7.5 -right-7.5 h-auto w-[46%] opacity-35" />
+      {next.cover ? (
+        <DotHexImage src={next.cover} radius={DOT_RADIUS} sizes="(min-width: 1024px) 280px, 46vw" className="absolute -top-7.5 -right-7.5 w-[46%]" />
+      ) : (
+        <DotHex fill="var(--bg)" radius={DOT_RADIUS} className="absolute -top-7.5 -right-7.5 h-auto w-[46%] opacity-35" />
+      )}
       <div className="@container relative">
         {/*
           Keeps the text clear of the dot hexagon: a float over the part of the hexagon inside

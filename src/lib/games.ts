@@ -17,15 +17,16 @@ const projection = {
   finishedOn: 1,
   progress: 1,
   description: 1,
+  cover: 1,
   scores: 1,
   average: 1,
 };
 
 // The report body is heavy: only the game page asks for it.
-const reportProjection = { ...projection, pros: 1, cons: 1, signature: 1 };
+const reportProjection = { ...projection, pros: 1, cons: 1, signature: 1, blocks: 1 };
 
-// Pros, cons and signature are only projected for the game page.
-type GameDocument = Omit<Game, "id" | "pros" | "cons" | "signature"> & Partial<Pick<Game, "id" | "pros" | "cons" | "signature">>;
+// Pros, cons, signature and blocks are only projected for the game page.
+type GameDocument = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks"> & Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks">>;
 
 function toGame({ _id, ...game }: WithId<GameDocument>): Game {
   // Only ended runs have a score, an end date, pros and cons, whatever the document holds.
@@ -40,7 +41,9 @@ function toGame({ _id, ...game }: WithId<GameDocument>): Game {
     pros: ended ? (game.pros ?? null) : null,
     cons: ended ? (game.cons ?? null) : null,
     description: game.description ?? [],
+    cover: game.cover ?? null,
     signature: game.signature ?? null,
+    blocks: game.blocks?.length ? game.blocks : null,
   };
 }
 

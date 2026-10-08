@@ -51,6 +51,9 @@ export const GENRES = {
 
 export type Genre = keyof typeof GENRES;
 
+/** Genres in alphabetical order, for lists that show every genre. */
+export const GENRES_BY_NAME = Object.values(GENRES).sort((a, b) => a.name.localeCompare(b.name));
+
 /** 0–10 scores, in the order of `AXES`. */
 export type Scores = [number, number, number, number, number, number];
 
@@ -68,6 +71,20 @@ export const TIERS = [
 
 export const tierOf = (score: number) => TIERS.find((tier) => score >= tier.min) ?? TIERS[TIERS.length - 1];
 
+/** An image in a report; without `src` a striped placeholder shows the `alt` text. */
+export type ReportImage = { src?: string; alt: Translated };
+
+/** One piece of a written report, rendered in order. Blocks without `accent` take the next accent in turn. */
+export type ReportBlock =
+  | { type: "heading"; text: Translated; accent?: Accent }
+  | { type: "paragraph"; text: Translated }
+  | { type: "image"; image: ReportImage; caption?: Translated; accent?: Accent }
+  | { type: "pair"; images: [ReportImage, ReportImage]; caption?: Translated }
+  | { type: "quote"; text: Translated; accent?: Accent }
+  | { type: "facts"; facts: { label: Translated; value: string }[] };
+
+export type Accent = "acc" | "acc2" | "acc3";
+
 export type Game = {
   id: string;
   title: string;
@@ -82,12 +99,16 @@ export type Game = {
   finishedOn: number | null;
   /** Completion percentage; null until the run has started. */
   progress: number | null;
+  /** Cover art URL; null shows the striped placeholder. */
+  cover: string | null;
   /** Peppobot's take on the game, shown on cards and as the report's headline. */
   description: Translated;
   /** Only for finished runs (Completed or Dropped), null otherwise; only loaded on the game page. */
   pros: Translated[] | null;
   /** Only for finished runs (Completed or Dropped), null otherwise; only loaded on the game page. */
   cons: Translated[] | null;
+  /** The written report, also while playing (a provisional report); null when missing. Only loaded on the game page. */
+  blocks: ReportBlock[] | null;
   /** What only this game does, scored on the Signature axis. Expected on finished runs (Completed or Dropped), optional otherwise; null when missing. Only loaded on the game page. */
   signature: Translated | null;
   /** Only for finished runs (Completed or Dropped); null while playing. */

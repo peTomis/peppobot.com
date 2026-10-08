@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { SectionHeading } from "@/components/section-heading";
-import { GENRES, TIERS } from "@/content/games";
+import { GENRES_BY_NAME, TIERS } from "@/content/games";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localizedAlternates } from "@/i18n/metadata";
 
@@ -78,7 +78,7 @@ export default async function ProtocolPage() {
             </tr>
           </thead>
           <tbody className="contents">
-            {Object.values(GENRES).map((genre) => (
+            {GENRES_BY_NAME.map((genre) => (
               <tr key={genre.id} className="grid grid-cols-3 items-center gap-3 bg-surface px-4.5 py-3.5 [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)]">
                 <th scope="row" className="text-left font-display text-[17px] leading-[1.1] font-bold text-fg uppercase">
                   {genre.name}

@@ -1,6 +1,7 @@
 import { connection } from "next/server";
 import { Suspense } from "react";
 import { GENRES, PLATFORMS, type Game } from "@/content/games";
+import Image from "next/image";
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
@@ -56,8 +57,8 @@ function NowPlayingCard({ game, lang, progressLabel, bg }: { game: Game; lang: L
       href={gameHref(lang, game.id)}
       className={`flex h-full gap-6 p-6 text-bg hover:text-bg hover:brightness-108 [clip-path:polygon(0_0,calc(100%-40px)_0,100%_40px,100%_100%,0_100%)] ${bg}`}
     >
-      <div aria-hidden className="grid w-32 shrink-0 aspect-[3/4] place-items-center self-start bg-bg p-1.5 text-center font-mono text-[9px] tracking-[0.08em] text-fg-dim">
-        COVER ART
+      <div aria-hidden className="relative grid w-32 shrink-0 aspect-[3/4] place-items-center self-start bg-bg p-1.5 text-center font-mono text-[9px] tracking-[0.08em] text-fg-dim">
+        {game.cover ? <Image src={game.cover} alt="" fill sizes="128px" className="object-cover" /> : "COVER ART"}
       </div>
       <div className="flex flex-col flex-1 min-w-0 gap-2.5">
         <div className="font-mono text-[11px] font-bold tracking-[0.14em] uppercase">

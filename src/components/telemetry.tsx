@@ -1,6 +1,6 @@
 import { connection } from "next/server";
 import type { CSSProperties } from "react";
-import { GENRES, TIERS } from "@/content/games";
+import { GENRES, GENRES_BY_NAME, TIERS } from "@/content/games";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { getData } from "@/lib/data";
@@ -53,6 +53,9 @@ export async function TelemetrySections({ lang, t, axisNames }: { lang: Locale; 
   const plural = new Intl.PluralRules(lang);
   const maxTier = Math.max(0, ...data.tiers);
   const maxHours = Math.max(0, ...data.platformHours.map((row) => row.hours));
+  // Every genre shows, by name; those without completed games have no score.
+  const scored = new Map(data.genres.map((row) => [row.genre, row]));
+  const genres = GENRES_BY_NAME.map((genre) => scored.get(genre.id) ?? { genre: genre.id, count: 0, avgScore: null });
 
   return (
     <>
@@ -115,10 +118,10 @@ export async function TelemetrySections({ lang, t, axisNames }: { lang: Locale; 
       <section aria-labelledby="genre-scan" className="flex flex-col gap-7">
         <SectionHeading id="genre-scan" index="04" first={t.genres[0]} second={t.genres[1]} accent="acc" small />
         <ul className="grid grid-cols-2 gap-x-4 gap-y-7 desk:grid-cols-[repeat(auto-fill,minmax(min(100%,180px),1fr))]">
-          {data.genres.map((genre, index) => (
+          {genres.map((genre, index) => (
             <li key={genre.genre} className="flex flex-col items-center gap-3 text-center">
               <div style={{ background: ACCENTS[index % 2] }} className="flex flex-col items-center justify-center font-mono font-bold hex h-26 w-30 text-bg">
-                <span className="text-[30px] leading-none">{one.format(genre.avgScore)}</span>
+                <span className="text-[30px] leading-none">{genre.avgScore != null ? one.format(genre.avgScore) : "—"}</span>
                 <span className="text-[10px] tracking-[0.14em]">
                   {number.format(genre.count)} {t.games[plural.select(genre.count) === "one" ? "one" : "other"]}
                 </span>

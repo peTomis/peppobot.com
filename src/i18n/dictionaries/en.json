@@ -50,6 +50,7 @@
     "tba": "TBA"
   },
   "library": {
+    "tba": "TBA",
     "archive": "PB-0001 // THE ARCHIVE",
     "every": "Every",
     "game": "game",
@@ -88,6 +89,7 @@
     "noMatches": "No matches in memory bank"
   },
   "report": {
+    "tba": "TBA",
     "back": "Library · Report",
     "by": "by",
     "outOf": "/ 10",

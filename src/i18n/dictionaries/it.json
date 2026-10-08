@@ -50,6 +50,7 @@
     "tba": "DA ANNUNCIARE"
   },
   "library": {
+    "tba": "DA ANNUNCIARE",
     "archive": "PB-0001 // L'ARCHIVIO",
     "every": "Ogni",
     "game": "gioco",
@@ -88,6 +89,7 @@
     "noMatches": "Nessun risultato nella memoria"
   },
   "report": {
+    "tba": "DA ANNUNCIARE",
     "back": "Libreria · Report",
     "by": "di",
     "outOf": "/ 10",
