@@ -23,7 +23,7 @@ const projection = {
 };
 
 // The report body is heavy: only the game page asks for it.
-const reportProjection = { ...projection, pros: 1, cons: 1, signature: 1, blocks: 1 };
+const reportProjection = { ...projection, pros: 1, cons: 1, signature: 1, blocks: 1, alsoPlayedOn: 1 };
 
 type GameDocument = GameFields;
 

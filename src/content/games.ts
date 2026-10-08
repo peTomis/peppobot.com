@@ -47,6 +47,7 @@ export const GENRES = {
   2: { id: 2, name: "JRPG" },
   3: { id: 3, name: "ARPG" },
   4: { id: 4, name: "MMORPG" },
+  5: { id: 5, name: "Sandbox" },
 } as const;
 
 export type Genre = keyof typeof GENRES;
@@ -90,6 +91,8 @@ export type Game = {
   title: string;
   dev: string;
   platform: Platform;
+  /** Other platforms the run also touched, shown on the game page after the main one; never includes `platform`. Only loaded on the game page. */
+  alsoPlayedOn: Platform[];
   genre: Genre;
   /** Release date, as a Unix timestamp in milliseconds; null while unannounced. */
   releasedOn: number | null;
@@ -118,7 +121,8 @@ export type Game = {
 };
 
 /** A game as stored: optional fields may be missing, and fields that do not apply to the status may still be set. */
-export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover"> & Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover">>;
+export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover" | "alsoPlayedOn"> &
+  Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover">> & { alsoPlayedOn?: Platform[] | null };
 
 /** The game as pages show it; `fallbackId` is used when the game has no `id` of its own. */
 export function normalizeGame(game: GameFields, fallbackId: string): Game {
@@ -135,6 +139,7 @@ export function normalizeGame(game: GameFields, fallbackId: string): Game {
     cons: ended ? (game.cons ?? null) : null,
     description: game.description ?? [],
     cover: game.cover ?? null,
+    alsoPlayedOn: (game.alsoPlayedOn ?? []).filter((platform) => platform !== game.platform),
     signature: game.signature ?? null,
     blocks: game.blocks?.length ? game.blocks : null,
   };

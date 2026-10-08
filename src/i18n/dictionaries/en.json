@@ -99,6 +99,7 @@
     "fullReport": ["Full", "report"],
     "pros": "+ Check Passed",
     "cons": "− Errors detected",
+    "alsoPlayedOn": "Also on",
     "pilotData": "Pilot data",
     "rows": {
       "status": "STATUS",
@@ -199,7 +200,8 @@
       "1": ["Narrative", "Progression"],
       "2": ["Characters", "Combat system"],
       "3": ["Build variety", "Combat feel"],
-      "4": ["Endgame", "World"]
+      "4": ["Endgame", "World"],
+      "5": ["Creativity", "Freedom"]
     },
     "tiers": ["Rating", "tiers"],
     "tierNotes": {

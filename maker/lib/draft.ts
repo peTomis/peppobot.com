@@ -10,6 +10,7 @@ export type Draft = {
   title: string;
   dev: string;
   platform: Platform;
+  alsoPlayedOn: Platform[];
   genre: Genre;
   status: GameStatus;
   hours: number;
@@ -36,6 +37,7 @@ export function emptyDraft(): Draft {
     title: "",
     dev: "",
     platform: 1,
+    alsoPlayedOn: [],
     genre: 1,
     status: "Not Started",
     hours: 0,
@@ -59,6 +61,7 @@ export function toDraft(game: StoredGame): Draft {
     title: game.title ?? "",
     dev: game.dev ?? "",
     platform: game.platform ?? empty.platform,
+    alsoPlayedOn: game.alsoPlayedOn ?? [],
     genre: game.genre ?? empty.genre,
     status: game.status ?? empty.status,
     hours: game.hours ?? 0,
@@ -91,12 +94,14 @@ export function toFields(draft: Draft): Omit<GameFields, "id"> & { id: string | 
   const pros = draft.pros.map(clean).filter((text) => text.length);
   const cons = draft.cons.map(clean).filter((text) => text.length);
   const signature = clean(draft.signature);
+  const alsoPlayedOn = draft.alsoPlayedOn.filter((platform) => platform !== draft.platform);
   const scored = draft.scores.some((score) => score != null);
   return {
     id: draft.id.trim() || undefined,
     title: draft.title.trim(),
     dev: draft.dev.trim(),
     platform: draft.platform,
+    alsoPlayedOn: alsoPlayedOn.length ? alsoPlayedOn : null,
     genre: draft.genre,
     status: draft.status,
     hours: draft.hours,

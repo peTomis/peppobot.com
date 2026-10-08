@@ -79,6 +79,14 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
           <div className="flex min-w-0 flex-[1_1_360px] flex-col gap-6">
             <div className="flex flex-wrap gap-2 font-mono text-[11px] font-bold tracking-[0.12em] uppercase">
               {platform && <span className="flex items-center bg-surface px-3 py-1.75 text-fg-muted">{platform}</span>}
+              {game.alsoPlayedOn.length > 0 && (
+                <span className="flex items-center gap-2.5 bg-surface px-3 py-1.75 text-fg-dim">
+                  {t.alsoPlayedOn}
+                  {game.alsoPlayedOn.map((other) => (
+                    <PlatformLogo key={other} platform={other} />
+                  ))}
+                </span>
+              )}
               {[GENRES[game.genre]?.name, year].filter(Boolean).map((chip) => (
                 <span key={String(chip)} className="bg-surface px-3 py-1.75 text-fg-muted">
                   {chip}

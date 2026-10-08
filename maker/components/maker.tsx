@@ -99,6 +99,25 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
             <Field label="Genre">
               <Select value={draft.genre} options={GENRE_OPTIONS} onChange={(value) => set("genre", value)} />
             </Field>
+            <div className="flex flex-col gap-1.5 @lg:col-span-2">
+              <span className={labelClass}>Also played on</span>
+              <div className="flex flex-wrap gap-1.5">
+                {PLATFORM_OPTIONS.filter((option) => option.value !== draft.platform).map((option) => {
+                  const on = draft.alsoPlayedOn.includes(option.value);
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => set("alsoPlayedOn", on ? draft.alsoPlayedOn.filter((platform) => platform !== option.value) : [...draft.alsoPlayedOn, option.value])}
+                      className={`${buttonClass} ${on ? "border-acc! bg-acc! text-bg!" : ""}`}
+                    >
+                      {option.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
             <Field label="Status">
               <Select value={draft.status} options={STATUS_OPTIONS} onChange={(value) => set("status", value)} />
             </Field>

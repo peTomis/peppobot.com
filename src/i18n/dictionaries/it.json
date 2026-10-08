@@ -99,6 +99,7 @@
     "fullReport": ["Report", "completo"],
     "pros": "+ Test superati",
     "cons": "− Errori rilevati",
+    "alsoPlayedOn": "Anche su",
     "pilotData": "Dati pilota",
     "rows": {
       "status": "STATO",
@@ -199,7 +200,8 @@
       "1": ["Narrativa", "Progressione"],
       "2": ["Personaggi", "Sistema di combattimento"],
       "3": ["Varietà delle build", "Feeling del combattimento"],
-      "4": ["Endgame", "Mondo di gioco"]
+      "4": ["Endgame", "Mondo di gioco"],
+      "5": ["Creatività", "Libertà"]
     },
     "tiers": ["Fasce", "di voto"],
     "tierNotes": {
