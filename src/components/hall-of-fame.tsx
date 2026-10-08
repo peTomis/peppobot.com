@@ -1,15 +1,13 @@
 import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { GENRES, PLATFORMS, releaseYear } from "@/content/games";
+import { GENRES, PLATFORMS } from "@/content/games";
 import type { Locale } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { getNextInQueue, getTopRated } from "@/lib/games";
-import { DotHex, DotHexImage } from "./dot-hex";
+import { NextInQueueCard } from "./game-cards";
 import { gameHref } from "./nav";
-import { PlatformLogo } from "./platform-logo";
 import { SectionHeading } from "./section-heading";
-import { TranslatedText } from "./translated-text";
 
 /** Home section 03: top-scored games, beside the next game not started yet. */
 export async function HallOfFame() {
@@ -30,42 +28,13 @@ export async function HallOfFame() {
   );
 }
 
-// Bigger dots than the default, so the cover reads through the mask.
-const DOT_RADIUS = 2.8;
-
 async function NextInQueue({ lang, label, tba }: { lang: Locale; label: string; tba: string }) {
   // MongoDB's driver reads the clock; defer its work until a request arrives.
   await connection();
   const next = await getNextInQueue();
   if (!next) return null;
 
-  return (
-    <aside className="relative flex min-h-105 flex-col justify-between gap-10 overflow-hidden bg-acc2 p-10 text-bg [clip-path:polygon(40px_0,100%_0,100%_calc(100%-40px),calc(100%-40px)_100%,0_100%,0_40px)]">
-      {next.cover ? (
-        <DotHexImage src={next.cover} radius={DOT_RADIUS} sizes="(min-width: 1024px) 280px, 46vw" className="absolute -top-7.5 -right-7.5 w-[46%]" />
-      ) : (
-        <DotHex fill="var(--bg)" radius={DOT_RADIUS} className="absolute -top-7.5 -right-7.5 h-auto w-[46%] opacity-35" />
-      )}
-      <div className="@container relative">
-        {/*
-          Keeps the text clear of the dot hexagon: a float over the part of the hexagon inside
-          this box (46% of the card wide, shifted 30px out, p-10 padding), plus a small gap.
-        */}
-        <div aria-hidden className="float-right h-[calc(53.12cqw-19.5px)] w-[calc(46cqw-17px)]" />
-        <div className="font-mono text-xs font-bold tracking-[0.18em]">{label}</div>
-        <div className="mt-5 font-display text-[clamp(34px,4vw,48px)] leading-[0.95] font-bold uppercase">{next.title}</div>
-        <TranslatedText text={next.description} lang={lang} className="mt-5 max-w-105 text-[17px] leading-normal font-medium" />
-      </div>
-      <div className="relative flex flex-wrap gap-2 font-mono text-[11px] font-bold tracking-[0.12em] uppercase">
-        {PLATFORMS[next.platform] && (
-          <span className="flex items-center bg-bg px-2.5 py-1.5 text-acc2">
-            <PlatformLogo platform={next.platform} />
-          </span>
-        )}
-        <span className="bg-bg px-2.5 py-1.5 text-acc2">{releaseYear(next) ?? tba}</span>
-      </div>
-    </aside>
-  );
+  return <NextInQueueCard game={next} lang={lang} label={label} tba={tba} />;
 }
 
 async function TopRated({ lang }: { lang: Locale }) {

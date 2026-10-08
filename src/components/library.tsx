@@ -1,11 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
 import { cache, type CSSProperties, type ReactNode } from "react";
-import { GENRES, LIBRARY_SORTS, PLATFORMS, releaseYear, STATUS_COLORS, STATUSES, tierOf, type Game, type GameStatus, type LibraryQuery, type LibrarySort } from "@/content/games";
+import { GENRES, LIBRARY_SORTS, PLATFORMS, STATUS_COLORS, STATUSES, type Game, type GameStatus, type LibraryQuery, type LibrarySort } from "@/content/games";
 import { localizePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { getLibraryPage } from "@/lib/games";
+import { GridCard, ScoreHex, StatusTag } from "./game-cards";
 import { LibrarySearch, LibrarySearchFallback } from "./library-search";
 import { gameHref } from "./nav";
 import { PlatformLogo } from "./platform-logo";
@@ -181,57 +181,6 @@ export async function LibraryResults({ searchParams, lang, t }: { searchParams: 
       )}
       {result.pages > 1 && <Pagination state={{ ...state, page: result.page }} pages={result.pages} lang={lang} t={t} />}
     </>
-  );
-}
-
-function ScoreHex({ game, score, className }: { game: Game; score: Intl.NumberFormat; className: string }) {
-  const { average } = game;
-  if (average == null) {
-    return <div className={`hex grid place-items-center bg-surface-hover font-mono font-bold text-fg-dim ${className}`}>—</div>;
-  }
-  return (
-    <div style={{ "--c": tierOf(average).color } as CSSProperties} className={`hex grid place-items-center bg-(--c) font-mono font-bold text-bg ${className}`}>
-      {score.format(average)}
-    </div>
-  );
-}
-
-function StatusTag({ status, t, className = "" }: { status: GameStatus; t: Strings; className?: string }) {
-  return (
-    <span style={{ "--c": STATUS_COLORS[status] } as CSSProperties} className={`bg-(--c) px-2.5 py-1.25 font-mono text-[10px] font-bold tracking-[0.14em] text-bg uppercase ${className}`}>
-      {t.statuses[status]}
-    </span>
-  );
-}
-
-function GridCard({ game, lang, score, t }: { game: Game; lang: Locale; score: Intl.NumberFormat; t: Strings }) {
-  const meta = [GENRES[game.genre]?.name, releaseYear(game) ?? t.tba].filter(Boolean).join(" · ");
-  return (
-    <Link href={gameHref(lang, game.id)} className="flex flex-col gap-4 text-fg hover:text-fg motion-safe:transition-transform hover:-translate-y-1">
-      <div className="relative">
-        <div
-          aria-hidden
-          className="relative grid aspect-[3/4] place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_10px,#170f24_10px_20px)] p-3 text-center font-mono text-[10px] tracking-[0.1em] text-fg-faint [clip-path:polygon(0_0,100%_0,100%_calc(100%-32px),calc(100%-32px)_100%,0_100%)]"
-        >
-          {game.cover ? <Image draggable={false} src={game.cover} alt="" fill sizes="(min-width: 1024px) 240px, 50vw" className="object-cover" /> : "COVER ART"}
-          <div style={{ background: STATUS_COLORS[game.status] }} className="absolute bottom-0 left-0 w-full h-2" />
-        </div>
-        <ScoreHex game={game} score={score} className="absolute -top-3 -right-2.5 h-13.5 w-15.5 text-[17px]" />
-        <StatusTag status={game.status} t={t} className="absolute left-0 top-3.5" />
-      </div>
-      <div className="flex flex-col gap-1.5">
-        <h2 className="font-display text-xl leading-[1.05] font-bold uppercase">{game.title}</h2>
-        <div className="flex flex-wrap items-center gap-x-2 font-mono text-[11px] tracking-widest text-fg-dim uppercase">
-          {PLATFORMS[game.platform] && (
-            <>
-              <PlatformLogo platform={game.platform} className="h-3" />
-              {meta && <span aria-hidden>·</span>}
-            </>
-          )}
-          {meta}
-        </div>
-      </div>
-    </Link>
   );
 }
 

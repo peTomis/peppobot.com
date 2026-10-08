@@ -8,7 +8,7 @@ import type { Locale } from "@/i18n/config";
 import { saveGame } from "../app/actions";
 import { averageOf, fromDateInput, previewGame, toDateInput, type Draft } from "../lib/draft";
 import type { GameEntry } from "../lib/games";
-import type { PreviewMessage } from "../lib/preview";
+import type { PreviewMessage, PreviewView } from "../lib/preview";
 import { BlocksEditor } from "./blocks-editor";
 import { buttonClass, Combobox, Field, inputClass, labelClass, NumberInput, Section, Select, TextInput, TranslatedInput, TranslatedList } from "./fields";
 import { PreviewFrame, type Viewport } from "./preview-frame";
@@ -27,6 +27,9 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
   const [saved, setSaved] = useState(initial);
   const [lang, setLang] = useState<Locale>("en");
   const [viewport, setViewport] = useState<Viewport>("desktop");
+  const [view, setView] = useState<PreviewView>("details");
+  // A local image to try in the cards before uploading it; it never reaches the draft.
+  const [localImage, setLocalImage] = useState<{ url: string; name: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [saving, startSaving] = useTransition();
   const dirty = draft !== saved;
@@ -41,12 +44,19 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
 
+  // Free the previous local image when it is replaced or the editor closes.
+  useEffect(() => {
+    if (!localImage) return;
+    return () => URL.revokeObjectURL(localImage.url);
+  }, [localImage]);
+
   const message = useMemo<PreviewMessage>(() => {
-    const game = previewGame(draft, id ?? "new");
+    const draftGame = previewGame(draft, id ?? "new");
+    const game = view === "images" && localImage ? { ...draftGame, cover: localImage.url } : draftGame;
     // Links are disabled in the preview, so the database id stands in for the main game's URL id.
     const main = game.mainGame ? games.find((entry) => entry._id === game.mainGame) : null;
-    return { type: "maker:game", game, number, mainGame: main ? { id: main._id, title: main.title } : null, lang };
-  }, [draft, id, number, lang, games]);
+    return { type: "maker:game", view, game, number, mainGame: main ? { id: main._id, title: main.title } : null, lang };
+  }, [draft, id, number, lang, games, view, localImage]);
 
   const open = (target: string) => {
     if (dirty && !window.confirm("Discard unsaved changes?")) return;
@@ -190,7 +200,12 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
 
       <div className="flex flex-col min-h-0 bg-bg">
         <div className="flex items-center gap-2 px-5 py-3 border-b border-line bg-surface">
-          <span className={`${labelClass} flex-1`}>Preview</span>
+          {(["details", "images"] as const).map((value) => (
+            <button key={value} type="button" onClick={() => setView(value)} className={`${buttonClass} ${view === value ? "border-acc! text-fg!" : ""}`}>
+              {value}
+            </button>
+          ))}
+          <span className="flex-1" />
           {(["en", "it"] as const).map((value) => (
             <button key={value} type="button" onClick={() => setLang(value)} className={`${buttonClass} ${lang === value ? "border-acc! text-fg!" : ""}`}>
               {value}
@@ -202,6 +217,29 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
             </button>
           ))}
         </div>
+        {view === "images" && (
+          <div className="flex items-center gap-2 px-5 py-2 border-b border-line bg-surface">
+            <label className={`${buttonClass} cursor-pointer`}>
+              Load image…
+              <input
+                type="file"
+                accept="image/*"
+                className="sr-only"
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+                  if (file) setLocalImage({ url: URL.createObjectURL(file), name: file.name });
+                  event.target.value = "";
+                }}
+              />
+            </label>
+            <span className={`${labelClass} min-w-0 flex-1 truncate`}>{localImage ? `Local: ${localImage.name} (not uploaded)` : draft.cover ? "Showing the cover URL" : "No cover: load an image to try it"}</span>
+            {localImage && (
+              <button type="button" className={buttonClass} onClick={() => setLocalImage(null)}>
+                Clear
+              </button>
+            )}
+          </div>
+        )}
         <PreviewFrame message={message} viewport={viewport} />
       </div>
     </div>
