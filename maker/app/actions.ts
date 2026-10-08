@@ -10,13 +10,18 @@ export type SaveResult = { ok: true; id: string; warning?: string } | { ok: fals
 
 /** Creates the game (`id` null) or updates it. Fields not edited by the maker are left as they are. */
 export async function saveGame(id: string | null, draft: Draft): Promise<SaveResult> {
-  const { id: slug, ...fields } = toFields(draft);
-  if (!fields.title) return { ok: false, error: "The title is required." };
+  const { id: slug, mainGame: mainGameId, ...rest } = toFields(draft);
+  if (!rest.title) return { ok: false, error: "The title is required." };
   if (id && !ObjectId.isValid(id)) return { ok: false, error: "Unknown game." };
+  if (rest.dlc && !mainGameId) return { ok: false, error: "A DLC needs its main game." };
+  if (mainGameId && (!ObjectId.isValid(mainGameId) || mainGameId === id)) return { ok: false, error: "Invalid main game." };
 
   const db = await getDatabase();
   const collection = db.collection("games");
   const _id = id ? new ObjectId(id) : null;
+  const mainGame = mainGameId ? new ObjectId(mainGameId) : null;
+  if (mainGame && !(await collection.findOne({ _id: mainGame }, { projection: { _id: 1 } }))) return { ok: false, error: "The main game no longer exists." };
+  const fields = { ...rest, mainGame };
 
   // The slug is the game's URL: it must not be another game's.
   if (slug) {

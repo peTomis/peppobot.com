@@ -100,6 +100,14 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
             <div className="font-display text-base font-semibold tracking-widest text-fg-dim uppercase">
               {t.by} {game.dev}
             </div>
+            {report.mainGame && (
+              <div className="-mt-3 font-display text-base font-semibold tracking-widest text-fg-dim uppercase">
+                {t.dlcOf}{" "}
+                <Link href={gameHref(lang, report.mainGame.id)} className="text-acc2 hover:text-acc">
+                  {report.mainGame.title}
+                </Link>
+              </div>
+            )}
             <TranslatedText text={game.description} lang={lang} quoted className="font-display text-[clamp(22px,2.4vw,30px)] leading-[1.3] font-medium text-pretty text-fg" />
             <div className="flex flex-wrap items-center gap-4">
               {tier && (

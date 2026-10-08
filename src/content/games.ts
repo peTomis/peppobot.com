@@ -1,3 +1,4 @@
+import type { ObjectId } from "mongodb";
 import type { Translated } from "@/i18n/translations";
 
 export const STATUSES = ["Playing", "Completed", "Dropped", "Not Started"] as const;
@@ -94,6 +95,10 @@ export type Game = {
   /** Other platforms the run also touched, shown on the game page after the main one; never includes `platform`. Only loaded on the game page. */
   alsoPlayedOn: Platform[];
   genre: Genre;
+  /** Whether this entry is a DLC of another game. */
+  dlc: boolean;
+  /** MongoDB id (hex) of the game this DLC belongs to; only for DLCs, null otherwise. */
+  mainGame: string | null;
   /** Release date, as a Unix timestamp in milliseconds; null while unannounced. */
   releasedOn: number | null;
   status: GameStatus;
@@ -120,9 +125,9 @@ export type Game = {
   average: number | null;
 };
 
-/** A game as stored: optional fields may be missing, and fields that do not apply to the status may still be set. */
-export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover" | "alsoPlayedOn"> &
-  Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover">> & { alsoPlayedOn?: Platform[] | null };
+/** A game as stored: optional fields may be missing, and fields that do not apply to the status may still be set. `mainGame` is an ObjectId in the database and a hex string in the maker's drafts. */
+export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover" | "alsoPlayedOn" | "dlc" | "mainGame"> &
+  Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover">> & { alsoPlayedOn?: Platform[] | null; dlc?: boolean; mainGame?: ObjectId | string | null };
 
 /** The game as pages show it; `fallbackId` is used when the game has no `id` of its own. */
 export function normalizeGame(game: GameFields, fallbackId: string): Game {
@@ -139,6 +144,8 @@ export function normalizeGame(game: GameFields, fallbackId: string): Game {
     cons: ended ? (game.cons ?? null) : null,
     description: game.description ?? [],
     cover: game.cover ?? null,
+    dlc: game.dlc ?? false,
+    mainGame: game.dlc && game.mainGame ? String(game.mainGame) : null,
     alsoPlayedOn: (game.alsoPlayedOn ?? []).filter((platform) => platform !== game.platform),
     signature: game.signature ?? null,
     blocks: game.blocks?.length ? game.blocks : null,
@@ -151,5 +158,5 @@ export const releaseYear = (game: Pick<Game, "releasedOn">) => (game.releasedOn 
 
 export type ReportLink = { id: string; title: string };
 
-/** A game with its report number (order of logging) and its neighbours in the library's default order. */
-export type GameReport = { game: Game; number: number; prev: ReportLink | null; next: ReportLink | null };
+/** A game with its report number (order of logging), its neighbours in the library's default order and, for a DLC, its main game. */
+export type GameReport = { game: Game; number: number; prev: ReportLink | null; next: ReportLink | null; mainGame: ReportLink | null };

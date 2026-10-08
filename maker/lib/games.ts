@@ -4,7 +4,7 @@ import type { GameStatus } from "@/content/games";
 import { getDatabase } from "@/lib/mongodb";
 import type { StoredGame } from "./draft";
 
-export type GameEntry = { _id: string; title: string; status: GameStatus };
+export type GameEntry = { _id: string; title: string; status: GameStatus; dlc: boolean };
 
 async function games() {
   const db = await getDatabase();
@@ -14,8 +14,8 @@ async function games() {
 /** Every game, for the picker, A–Z. */
 export async function listGames(): Promise<GameEntry[]> {
   const collection = await games();
-  const entries = await collection.find({}, { projection: { _id: 1, title: 1, status: 1 } }).sort({ title: 1 }).toArray();
-  return entries.map((entry) => ({ _id: entry._id.toHexString(), title: entry.title ?? "", status: entry.status ?? "Not Started" }));
+  const entries = await collection.find({}, { projection: { _id: 1, title: 1, status: 1, dlc: 1 } }).sort({ title: 1 }).toArray();
+  return entries.map((entry) => ({ _id: entry._id.toHexString(), title: entry.title ?? "", status: entry.status ?? "Not Started", dlc: entry.dlc ?? false }));
 }
 
 /** One game's document and report number (order of logging, as on the site), or null. */

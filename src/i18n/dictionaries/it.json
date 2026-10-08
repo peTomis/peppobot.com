@@ -92,6 +92,7 @@
     "tba": "DA ANNUNCIARE",
     "back": "Libreria · Report",
     "by": "di",
+    "dlcOf": "DLC di",
     "outOf": "/ 10",
     "inProgress": "IN CORSO — RUN AL",
     "notStarted": "NON ANCORA INIZIATO",
@@ -100,7 +101,7 @@
     "pros": "+ Test superati",
     "cons": "− Errori rilevati",
     "alsoPlayedOn": "Anche su",
-    "pilotData": "Dati pilota",
+    "pilotData": "Dati dell'operatore",
     "rows": {
       "status": "STATO",
       "platform": "PIATTAFORMA",

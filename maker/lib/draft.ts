@@ -12,6 +12,9 @@ export type Draft = {
   platform: Platform;
   alsoPlayedOn: Platform[];
   genre: Genre;
+  dlc: boolean;
+  /** Hex id of the main game; "" when none is picked. */
+  mainGame: string;
   status: GameStatus;
   hours: number;
   progress: number | null;
@@ -39,6 +42,8 @@ export function emptyDraft(): Draft {
     platform: 1,
     alsoPlayedOn: [],
     genre: 1,
+    dlc: false,
+    mainGame: "",
     status: "Not Started",
     hours: 0,
     progress: null,
@@ -63,6 +68,9 @@ export function toDraft(game: StoredGame): Draft {
     platform: game.platform ?? empty.platform,
     alsoPlayedOn: game.alsoPlayedOn ?? [],
     genre: game.genre ?? empty.genre,
+    dlc: game.dlc ?? false,
+    // Read through JSON, so a stored ObjectId arrives as its hex string.
+    mainGame: game.mainGame ? String(game.mainGame) : "",
     status: game.status ?? empty.status,
     hours: game.hours ?? 0,
     progress: game.progress ?? null,
@@ -89,8 +97,8 @@ export function averageOf(scores: (number | null)[]): number | null {
 /** Drops empty translations, so a blank Italian field never hides the English text. */
 const clean = (text: Translated) => text.filter((entry) => entry.value.trim());
 
-/** The document fields to store. `id` is undefined when the game uses its MongoDB id in URLs. */
-export function toFields(draft: Draft): Omit<GameFields, "id"> & { id: string | undefined } {
+/** The document fields to store. `id` is undefined when the game uses its MongoDB id in URLs; `mainGame` is a hex id, turned into an ObjectId on save. */
+export function toFields(draft: Draft): Omit<GameFields, "id" | "mainGame"> & { id: string | undefined; mainGame: string | null } {
   const pros = draft.pros.map(clean).filter((text) => text.length);
   const cons = draft.cons.map(clean).filter((text) => text.length);
   const signature = clean(draft.signature);
@@ -103,6 +111,8 @@ export function toFields(draft: Draft): Omit<GameFields, "id"> & { id: string | 
     platform: draft.platform,
     alsoPlayedOn: alsoPlayedOn.length ? alsoPlayedOn : null,
     genre: draft.genre,
+    dlc: draft.dlc,
+    mainGame: draft.dlc ? draft.mainGame || null : null,
     status: draft.status,
     hours: draft.hours,
     progress: draft.progress,

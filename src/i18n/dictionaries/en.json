@@ -92,6 +92,7 @@
     "tba": "TBA",
     "back": "Library · Report",
     "by": "by",
+    "dlcOf": "DLC of",
     "outOf": "/ 10",
     "inProgress": "IN PROGRESS — RUN AT",
     "notStarted": "NOT STARTED YET",
@@ -100,7 +101,7 @@
     "pros": "+ Check Passed",
     "cons": "− Errors detected",
     "alsoPlayedOn": "Also on",
-    "pilotData": "Pilot data",
+    "pilotData": "Operator data",
     "rows": {
       "status": "STATUS",
       "platform": "PLATFORM",

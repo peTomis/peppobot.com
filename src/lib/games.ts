@@ -11,6 +11,8 @@ const projection = {
   dev: 1,
   platform: 1,
   genre: 1,
+  dlc: 1,
+  mainGame: 1,
   releasedOn: 1,
   status: 1,
   hours: 1,
@@ -115,15 +117,18 @@ export async function getGameReport(id: string): Promise<GameReport | null> {
   const document = await collection.findOne(filter, { projection: reportProjection, maxTimeMS: 5000 });
   if (!document) return null;
 
+  const game = toGame(document);
+
   // Neighbours follow the library's default "recent" order: previous is older, next is newer.
-  const [order, number] = await Promise.all([
+  const [order, number, main] = await Promise.all([
     collection.find({}, { projection: { _id: 1, id: 1, title: 1 } }).sort(LIBRARY_ORDER.recent).maxTimeMS(5000).toArray(),
     collection.countDocuments({ _id: { $lte: document._id } }, { maxTimeMS: 5000 }),
+    game.mainGame ? collection.findOne({ _id: new ObjectId(game.mainGame) }, { projection: { _id: 1, id: 1, title: 1 }, maxTimeMS: 5000 }) : null,
   ]);
   const index = order.findIndex((entry) => entry._id.equals(document._id));
-  const link = (entry: (typeof order)[number] | undefined) => (entry ? { id: entry.id || entry._id.toHexString(), title: entry.title } : null);
+  const link = (entry: Pick<WithId<GameDocument>, "_id" | "id" | "title"> | null | undefined) => (entry ? { id: entry.id || entry._id.toHexString(), title: entry.title } : null);
 
-  return { game: toGame(document), number, prev: link(order[index + 1]), next: index > 0 ? link(order[index - 1]) : null };
+  return { game, number, prev: link(order[index + 1]), next: index > 0 ? link(order[index - 1]) : null, mainGame: link(main) };
 }
 
 export async function getGame(id: string): Promise<Game | null> {

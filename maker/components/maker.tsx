@@ -41,7 +41,12 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
 
-  const message = useMemo<PreviewMessage>(() => ({ type: "maker:game", game: previewGame(draft, id ?? "new"), number, lang }), [draft, id, number, lang]);
+  const message = useMemo<PreviewMessage>(() => {
+    const game = previewGame(draft, id ?? "new");
+    // Links are disabled in the preview, so the database id stands in for the main game's URL id.
+    const main = game.mainGame ? games.find((entry) => entry._id === game.mainGame) : null;
+    return { type: "maker:game", game, number, mainGame: main ? { id: main._id, title: main.title } : null, lang };
+  }, [draft, id, number, lang, games]);
 
   const open = (target: string) => {
     if (dirty && !window.confirm("Discard unsaved changes?")) return;
@@ -60,6 +65,11 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
     });
 
   const average = averageOf(draft.scores);
+  // A DLC belongs to a main game, never to itself or to another DLC.
+  const mainGameOptions = [
+    { value: "", label: "— Pick the main game —" },
+    ...games.filter((game) => game._id !== id && (!game.dlc || game._id === draft.mainGame)).map((game) => ({ value: game._id, label: game.title || "(untitled)" })),
+  ];
 
   return (
     <div className="grid h-dvh grid-cols-[minmax(420px,1fr)_minmax(0,1.2fr)] overflow-hidden">
@@ -100,6 +110,15 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
             <Field label="Genre">
               <Select value={draft.genre} options={GENRE_OPTIONS} onChange={(value) => set("genre", value)} />
             </Field>
+            <label className="flex items-center gap-2 self-end py-2">
+              <input type="checkbox" className="accent-acc" checked={draft.dlc} onChange={(event) => set("dlc", event.target.checked)} />
+              <span className={labelClass}>DLC</span>
+            </label>
+            {draft.dlc && (
+              <Field label="Main game">
+                <Select value={draft.mainGame} options={mainGameOptions} onChange={(value) => set("mainGame", value)} />
+              </Field>
+            )}
             <div className="flex flex-col gap-1.5 @lg:col-span-2">
               <span className={labelClass}>Also played on</span>
               <div className="flex flex-wrap gap-1.5">

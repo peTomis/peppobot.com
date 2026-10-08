@@ -33,7 +33,7 @@ export default function PreviewPage() {
       }}
     >
       <GameReport
-        report={{ game: message.game, number: message.number, prev: null, next: null }}
+        report={{ game: message.game, number: message.number, prev: null, next: null, mainGame: message.mainGame }}
         lang={message.lang}
         t={dict.report}
         statuses={dict.library.statuses}
