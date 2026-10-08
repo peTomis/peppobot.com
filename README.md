@@ -4,198 +4,160 @@ Source for **[www.peppobot.com](https://www.peppobot.com)**: Peppobot's personal
 
 > **PEPPOBOT — PILOT LOG // GAME REPORTS**
 > _Games played. Reports filed._
-> Every game Peppobot runs is scored on six axes, reviewed without filters and tracked to the hour.
 
-The visual design comes from a Claude Design project (`Peppobot v2.dc.html`). A copy of it is in [`design/`](design/) as the reference for this implementation.
+The repository holds two Next.js apps that share code and one MongoDB database:
+
+| App          | Folder                   | Runs                     | Purpose                                                                                    |
+| ------------ | ------------------------ | ------------------------ | ------------------------------------------------------------------------------------------ |
+| **Site**     | repo root (`src/`)       | AWS Amplify (production) | The public website. Reads only.                                                             |
+| **Maker**    | [`maker/`](maker/)       | **Locally only**         | Editor for creating and updating games, with a live preview of the site's report page.     |
+
+The maker is never deployed. `next build` only builds the site: the root `tsconfig.json` excludes `maker/`, and the maker has no build or start script.
 
 ---
 
 ## What the site does
 
-Peppobot is a human gamer with a "robot persona". He plays games, from RPGs and roguelikes to "anything with a good parry", since 1999. He keeps a public log of every game: what he's playing now, what he finished, what he dropped and what's coming next. Each game gets a structured score and a written review. Reviews are written "after the credits, never before". Games still being played get a **provisional** score.
-
-The persona drives the copy. The site reads like a robot's ship log: "pilot", "runs", "telemetry", "loading bay", "systems nominal / errors detected", "no matches in memory bank", "all scores final until patched".
+Peppobot is a human gamer with a "robot persona". He keeps a public log of every game: what he's playing now, what he finished, what he dropped and what's coming next. Each finished game gets six axis scores, an average, a tier and a written report. The copy reads like a robot's ship log: "pilot", "runs", "telemetry", "systems nominal / errors detected", "all verdicts final until patched".
 
 ### Core concepts
 
-| Concept           | Meaning                                                                                                                                                                                                  |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Game / Report** | One logged title: developer, platform, genre, year, status, hours played, finish date (or last session), progress % (while playing), six axis scores, one-line verdict, long-form review, pros and cons. |
-| **Status**        | `Playing` (green), `Completed` (purple), `Dropped` (red).                                                                                                                                                |
-| **Six axes**      | Every game is rated 0–10 on **Gameplay**, **Narrative**, **Visuals**, **Audio**, **Longevity** and **Innovation**.                                                                                       |
-| **Overall score** | The plain average of the six axes. No hidden weights.                                                                                                                                                    |
-| **Tiers**         | `OVERCLOCKED` 9.0+ (all-time list) · `OPTIMAL` 8.0–8.9 · `STABLE` 7.0–7.9 · `GLITCHED` 5.0–6.9 · `CORRUPTED` 0–4.9 (skip it).                                                                            |
-| **Provisional**   | A `Playing` game shows its score labelled "PROVISIONAL — RUN AT N%" until it is finished.                                                                                                                |
-| **Queue**         | Upcoming games, each with a `HIGH` / `MED` / `LOW` priority, platform, release window and a note.                                                                                                        |
-
-Dropped games stay in the library but are left out of aggregate stats such as the average score, tier distribution, axis profile and genre averages. Hours still count them.
+| Concept      | Meaning                                                                                                                                                                                         |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Game**     | One logged title. Type `Game` in [`src/content/games.ts`](src/content/games.ts).                                                                                                                |
+| **Status**   | `Playing`, `Completed`, `Dropped`, `Not Started`. Only ended runs (`Completed` / `Dropped`) show scores, an end date, pros and cons; `normalizeGame()` hides those fields for other statuses. |
+| **Six axes** | Rated 0–10, in this order: **Gameplay**, **Visuals**, **Audio**, **Genre I**, **Genre II**, **Signature**. The two genre axes use criteria set per genre (see the protocol page).                |
+| **Average**  | The plain average of the six axes, to one decimal. It is stored on the game (`average`) when the maker saves it, and is null until all six axes are scored.                                     |
+| **Tiers**    | `OVERCLOCKED` 9.0+ · `OPTIMAL` 8.0–8.9 · `STABLE` 7.0–7.9 · `GLITCHED` 5.0–6.9 · `CORRUPTED` 0–4.9 (`TIERS` in `games.ts`).                                                                    |
+| **Queue**    | Games with status `Not Started`. The home page shows the oldest one as "next in queue".                                                                                                         |
+| **Platform / Genre** | Stored as numeric ids. The names and logos come from `PLATFORMS` and `GENRES` in `games.ts`. A game has one main `platform` and an optional `alsoPlayedOn` list.                        |
 
 ### Pages
 
-The prototype is a single-page app with in-memory navigation. In Next.js each screen should become its own route:
+Every page is under a language prefix (`/en/…`, `/it/…`).
 
-| Screen                                                       | Suggested route | Contents                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ------------------------------------------------------------ | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Home**                                                     | `/`             | Hero ("Games played. Reports filed.") with a large hexagon logo badge and a circular "PLAYING AND ENJOYING VIDEOGAMES ◆ SINCE 1999" text ring. KPI chips (games logged, total hours, average score). Two angled scrolling tickers. **01 Now playing** (cards with progress bar and hours). **02 Latest reports** (last 3 completed). **03 Hall of fame** (top 5 by score). **Next in queue** promo card.                                 |
-| **Library** ("The archive — Every game logged.")             | `/library`      | Full-text search over title, developer, genre and platform. Status filter chips (All / Playing / Completed / Dropped). Sort by Recent / Score / Hours / A–Z. Grid or list view. Pagination at 12 per page. Shows a "filtered of total entries" counter and an empty state.                                                                                                                                                               |
-| **Game report**                                              | `/games/[slug]` | Cover, big hex score badge, tags, title, developer, quoted verdict, tier stamp, provisional flag. **01 Score matrix**: hexagonal radar chart plus a per-axis bar breakdown with axis descriptions. **02 Full report**: rich content blocks, then pros ("+ Systems nominal") and cons ("− Errors detected"). Sticky **Pilot data** sidebar (status, platform, developer, playtime, date, progress, tier). Previous and next report links. |
-| **Telemetry** ("Pilot telemetry.")                           | `/telemetry`    | KPI tiles (games logged, hours played, completed, average score). **01 Pilot profile**: radar of the six axes averaged across all rated games ("taste fingerprint"). **02 Rating tiers** distribution. **03 Hours by platform**. **04 Genre scan**: average score and game count per genre.                                                                                                                                              |
-| **Queue** ("Loading bay — Up next.")                         | `/queue`        | Intro ("priority is set by hype, free time and how loudly friends keep asking"). Counts per priority. List of queued games with priority stamps.                                                                                                                                                                                                                                                                                         |
-| **Protocol** ("How scores are computed — Scoring protocol.") | `/protocol`     | Methodology: **01 Six axes** with descriptions. **02 Rating tiers** with ranges. **03 About the pilot** ("Human pilot. Robot patience.").                                                                                                                                                                                                                                                                                                |
+| Route                  | Contents                                                                                                                                                       |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/[lang]`              | Hero with KPI chips (from `/api/data`), now playing, latest reports (last 3 completed), hall of fame (top 5 completed by average) and next in queue.           |
+| `/[lang]/library`      | Search (title, developer, genre, platform), status filter, sort (recent / score / hours / A–Z) and pagination at 12 per page. State lives in the URL query.   |
+| `/[lang]/library/[id]` | Game report: score badge, radar and per-axis bars, report blocks, pros and cons, pilot data sidebar, links to the previous and next report. `id` is the game's slug or its MongoDB `_id`. |
+| `/[lang]/telemetry`    | Site-wide figures from the `data` document: KPIs, axis profile, tier distribution, hours by platform, genre scan.                                              |
+| `/[lang]/protocol`     | Scoring method: the six axes, genre calibration table, tiers, about the pilot. Fully static.                                                                   |
 
-Shared on every page:
+Every page also has the top bar (desktop nav, mobile menu, EN/IT switch), the "Find Peppobot" gamertag band and the bottom bar.
 
-- **Header**: sticky. Logo with "PEPPOBOT / PILOT LOG // GAME REPORTS". Nav: Home · Library · Telemetry · Queue · Protocol (Library stays active on game pages). "ONLINE" status dot. Below 760px it switches to a hexagon hamburger that opens a full-screen numbered menu. The bottom border lights up once the page is scrolled.
-- **"Find Peppobot" band** ("Add me · Watch me · Challenge me"): gamertag cards for PlayStation Network, Xbox Live, Steam, Epic Games, Nintendo Switch (friend code), Twitch, YouTube and Discord. Each card has an icon and links out. **The URLs and handles in the prototype are placeholders.**
-- **Footer**: "© 2026 PEPPOBOT · REPORTS WRITTEN BY A ROBOT, FOR HUMANS · BUILD 4.2.0 · ALL SCORES FINAL UNTIL PATCHED".
+### Report blocks
 
-### Review content blocks
-
-A long-form review is an ordered list of blocks. If a game has no blocks, its `review` paragraphs are used instead:
-
-- `h`: section heading with a small coloured hexagon
-- `p`: body paragraph
-- `img` + `caption`: single 16:9 figure
-- `pair` (`a`, `b`, `caption`): two side-by-side 4:3 figures
-- `quote` (optional `color`): big angled pull quote
-- `facts`: grid of key/value stat tiles (for example HOURS PLAYED 9, BOSSES DOWN 3)
-
-Accent colours rotate green, purple, pink when a block doesn't set one. That maps naturally to MDX or a small typed block schema.
-
-### Sample data in the prototype
-
-The prototype hard-codes 17 games, among them Metroid Prime 4, Ghost of Yōtei, Hades II, Silksong, Clair Obscur: Expedition 33, Baldur's Gate 3, Elden Ring and Balatro. Only Metroid Prime 4 has a full block-based review. It also has 5 queue entries. Cover art, key art and screenshots are striped placeholders. All of it is seed content to replace with real data.
+A game's written report is an ordered list of `ReportBlock`s: `heading`, `paragraph`, `image`, `pair` (two images), `quote` and `facts` (label/value tiles). Every text is a `Translated` value (see below). Blocks without an `accent` take the next accent in turn.
 
 ---
 
-## Visual design system
+## Data
 
-Dark, angular, "mecha HUD" style: hexagons everywhere, clipped corners, outlined display type and tilted stamps.
+The content lives in MongoDB. There is no seed data and no static fallback.
 
-**Colours** (from the default "Green / Purple" palette):
+### `games` collection
 
-| Token                           | Value                                             | Use                                        |
-| ------------------------------- | ------------------------------------------------- | ------------------------------------------ |
-| `--bg`                          | `#100a18`                                         | page background, text on accent fills      |
-| `--surface` / `--surface-hover` | `#1a1126` / `#2a1640`                             | cards, rows, inputs                        |
-| `--line`                        | `#3e2c56`                                         | radar grid                                 |
-| `--fg` → `--fg-faint`           | `#f3eefa` `#ddd3ec` `#c4b8d8` `#a595bf` `#7a6a92` | text scale                                 |
-| `--acc`                         | `#5cff8a` (green)                                 | primary accent, Playing, OVERCLOCKED       |
-| `--acc2`                        | `#b65cff` (purple)                                | secondary accent, Completed, STABLE        |
-| `--acc3`                        | `#ff5cd6` (pink)                                  | tertiary accent, provisional, cons         |
-| —                               | `#a8ff5c` / `#ff8a5c` / `#ff5c7a`                 | OPTIMAL / GLITCHED / CORRUPTED and Dropped |
+One document per game, matching `GameFields` in [`src/content/games.ts`](src/content/games.ts). Pages use the optional string `id` as the URL slug; a game without one is reached by its `_id`. Suggested indexes: unique `{ id: 1 }` (sparse), `{ finishedOn: -1, _id: 1 }`, `{ status: 1 }`.
 
-The prototype also has two alternate palettes behind a `palette` prop. They only swap the three accents: **Lime / Violet** (`#c6ff3d #8a1fd6 #ff5c8a`) and **Mint / Magenta** (`#3dffc6 #ff5cd6 #ffd65c`).
+Texts written by Peppobot (description, signature, pros, cons, report blocks) are stored as `Translated`, a list of `{ key: "en" | "it", value }`. `pickTranslation()` shows the page's language, then English, then whatever exists.
 
-**Type**: Chakra Petch (display: uppercase headings, labels, buttons), IBM Plex Sans (body), JetBrains Mono (data, tags and numbers, spaced with wide letter-spacing).
+Dates (`releasedOn`, `finishedOn`) are Unix timestamps in milliseconds, read in UTC.
 
-**Recurring motifs**:
+### `data` collection
 
-- **Hexagon**: `clip-path: polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)`. Used for score badges, section numbers (01, 02…), the logo frame and page buttons.
-- **Clipped-corner cards** and **arrow-shaped buttons** built with `clip-path`.
-- A dot-matrix hexagon pattern generated as an SVG path (`dotHex`).
-- **Headings** mix a solid word with an outlined word (`-webkit-text-stroke`). Hero titles add a tilted highlighter block ("played.", "game", "telemetry.", "next.", "protocol.").
-- **Stamps** rotated by −3°: tier labels and priorities.
-- **Radar chart**: 300×300 SVG hexagon with 5 rings, centre (150,150) and radius 105.
-- The logo (`public/peppobot.png`) is black line art shown with `filter: invert(1); mix-blend-mode: screen`.
+One document with site-wide figures, typed `Data` in [`src/content/data.ts`](src/content/data.ts): count, hours, average score, completed count, axis averages, tier counts, hours per platform and genre averages. Score figures count completed games only. The home KPIs and the telemetry page read this document as it is and do not aggregate the games.
 
-The site is designed mobile-first, with a breakpoint at 760px. Layouts mostly use `auto-fit` / `minmax` grids.
+> Nothing in this repository writes the `data` document. It has to be recomputed outside the repo when games change.
+
+### Server helpers and API
+
+- [`src/lib/mongodb.ts`](src/lib/mongodb.ts): one lazy connection pool per process. Building the site does not need a database.
+- [`src/lib/games.ts`](src/lib/games.ts): `getGames`, `getPlayingGames`, `getLatestReports`, `getTopRated`, `getNextInQueue`, `getLibraryPage`, `getGameReport`, `getGame`. Every query uses an explicit projection, so new database fields never leak to pages or the API.
+- [`src/lib/data.ts`](src/lib/data.ts): `getData()`, cached with `"use cache"` and revalidated every 60 seconds.
+
+Public read-only endpoints, outside the language prefix:
+
+- `GET /api/games?limit=50&offset=0` returns `{ games, limit, offset }`, sorted by `finishedOn` descending. `limit` is 1–100. Invalid values return 400.
+- `GET /api/games/[id]` returns `{ game }`, looked up by slug, then by `_id`. Unknown games return 404.
+- `GET /api/data` returns the `data` document, with a 60-second HTTP cache.
+- If MongoDB is unavailable or not configured, the endpoints return 503 with a generic error message.
 
 ---
 
-## Repository layout
+## The maker (local only)
 
-```
-design/                     Claude Design export (reference only, not built)
-  Peppobot v2.dc.html       the v2 prototype: markup + data + logic
-  support.js                Claude Design "dc-runtime" that renders .dc.html files
-  assets/peppobot.png       logo
-public/peppobot.png         logo used by the app
-src/app/                    Next.js App Router
-  globals.css               design tokens exposed to Tailwind v4 (`bg-acc`, `text-fg-dim`, `font-display`…)
-  [lang]/layout.tsx         root layout: fonts, localized metadata, top/bottom bars
-  [lang]/page.tsx           placeholder home page
-src/components/             TopBar (desktop + mobile menu, EN/IT switch), FindPeppobot (gamertags), BottomBar, nav config
-public/icons/               platform icons for the gamertag cards
-src/i18n/                   locales config, dictionaries (en.json, it.json), getDictionary()
-src/proxy.ts                redirects unprefixed URLs to /en or /it
-```
+`npm run maker` starts the editor at **http://localhost:4889**. It is a separate Next.js app in `maker/` that:
 
-## Stack
+- imports the site's code from `../src` through the `@/*` alias (types, `GameReport`, dictionaries, `getDatabase`, fonts), and uses the root `node_modules`;
+- symlinks `maker/public` → `../public` and `maker/app/icon.png` → the site's icon;
+- lists every game in a picker (`/?id=<MongoDB _id>` edits one, `/` starts a new one);
+- edits all game fields, the six scores (the average is computed live), translated texts in EN and IT, pros and cons, and report blocks with drag-and-drop reordering;
+- shows a live preview in an iframe (`/preview`) that renders the site's real `GameReport` component. The editor sends it the game with `postMessage`. The preview can switch between EN and IT and between a desktop (1280px) and mobile (390px) width;
+- saves through a server action (`maker/app/actions.ts`) that writes directly to the `games` collection. It checks that the slug is lowercase letters, digits and dashes and is not used by another game. Empty texts and lists are cleaned up before saving.
 
-- [Next.js](https://nextjs.org) 16 (App Router, Turbopack) · React 19 · TypeScript
-- Tailwind CSS v4. Tokens are defined in `src/app/globals.css` under `@theme`.
-- Fonts via `next/font/google`
+The maker has **no authentication**. It writes to whatever database its env points to, so never deploy it.
 
-## Internationalization
+Next.js loads env files from the app's own folder, so the maker needs its own `maker/.env` (or `maker/.env.local`) with `MONGODB_URI` and `MONGODB_DB`. The root `.env*` files are not read by the maker.
 
-The site is in English (`en`, the default) and Italian (`it`). Every route lives under `src/app/[lang]/`, so URLs always carry the language: `/en/library`, `/it/library`.
-
-- **Language picking**: [`src/proxy.ts`](src/proxy.ts) redirects any URL without a language (for example `/` or `/library`) to one. It uses the `NEXT_LOCALE` cookie if set, otherwise the browser's `Accept-Language` header, otherwise `en`.
-- **Switching**: the EN / IT switch in the top bar keeps the current page, changing only the language, and saves the choice in the `NEXT_LOCALE` cookie.
-- **Strings**: [`src/i18n/dictionaries/en.json`](src/i18n/dictionaries/en.json) and [`it.json`](src/i18n/dictionaries/it.json). `en.json` defines the `Dictionary` type, so a key missing from `it.json` fails type-checking.
-- **Server components** call `await getDictionary()` (and `getLocale()`). These read the language from the URL through `next/root-params`, so nothing has to pass it down.
-- **Client components** can't read the dictionary themselves. They get the strings they need as props from a server component, as `TopBar` does.
-- **SEO**: each language is prerendered statically. `<html lang>`, the title and description are localized, and the pages declare `canonical` and `hreflang` alternate links.
-
-To add a language, add its code to `locales` in [`src/i18n/config.ts`](src/i18n/config.ts), create its JSON dictionary and register it in [`src/i18n/dictionaries.ts`](src/i18n/dictionaries.ts).
+---
 
 ## Getting started
 
 ```bash
+cp .env.example .env.local          # site: set MONGODB_URI and MONGODB_DB
+cp .env.example maker/.env.local    # maker: same variables
 npm install
-npm run dev      # http://localhost:4888
-npm run build    # production build
-npm run lint
+npm run dev      # site,  http://localhost:4888
+npm run maker    # maker, http://localhost:4889
+npm run build    # production build of the site
+npm run lint     # lints both apps
 ```
 
-## Suggested next steps
+## Stack
 
-1. Define a `Game` type and move the seed data into `src/content/` (or MDX per game for long reviews). Do the same for the queue.
-2. Build shared primitives: `Hex`, `HexBadge` (score), `SectionTitle` (number + solid/outlined words), `Stamp`, `ClipCard`, `ArrowButton`, `RadarChart`, `BarRow`.
-3. Implement the routes listed above. Use static generation for `/games/[slug]` with `generateStaticParams`.
-4. Replace placeholder art with real cover art and screenshots, and the gamertag URLs and handles with real ones.
-5. Add per-page metadata and Open Graph images, a sitemap and RSS for new reports.
+- [Next.js](https://nextjs.org) 16 (App Router, Turbopack, `cacheComponents`, `partialPrefetching`) · React 19 · TypeScript
+- Tailwind CSS v4 through `@tailwindcss/turbopack`. Tokens are in [`src/app/globals.css`](src/app/globals.css). The `desk:` breakpoint is at 760px
+- Fonts via `next/font/google` ([`src/app/fonts.ts`](src/app/fonts.ts), shared with the maker): Chakra Petch (display), IBM Plex Sans (body), JetBrains Mono (data)
+- MongoDB Node driver 7
+- The maker's drag-and-drop uses `@dnd-kit` (a dev dependency, since only the maker uses it)
 
-## MongoDB game API
+## Internationalization
 
-Copy `.env.example` to `.env.local` and set `MONGODB_URI` and `MONGODB_DB`.
-Configure the same server-only variables in your hosting environment. Restart the
-server after changing them. The client connects lazily and reuses its connection
-pool; a database connection is not needed to build the site.
+English (`en`, default) and Italian (`it`). All routes live under `src/app/[lang]/`.
 
-The public, read-only endpoints are outside the language prefixes:
+- [`src/proxy.ts`](src/proxy.ts) redirects URLs without a language prefix. It checks the `NEXT_LOCALE` cookie first, then `Accept-Language`, then falls back to `en`. API routes and files are skipped.
+- UI strings are in [`src/i18n/dictionaries/en.json`](src/i18n/dictionaries/en.json) and [`it.json`](src/i18n/dictionaries/it.json). `en.json` defines the `Dictionary` type, so a key missing from `it.json` fails type-checking.
+- Server components call `getDictionary()` / `getLocale()`, which read `[lang]` through `next/root-params`. Client components get their strings as props.
+- Content texts (from the database) use `Translated` and `pickTranslation()`, not the dictionaries.
+- Each page sets `canonical` and `hreflang` links through `localizedAlternates()`.
 
-- `GET /api/games?limit=50&offset=0` returns `{ games, limit, offset }`, sorted by
-  `finished` descending, then `id`. Limit is 1–100; offset is a non-negative integer.
-- `GET /api/games/hades2` returns `{ game }`, looking up the string `id` field
-  (not MongoDB's `_id`). Missing games return 404.
-- Invalid pagination returns 400; unavailable or unconfigured MongoDB returns 503
-  with a generic error, without connection details.
+To add a language: add it to `locales` in [`src/i18n/config.ts`](src/i18n/config.ts), add a dictionary and register it in [`src/i18n/dictionaries.ts`](src/i18n/dictionaries.ts). Then add it to the maker's preview (`maker/app/preview/page.tsx`) and to its translated inputs.
 
-Use the `games` collection with documents matching `Game` in
-`src/content/games.ts`. Only those public fields are returned, excluding `_id`.
-Create a unique `{ id: 1 }` index and a `{ finished: -1, id: 1 }` index when
-provisioning the collection. No seed data is inserted automatically.
+## Design
 
-```ts
-const response = await fetch("/api/games?limit=20&offset=0");
-if (!response.ok) throw new Error("Unable to load games");
-const { games } = await response.json();
+Dark, angular "mecha HUD" style, from a Claude Design prototype: hexagons (`.hex` clip-path), clipped-corner cards, headings that mix solid and outlined words, stamps rotated by −3°, and a 300×300 hexagonal radar. The accents are `--acc` (lime `#abff3d`), `--acc2` (violet `#8a1fd6`) and `--acc3` (pink `#f02670`). Tiers and the Dropped status use fixed colours (see `TIERS` and `STATUS_COLORS`). The logo (`public/peppobot.png`) is black line art, shown with `invert` + `mix-blend-screen`.
+
+## Repository layout
+
+```
+src/
+  app/[lang]/               site pages (home, library, library/[id], telemetry, protocol) and root layout
+  app/api/                  read-only JSON endpoints (games, games/[id], data)
+  app/fonts.ts              shared font setup (site + maker)
+  app/globals.css           design tokens and Tailwind theme
+  components/               site UI; game-report.tsx is also rendered by the maker preview
+  content/                  types and constants: games.ts (Game, PLATFORMS, GENRES, AXES, TIERS), data.ts
+  i18n/                     locales, dictionaries, translations, metadata helpers
+  lib/                      server-only MongoDB access (mongodb.ts, games.ts, data.ts)
+  proxy.ts                  language redirect
+maker/                      local-only editor app (see above)
+  app/                      page (editor), preview/ (iframe), actions.ts (save)
+  components/               maker, fields, blocks-editor, preview-frame
+  lib/                      draft.ts (Draft ⇄ stored game), games.ts (picker queries), preview.ts (postMessage types)
+public/                     logo and platform icons (shared with the maker by symlink)
 ```
 
-Server Components can import `getGames()` or `getGame(id)` from `@/lib/games`
-directly. The existing pages still use the static sample data until connected to
-these helpers. MongoDB credentials and helpers are server-only.
+## Deployment
 
-`GET /api/games/metrics` returns `{ count, hours, avgScore }` across the entire games
-collection, including all statuses for count and hours. `avgScore` averages the stored
-`average` field, including only Completed games (excluding Playing and Dropped). An empty collection returns zero count
-and hours and a null average. This dedicated aggregation is independent of game
-list pagination. The home
-page fetches these metrics on mount; unavailable values display as dashes.
-
-Home game titles are fetched on the server with `getGames()` (the first 50 recent
-games), streamed behind a Suspense boundary. Metrics remain independent of this
-list. Metrics use a server cache revalidated after 60 seconds and a 60-second
-browser/shared HTTP cache; errors are not HTTP-cached.
+The site is deployed on **AWS Amplify** from `main`. Amplify runs `npm ci`, so `package-lock.json` must be in sync with `package.json` under Amplify's npm version. If Amplify uses an older npm than your machine, regenerate the lockfile with that version, for example `npx npm@10 install --package-lock-only`, or use the same Node version on both. Set `MONGODB_URI` and `MONGODB_DB` as environment variables in Amplify.
