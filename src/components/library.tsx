@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { connection } from "next/server";
 import { cache, type CSSProperties, type ReactNode } from "react";
-import { LIBRARY_SORTS, PLATFORMS, releaseYear, STATUS_COLORS, STATUSES, tierOf, type Game, type GameStatus, type LibraryQuery, type LibrarySort } from "@/content/games";
+import { GENRES, LIBRARY_SORTS, PLATFORMS, releaseYear, STATUS_COLORS, STATUSES, tierOf, type Game, type GameStatus, type LibraryQuery, type LibrarySort } from "@/content/games";
 import { localizePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { getLibraryPage } from "@/lib/games";
@@ -203,7 +203,7 @@ function StatusTag({ status, t, className = "" }: { status: GameStatus; t: Strin
 }
 
 function GridCard({ game, lang, score, t }: { game: Game; lang: Locale; score: Intl.NumberFormat; t: Strings }) {
-  const meta = [PLATFORMS[game.platform]?.name, game.genre, releaseYear(game)].filter(Boolean).join(" · ");
+  const meta = [PLATFORMS[game.platform]?.name, GENRES[game.genre]?.name, releaseYear(game)].filter(Boolean).join(" · ");
   return (
     <Link href={gameHref(lang, game.id)} className="flex flex-col gap-4 text-fg hover:text-fg motion-safe:transition-transform hover:-translate-y-1">
       <div className="relative">
@@ -251,7 +251,7 @@ function ListTable({ games, lang, offset, score, t }: { games: Game[]; lang: Loc
                   {PLATFORMS[game.platform] && <span className="px-2 py-1 bg-bg text-fg-dim">{PLATFORMS[game.platform].name}</span>}
                   <span className="px-2 py-1 bg-bg text-fg-dim">{game.hours}h</span>
                 </div>
-                <div className="text-xs text-fg-dim">{game.genre}</div>
+                <div className="text-xs text-fg-dim">{GENRES[game.genre]?.name}</div>
               </div>
               <ScoreHex game={game} score={score} className="h-11.25 w-13 text-[15px]" />
             </Link>
@@ -292,7 +292,7 @@ function ListTable({ games, lang, offset, score, t }: { games: Game[]; lang: Loc
                 {PLATFORMS[game.platform]?.name}
               </span>
               <span role="cell" className="font-mono text-xs text-fg-muted">
-                {game.genre}
+                {GENRES[game.genre]?.name}
               </span>
               <span role="cell" className="font-mono text-sm font-bold">
                 {game.hours}h

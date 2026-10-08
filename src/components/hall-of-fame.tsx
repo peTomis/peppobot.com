@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { PLATFORMS, releaseYear } from "@/content/games";
+import { GENRES, PLATFORMS, releaseYear } from "@/content/games";
 import type { Locale } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { getNextInQueue, getTopRated } from "@/lib/games";
@@ -81,7 +81,7 @@ async function TopRated({ lang }: { lang: Locale }) {
             <div className="flex flex-col min-w-0 gap-1">
               <h3 className="truncate font-display text-[22px] font-bold uppercase">{game.title}</h3>
               <div className="font-mono text-[11px] tracking-widest text-fg-dim uppercase">
-                {game.genre} · {PLATFORMS[game.platform]?.name}
+                {GENRES[game.genre]?.name} · {PLATFORMS[game.platform]?.name}
               </div>
             </div>
             <div className={`hex grid h-13 w-15 place-items-center font-mono text-[17px] font-bold text-bg ${index % 2 ? "bg-acc2" : "bg-acc"}`}>

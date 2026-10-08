@@ -13,7 +13,6 @@ export const NAV: NavItem[] = [
   { href: "/", key: "home" },
   { href: "/library", key: "library", match: ["/games"] },
   { href: "/telemetry", key: "telemetry" },
-  { href: "/queue", key: "queue" },
   { href: "/protocol", key: "protocol" },
 ];
 

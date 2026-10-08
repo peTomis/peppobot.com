@@ -1,23 +1,28 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { PLATFORMS, releaseYear, STATUS_COLORS, tierOf, type GameReport as Report, type ReportLink, type Scores } from "@/content/games";
+import { GENRES, PLATFORMS, releaseYear, STATUS_COLORS, tierOf, type GameReport as Report, type ReportLink } from "@/content/games";
 import { localizePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { Translated } from "@/i18n/translations";
 import { DotHex } from "./dot-hex";
 import { gameHref } from "./nav";
 import { PlatformLogo } from "./platform-logo";
+import { Radar } from "./radar";
 import { SectionHeading } from "./section-heading";
 import { TranslatedText } from "./translated-text";
 
 type Strings = Dictionary["report"];
 type Statuses = Dictionary["library"]["statuses"];
+type GenreAxes = Dictionary["protocol"]["genreAxes"];
 
 const placeholder = "grid place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_12px,#170f24_12px_24px)] p-4 text-center font-mono text-[11px] tracking-[0.12em] text-fg-dim uppercase";
 
 /** Full game report: hero, score matrix, written report with pilot data, and neighbouring reports. */
-export function GameReport({ report, lang, t, statuses }: { report: Report; lang: Locale; t: Strings; statuses: Statuses }) {
+export function GameReport({ report, lang, t, statuses, genreAxes }: { report: Report; lang: Locale; t: Strings; statuses: Statuses; genreAxes: GenreAxes }) {
   const { game } = report;
+  // The genre axes take the names of the game's genre criteria.
+  const criteria: readonly string[] = genreAxes[game.genre] ?? [];
+  const axisNames = t.axes.map((axis, index) => (index === 3 || index === 4 ? (criteria[index - 3] ?? axis.name) : axis.name));
   const one = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const tier = game.average != null ? tierOf(game.average) : null;
   const statusColor = STATUS_COLORS[game.status];
@@ -70,7 +75,7 @@ export function GameReport({ report, lang, t, statuses }: { report: Report; lang
           <div className="flex min-w-0 flex-[1_1_360px] flex-col gap-6">
             <div className="flex flex-wrap gap-2 font-mono text-[11px] font-bold tracking-[0.12em] uppercase">
               {platform && <span className="flex items-center bg-surface px-3 py-1.75 text-fg-muted">{platform}</span>}
-              {[game.genre, year].filter(Boolean).map((chip) => (
+              {[GENRES[game.genre]?.name, year].filter(Boolean).map((chip) => (
                 <span key={String(chip)} className="bg-surface px-3 py-1.75 text-fg-muted">
                   {chip}
                 </span>
@@ -105,12 +110,12 @@ export function GameReport({ report, lang, t, statuses }: { report: Report; lang
         <section aria-labelledby="score-matrix" className="flex flex-col gap-10">
           <SectionHeading id="score-matrix" index={nextIndex()} first={t.scoreMatrix[0]} second={t.scoreMatrix[1]} accent="acc2" small />
           <div className="grid grid-cols-1 items-center gap-16 desk:grid-cols-2">
-            <Radar scores={game.scores} t={t} one={one} />
+            <Radar values={game.scores} labels={axisNames} format={one} />
             <ul className="flex flex-col gap-4.5">
               {game.scores.map((value, index) => (
                 <li key={index} className="flex flex-col gap-2">
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="font-display text-lg font-bold tracking-[0.08em] uppercase">{t.axes[index].name}</span>
+                    <span className="font-display text-lg font-bold tracking-[0.08em] uppercase">{axisNames[index]}</span>
                     <span className="font-mono text-lg font-bold">{one.format(value)}</span>
                   </div>
                   <div className="h-5.5 bg-surface [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)]">
@@ -156,42 +161,6 @@ export function GameReport({ report, lang, t, statuses }: { report: Report; lang
           {report.next && <Neighbour link={report.next} label={t.next} lang={lang} direction="next" />}
         </nav>
       )}
-    </div>
-  );
-}
-
-const R = 105;
-
-/** Corner `i` of the hexagonal radar at radius `r`, in a 300×300 box. */
-function point(i: number, r: number) {
-  const angle = -Math.PI / 2 + (i * Math.PI) / 3;
-  return [150 + r * Math.cos(angle), 150 + r * Math.sin(angle)] as const;
-}
-
-const polygon = (radii: number[]) => radii.map((r, i) => point(i, r).map((n) => n.toFixed(1)).join(",")).join(" ");
-
-function Radar({ scores, t, one }: { scores: Scores; t: Strings; one: Intl.NumberFormat }) {
-  const rings = [5, 4, 3, 2, 1].map((k) => polygon(Array(6).fill((R * k) / 5)));
-  const axes = scores.map((_, i) => `M150 150 L${point(i, R).map((n) => n.toFixed(1)).join(" ")}`).join(" ");
-
-  return (
-    <div className="relative mx-auto aspect-square w-[calc(100%-64px)] max-w-120">
-      <svg viewBox="0 0 300 300" aria-hidden className="absolute inset-0 overflow-visible size-full">
-        {rings.map((points, index) => (
-          <polygon key={index} points={points} className={`stroke-line ${index ? "fill-none" : "fill-surface"}`} />
-        ))}
-        <path d={axes} className="stroke-line" />
-        <polygon points={polygon(scores.map((value) => (R * value) / 10))} className="fill-acc2/80 stroke-acc2 stroke-2 [stroke-linejoin:round]" />
-      </svg>
-      {scores.map((value, i) => {
-        const [x, y] = point(i, R + 34);
-        return (
-          <div key={i} style={{ left: `${x / 3}%`, top: `${y / 3}%` }} className="absolute flex flex-col items-center gap-0.5 font-display font-bold whitespace-nowrap -translate-x-1/2 -translate-y-1/2">
-            <span className="text-[13px] tracking-widest text-fg-muted uppercase">{t.axes[i].name}</span>
-            <span className="text-[22px] leading-none text-acc">{one.format(value)}</span>
-          </div>
-        );
-      })}
     </div>
   );
 }

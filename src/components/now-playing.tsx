@@ -1,6 +1,6 @@
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { PLATFORMS, type Game } from "@/content/games";
+import { GENRES, PLATFORMS, type Game } from "@/content/games";
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
@@ -61,7 +61,7 @@ function NowPlayingCard({ game, lang, progressLabel, bg }: { game: Game; lang: L
       </div>
       <div className="flex flex-col flex-1 min-w-0 gap-2.5">
         <div className="font-mono text-[11px] font-bold tracking-[0.14em] uppercase">
-          {PLATFORMS[game.platform]?.name} · {game.genre}
+          {PLATFORMS[game.platform]?.name} · {GENRES[game.genre]?.name}
         </div>
         <h3 className="font-display text-[28px] leading-none font-bold uppercase">{game.title}</h3>
         <TranslatedText text={game.description} lang={lang} className="text-[15px] leading-[1.45] font-medium" />

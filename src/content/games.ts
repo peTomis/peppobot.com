@@ -41,10 +41,21 @@ export const PLATFORMS = {
 
 export type Platform = keyof typeof PLATFORMS;
 
+/** Stored on games by id, like platforms; the name is the same in every language. */
+export const GENRES = {
+  1: { id: 1, name: "RPG" },
+  2: { id: 2, name: "JRPG" },
+  3: { id: 3, name: "ARPG" },
+  4: { id: 4, name: "MMORPG" },
+} as const;
+
+export type Genre = keyof typeof GENRES;
+
 /** 0–10 scores, in the order of `AXES`. */
 export type Scores = [number, number, number, number, number, number];
 
-export const AXES = ["Gameplay", "Narrative", "Visuals", "Audio", "Longevity", "Innovation"] as const;
+/** The genre axes are scored on the criteria of the game's genre; the signature on what only that game does. */
+export const AXES = ["Gameplay", "Visuals", "Audio", "Genre I", "Genre II", "Signature"] as const;
 
 /** Score bands, highest first; a game falls in the first tier whose `min` it reaches. */
 export const TIERS = [
@@ -62,7 +73,7 @@ export type Game = {
   title: string;
   dev: string;
   platform: Platform;
-  genre: string;
+  genre: Genre;
   /** Release date, as a Unix timestamp in milliseconds; null while unannounced. */
   releasedOn: number | null;
   status: GameStatus;

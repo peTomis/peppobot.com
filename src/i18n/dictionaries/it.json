@@ -7,7 +7,6 @@
     "home": "Home",
     "library": "Libreria",
     "telemetry": "Telemetria",
-    "queue": "Coda",
     "protocol": "Protocollo"
   },
   "topBar": {
@@ -116,8 +115,55 @@
         "note": "La sensazione momento per momento: controlli, sistemi, combattimento, enigmi. Si gioca bene?"
       },
       {
-        "name": "Narrativa",
-        "note": "Storia, personaggi, scrittura e world-building. Mi fa appassionare?"
+        "name": "Grafica",
+        "note": "Prima la direzione artistica, poi la tecnica. Ha un aspetto unico?"
+      },
+      {
+        "name": "Audio",
+        "note": "Colonna sonora, sound design e doppiaggio. Mi resta in testa?"
+      },
+      {
+        "name": "Genere · I",
+        "note": "Il primo criterio del genere del gioco: ciò su cui quel tipo di gioco vive o muore."
+      },
+      {
+        "name": "Genere · II",
+        "note": "Il secondo criterio del genere del gioco."
+      },
+      {
+        "name": "Esclusivo",
+        "note": "Ciò che solo questo gioco fa. Il motivo per cui verrà ricordato."
+      }
+    ]
+  },
+  "telemetry": {
+    "diagnostics": "DIAGNOSTICA",
+    "title": ["Dati sul", "pilota."],
+    "kpis": {
+      "logged": "GIOCHI REGISTRATI",
+      "hours": "ORE GIOCATE",
+      "completed": "COMPLETATI",
+      "avgScore": "VOTO MEDIO"
+    },
+    "profile": ["Profilo", "pilota"],
+    "profileIntro": "L'impronta dei gusti di Peppobot: i sei assi mediati su ogni run completata.",
+    "tiers": ["Fasce", "di voto"],
+    "platforms": ["Ore per", "piattaforma"],
+    "genres": ["Scansione", "generi"],
+    "games": {
+      "one": "GIOCO",
+      "other": "GIOCHI"
+    }
+  },
+  "protocol": {
+    "howScores": "COME VENGONO CALCOLATI I VOTI",
+    "title": ["Protocollo", "di voto."],
+    "intro": "Ogni gioco è valutato da 0 a 10 su sei assi. Il voto finale è la media semplice: niente pesi nascosti, nessuna pressione dagli editori. I giochi ancora in corso non hanno voto finché non scorrono i titoli di coda.",
+    "axes": ["Sei", "assi"],
+    "axisCards": [
+      {
+        "name": "Gameplay",
+        "note": "La sensazione momento per momento: controlli, sistemi, combattimento, enigmi. Si gioca bene?"
       },
       {
         "name": "Grafica",
@@ -128,14 +174,36 @@
         "note": "Colonna sonora, sound design e doppiaggio. Mi resta in testa?"
       },
       {
-        "name": "Longevità",
-        "note": "Rigiocabilità, profondità dei contenuti e ritmo sull'intera run."
+        "name": "Genere · I",
+        "note": "Il primo criterio specifico del genere del gioco — vedi la tabella sotto."
       },
       {
-        "name": "Innovazione",
-        "note": "Idee nuove, scelte di design audaci, cose mai giocate prima."
+        "name": "Genere · II",
+        "note": "Il secondo criterio specifico del genere del gioco — vedi la tabella sotto."
+      },
+      {
+        "name": "Esclusivo",
+        "note": "Unico per questo gioco: l'elemento che lo definisce, valutato a parte. Ogni gioco ne ha uno diverso."
       }
-    ]
+    ],
+    "genreAxesHead": ["Genere", "Genere · I", "Genere · II"],
+    "genreAxes": {
+      "1": ["Narrativa", "Progressione"],
+      "2": ["Personaggi", "Sistema di combattimento"],
+      "3": ["Varietà delle build", "Feeling del combattimento"],
+      "4": ["Endgame", "Mondo di gioco"]
+    },
+    "tiers": ["Fasce", "di voto"],
+    "tierNotes": {
+      "OVERCLOCKED": "Da classifica di sempre. Giocalo subito.",
+      "OPTIMAL": "Eccellente, piccoli difetti.",
+      "STABLE": "Buono, vale il tuo tempo.",
+      "GLITCHED": "Altalenante. Solo per fan.",
+      "CORRUPTED": "Lascia perdere."
+    },
+    "about": ["Chi è il", "pilota"],
+    "aboutTitle": ["Pilota umano.", "Pazienza da robot."],
+    "aboutText": "Peppobot è un umano con la pazienza di un robot per le schermate di completamento. Gioca soprattutto GDR, roguelike e qualsiasi cosa abbia un buon parry. Le recensioni si scrivono dopo i titoli di coda, mai prima."
   },
   "findPeppobot": {
     "find": "Trova",

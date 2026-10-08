@@ -1,13 +1,12 @@
 {
   "meta": {
-    "title": "Peppobot — Pilot log // Game reports",
+    "title": "Peppobot",
     "description": "Every game Peppobot runs. Scored on six axes, reviewed without filters, tracked to the hour."
   },
   "nav": {
     "home": "Home",
     "library": "Library",
     "telemetry": "Telemetry",
-    "queue": "Queue",
     "protocol": "Protocol"
   },
   "topBar": {
@@ -116,8 +115,55 @@
         "note": "Moment-to-moment feel: controls, systems, combat, puzzles. Does it play well?"
       },
       {
-        "name": "Narrative",
-        "note": "Story, characters, writing and world-building. Does it make me care?"
+        "name": "Visuals",
+        "note": "Art direction first, raw tech second. Does it look like nothing else?"
+      },
+      {
+        "name": "Audio",
+        "note": "Soundtrack, sound design and voice work. Does it stay in my head?"
+      },
+      {
+        "name": "Genre · I",
+        "note": "The first criterion of the game's genre: what its kind lives or dies on."
+      },
+      {
+        "name": "Genre · II",
+        "note": "The second criterion of the game's genre."
+      },
+      {
+        "name": "Signature",
+        "note": "What only this game does. The thing it will be remembered for."
+      }
+    ]
+  },
+  "telemetry": {
+    "diagnostics": "DIAGNOSTICS",
+    "title": ["Pilot", "telemetry."],
+    "kpis": {
+      "logged": "GAMES LOGGED",
+      "hours": "HOURS PLAYED",
+      "completed": "COMPLETED",
+      "avgScore": "AVG SCORE"
+    },
+    "profile": ["Pilot", "profile"],
+    "profileIntro": "Peppobot's taste fingerprint — the six axes averaged across every completed run.",
+    "tiers": ["Rating", "tiers"],
+    "platforms": ["Hours by", "platform"],
+    "genres": ["Genre", "scan"],
+    "games": {
+      "one": "GAME",
+      "other": "GAMES"
+    }
+  },
+  "protocol": {
+    "howScores": "HOW SCORES ARE COMPUTED",
+    "title": ["Scoring", "protocol."],
+    "intro": "Every game is rated 0–10 on six axes. The final score is the plain average — no hidden weights, no publisher pressure. Games still in progress get no score until the credits roll.",
+    "axes": ["Six", "axes"],
+    "axisCards": [
+      {
+        "name": "Gameplay",
+        "note": "Moment-to-moment feel: controls, systems, combat, puzzles. Does it play well?"
       },
       {
         "name": "Visuals",
@@ -128,14 +174,36 @@
         "note": "Soundtrack, sound design and voice work. Does it stay in my head?"
       },
       {
-        "name": "Longevity",
-        "note": "Replay value, content depth and pacing over the full run."
+        "name": "Genre · I",
+        "note": "The first criterion specific to the game's genre — see the table below."
       },
       {
-        "name": "Innovation",
-        "note": "New ideas, bold design swings, things I have never played before."
+        "name": "Genre · II",
+        "note": "The second criterion specific to the game's genre — see the table below."
+      },
+      {
+        "name": "Signature",
+        "note": "Exclusive to this game: the one thing that defines it, scored on its own. Every game gets a different one."
       }
-    ]
+    ],
+    "genreAxesHead": ["Genre", "Genre · I", "Genre · II"],
+    "genreAxes": {
+      "1": ["Narrative", "Progression"],
+      "2": ["Characters", "Combat system"],
+      "3": ["Build variety", "Combat feel"],
+      "4": ["Endgame", "World"]
+    },
+    "tiers": ["Rating", "tiers"],
+    "tierNotes": {
+      "OVERCLOCKED": "All-time list. Play it now.",
+      "OPTIMAL": "Excellent, small flaws.",
+      "STABLE": "Good, worth your time.",
+      "GLITCHED": "Uneven. Fans only.",
+      "CORRUPTED": "Skip it."
+    },
+    "about": ["About the", "pilot"],
+    "aboutTitle": ["Human pilot.", "Robot patience."],
+    "aboutText": "Peppobot is a human with a robot's patience for completion screens. Plays mostly RPGs, roguelikes and anything with a good parry. Reviews are written after the credits, never before."
   },
   "findPeppobot": {
     "find": "Find",

@@ -37,5 +37,5 @@ async function Report({ params }: { params: PageProps<"/[lang]/library/[id]">["p
   const [{ id }, lang, dict] = await Promise.all([params, getLocale(), getDictionary()]);
   const report = await loadReport(id);
   if (!report) notFound();
-  return <GameReport report={report} lang={lang} t={dict.report} statuses={dict.library.statuses} />;
+  return <GameReport report={report} lang={lang} t={dict.report} statuses={dict.library.statuses} genreAxes={dict.protocol.genreAxes} />;
 }

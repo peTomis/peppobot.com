@@ -1,6 +1,6 @@
 import "server-only";
 import { ObjectId, type WithId } from "mongodb";
-import { PLATFORMS, type Game, type GameReport, type LibraryPage, type LibraryQuery, type LibrarySort } from "@/content/games";
+import { GENRES, PLATFORMS, type Game, type GameReport, type LibraryPage, type LibraryQuery, type LibrarySort } from "@/content/games";
 import { getDatabase } from "@/lib/mongodb";
 
 // Explicit public fields: additional database fields never leak into API responses.
@@ -97,9 +97,10 @@ export async function getLibraryPage({ q, status, sort, page }: LibraryQuery): P
   const search = q.trim();
   if (search) {
     const pattern = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
-    // Platforms are stored as ids, so match their names here.
+    // Platforms and genres are stored as ids, so match their names here.
     const platforms = Object.values(PLATFORMS).filter((platform) => pattern.test(platform.name)).map((platform) => platform.id);
-    filter.$or = [{ title: pattern }, { dev: pattern }, { genre: pattern }, { platform: { $in: platforms } }];
+    const genres = Object.values(GENRES).filter((genre) => pattern.test(genre.name)).map((genre) => genre.id);
+    filter.$or = [{ title: pattern }, { dev: pattern }, { genre: { $in: genres } }, { platform: { $in: platforms } }];
   }
 
   const [matches, total] = await Promise.all([collection.countDocuments(filter, { maxTimeMS: 5000 }), collection.countDocuments({}, { maxTimeMS: 5000 })]);
