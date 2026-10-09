@@ -81,8 +81,14 @@ export function NowPlayingCard({ game, lang, progressLabel, bg }: { game: Game; 
         {game.cover ? <Image draggable={false} src={game.cover} alt="" fill sizes="128px" className="object-cover" /> : "COVER ART"}
       </div>
       <div className="flex flex-col flex-1 min-w-0 gap-2.5">
-        <div className="font-mono text-[11px] font-bold tracking-[0.14em] uppercase">
-          {PLATFORMS[game.platform]?.name} · {GENRES[game.genre]?.name}
+        <div className="flex flex-wrap items-center gap-x-2 font-mono text-[11px] font-bold tracking-[0.14em] uppercase">
+          {PLATFORMS[game.platform] && (
+            <>
+              <PlatformLogo platform={game.platform} className="h-3" />
+              {GENRES[game.genre] && <span aria-hidden>·</span>}
+            </>
+          )}
+          {GENRES[game.genre]?.name}
         </div>
         <h3 className="font-display text-[28px] leading-none font-bold uppercase">{game.title}</h3>
         <TranslatedText text={game.description} lang={lang} className="text-[15px] leading-[1.45] font-medium" />
