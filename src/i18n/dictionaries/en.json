@@ -102,7 +102,7 @@
     "fullReport": ["Full", "report"],
     "pros": "+ Check Passed",
     "cons": "− Errors detected",
-    "alsoPlayedOn": "Also on",
+    "alsoPlayedOn": "Also played on",
     "pilotData": "Operator data",
     "gacha": {
       "file": "THREATS",

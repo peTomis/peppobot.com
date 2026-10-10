@@ -53,7 +53,8 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
   }, [localImage]);
 
   const message = useMemo<PreviewMessage>(() => {
-    const draftGame = previewGame(draft, id ?? "new");
+    // The details view shows the full report whatever the status; the images view shows the cards as the site does.
+    const draftGame = previewGame(draft, id ?? "new", view === "details");
     const game = view === "images" && localImage ? { ...draftGame, cover: localImage.url } : draftGame;
     // Links are disabled in the preview, so the database id stands in for the main game's URL id.
     const main = game.mainGame ? games.find((entry) => entry._id === game.mainGame) : null;
