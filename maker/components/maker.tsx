@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { GENRES_BY_NAME, PLATFORMS, STATUSES, type GameStatus } from "@/content/games";
+import { GACHA_LEVELS, GENRES_BY_NAME, PLATFORMS, STATUSES, type GameStatus } from "@/content/games";
 import en from "@/i18n/dictionaries/en.json";
 import type { Locale } from "@/i18n/config";
 import { saveGame } from "../app/actions";
@@ -16,6 +16,8 @@ import { PreviewFrame, type Viewport } from "./preview-frame";
 const PLATFORM_OPTIONS = Object.values(PLATFORMS).map((platform) => ({ value: platform.id, label: platform.name }));
 const GENRE_OPTIONS = GENRES_BY_NAME.map((genre) => ({ value: genre.id, label: genre.name }));
 const STATUS_OPTIONS = STATUSES.map((status) => ({ value: status, label: status }));
+// 0 stands for "no gacha", since the select cannot hold null.
+const GACHA_OPTIONS = [{ value: 0, label: "None" }, ...GACHA_LEVELS.map((level) => ({ value: level, label: `${level} · ${en.report.gacha.levels[level - 1].type}` }))];
 const AXES = en.report.axes.map((axis) => axis.name);
 
 const ended = (status: GameStatus) => status === "Completed" || status === "Dropped";
@@ -158,6 +160,9 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
             </Field>
             <Field label="Cover URL">
               <TextInput value={draft.cover} placeholder="https://…" onChange={(value) => set("cover", value)} />
+            </Field>
+            <Field label="Gacha">
+              <Select<number> value={draft.gacha ?? 0} options={GACHA_OPTIONS} onChange={(value) => set("gacha", GACHA_LEVELS.find((level) => level === value) ?? null)} />
             </Field>
           </div>
 

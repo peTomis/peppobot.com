@@ -1,4 +1,4 @@
-import { normalizeGame, type Game, type GameFields, type GameStatus, type Genre, type Platform, type ReportBlock, type Scores } from "@/content/games";
+import { normalizeGame, type Gacha, type Game, type GameFields, type GameStatus, type Genre, type Platform, type ReportBlock, type Scores } from "@/content/games";
 import type { Translated } from "@/i18n/translations";
 
 /** A report block with a key that stays the same while blocks are dragged around. */
@@ -21,6 +21,7 @@ export type Draft = {
   releasedOn: number | null;
   finishedOn: number | null;
   cover: string;
+  gacha: Gacha | null;
   description: Translated;
   signature: Translated;
   scores: (number | null)[];
@@ -50,6 +51,7 @@ export function emptyDraft(): Draft {
     releasedOn: null,
     finishedOn: null,
     cover: "",
+    gacha: null,
     description: [],
     signature: [],
     scores: EMPTY_SCORES,
@@ -77,6 +79,7 @@ export function toDraft(game: StoredGame): Draft {
     releasedOn: game.releasedOn ?? null,
     finishedOn: game.finishedOn ?? null,
     cover: game.cover ?? "",
+    gacha: game.gacha ?? null,
     description: game.description ?? [],
     signature: game.signature ?? [],
     scores: game.scores?.length === 6 ? game.scores : EMPTY_SCORES,
@@ -119,6 +122,7 @@ export function toFields(draft: Draft): Omit<GameFields, "id" | "mainGame"> & { 
     releasedOn: draft.releasedOn,
     finishedOn: draft.finishedOn,
     cover: draft.cover.trim() || null,
+    gacha: draft.gacha,
     description: clean(draft.description),
     signature: signature.length ? signature : null,
     // The radar and bars show a dash for an axis not scored yet.

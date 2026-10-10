@@ -88,6 +88,11 @@ export type ReportBlock =
 
 export type Accent = "acc" | "acc2" | "acc3";
 
+/** Gacha levels, shown as a banner on the game page's cover art. */
+export const GACHA_LEVELS = [1, 2, 3] as const;
+
+export type Gacha = (typeof GACHA_LEVELS)[number];
+
 export type Game = {
   id: string;
   title: string;
@@ -110,6 +115,8 @@ export type Game = {
   progress: number | null;
   /** Cover art URL; null shows the striped placeholder. */
   cover: string | null;
+  /** Gacha level (1–3), shown as a banner on the cover art; null for games without gacha. Only loaded on the game page. */
+  gacha: Gacha | null;
   /** Peppobot's take on the game, shown on cards and as the report's headline. */
   description: Translated;
   /** Only for finished runs (Completed or Dropped), null otherwise; only loaded on the game page. */
@@ -127,8 +134,8 @@ export type Game = {
 };
 
 /** A game as stored: optional fields may be missing, and fields that do not apply to the status may still be set. `mainGame` is an ObjectId in the database and a hex string in the maker's drafts. */
-export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover" | "alsoPlayedOn" | "dlc" | "mainGame"> &
-  Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover">> & { alsoPlayedOn?: Platform[] | null; dlc?: boolean; mainGame?: ObjectId | string | null };
+export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover" | "gacha" | "alsoPlayedOn" | "dlc" | "mainGame"> &
+  Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover" | "gacha">> & { alsoPlayedOn?: Platform[] | null; dlc?: boolean; mainGame?: ObjectId | string | null };
 
 /** The game as pages show it; `fallbackId` is used when the game has no `id` of its own. */
 export function normalizeGame(game: GameFields, fallbackId: string): Game {
@@ -145,6 +152,7 @@ export function normalizeGame(game: GameFields, fallbackId: string): Game {
     cons: ended ? (game.cons ?? null) : null,
     description: game.description ?? [],
     cover: game.cover ?? null,
+    gacha: GACHA_LEVELS.find((level) => level === game.gacha) ?? null,
     dlc: game.dlc ?? false,
     mainGame: game.dlc && game.mainGame ? String(game.mainGame) : null,
     alsoPlayedOn: (game.alsoPlayedOn ?? []).filter((platform) => platform !== game.platform),

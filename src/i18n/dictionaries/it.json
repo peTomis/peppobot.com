@@ -104,6 +104,26 @@
     "cons": "− Errori rilevati",
     "alsoPlayedOn": "Anche su",
     "pilotData": "Dati dell'operatore",
+    "gacha": {
+      "file": "MINACCE RILEVATE",
+      "none": "NESSUNO",
+      "type": "TIPO",
+      "scanComplete": "SCANSIONE COMPLETATA · 100%",
+      "levels": [
+        {
+          "title": "SISTEMA PULITO",
+          "type": "F2P FRIENDLY"
+        },
+        {
+          "title": "FILE SOSPETTO",
+          "type": "GACHA AGGRESSIVO"
+        },
+        {
+          "title": "SISTEMA COMPROMESSO",
+          "type": "PAY 2 WIN"
+        }
+      ]
+    },
     "rows": {
       "status": "STATO",
       "platform": "PIATTAFORMA",

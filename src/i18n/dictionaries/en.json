@@ -104,6 +104,26 @@
     "cons": "− Errors detected",
     "alsoPlayedOn": "Also on",
     "pilotData": "Operator data",
+    "gacha": {
+      "file": "THREATS",
+      "none": "NONE",
+      "type": "TYPE",
+      "scanComplete": "SCAN COMPLETE · 100%",
+      "levels": [
+        {
+          "title": "SYSTEM CLEAN",
+          "type": "F2P FRIENDLY"
+        },
+        {
+          "title": "SUSPICIOUS FILE",
+          "type": "GREEDY GACHA"
+        },
+        {
+          "title": "SYSTEM COMPROMISED",
+          "type": "PAY TO WIN"
+        }
+      ]
+    },
     "rows": {
       "status": "STATUS",
       "platform": "PLATFORM",

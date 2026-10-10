@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { GENRES, PLATFORMS, releaseYear, STATUS_COLORS, tierOf, type GameReport as Report, type ReportLink } from "@/content/games";
+import { GENRES, PLATFORMS, releaseYear, STATUS_COLORS, tierOf, type Gacha, type GameReport as Report, type ReportLink } from "@/content/games";
 import { localizePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { pickTranslation, type Translated } from "@/i18n/translations";
@@ -20,7 +20,15 @@ type GenreAxes = Dictionary["protocol"]["genreAxes"];
 /** Spinning hexagon shown where an image is still loading. */
 const loader = <span className="hex h-10 w-11.5 animate-[spin_1.4s_linear_infinite] bg-acc2" />;
 
-const placeholder = "grid place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_12px,#170f24_12px_24px)] p-4 text-center font-mono text-[11px] tracking-[0.12em] text-fg-dim uppercase";
+/** Look of the gacha banner per level: 1 is gacha free, 2 partial gacha, 3 full gacha. */
+const GACHA_STYLES: Record<Gacha, { color: string; icon: string; count: string; file: string | null }> = {
+  1: { color: "#ffffff", icon: "✓", count: "0/1", file: null },
+  2: { color: "var(--acc)", icon: "⚠", count: "1/2", file: "GACHA.DLL" },
+  3: { color: "var(--acc3)", icon: "⚠", count: "1/1", file: "GACHA.EXE" },
+};
+
+const placeholder =
+  "grid place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_12px,#170f24_12px_24px)] p-4 text-center font-mono text-[11px] tracking-[0.12em] text-fg-dim uppercase";
 
 /** Full game report: hero, score matrix, written report with pilot data, and neighbouring reports. */
 export function GameReport({ report, lang, t, statuses, genreAxes }: { report: Report; lang: Locale; t: Strings; statuses: Statuses; genreAxes: GenreAxes }) {
@@ -85,6 +93,7 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
               <span className="text-[10px] tracking-[0.16em]">{t.outOf}</span>
             </div>
             <DotHex fill="var(--acc)" className="absolute -bottom-8 -left-6 -z-1 h-auto w-27.5" />
+            {game.gacha && <GachaBanner level={game.gacha} t={t.gacha} />}
           </div>
 
           <div className="flex min-w-0 flex-[1_1_360px] flex-col gap-6">
@@ -150,10 +159,7 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
                     <span className="font-mono text-lg font-bold">{one.format(value)}</span>
                   </div>
                   <div className="h-5.5 bg-surface [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)]">
-                    <div
-                      style={{ width: `${value * 10}%` }}
-                      className={`h-full [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)] ${index % 2 ? "bg-acc2" : "bg-acc"}`}
-                    />
+                    <div style={{ width: `${value * 10}%` }} className={`h-full [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)] ${index % 2 ? "bg-acc2" : "bg-acc"}`} />
                   </div>
                   <p className="text-[13px] leading-normal text-fg-dim">{t.axes[index].note}</p>
                 </li>
@@ -176,7 +182,9 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
             )}
           </article>
         )}
-        <aside className={`flex flex-col gap-1 bg-acc2 p-7 text-bg [clip-path:polygon(28px_0,100%_0,100%_100%,0_100%,0_28px)] ${hasReport ? "desk:sticky desk:top-24 desk:w-80 desk:shrink-0" : "desk:w-full"}`}>
+        <aside
+          className={`flex flex-col gap-1 bg-acc2 p-7 text-bg [clip-path:polygon(28px_0,100%_0,100%_100%,0_100%,0_28px)] ${hasReport ? "desk:sticky desk:top-24 desk:w-80 desk:shrink-0" : "desk:w-full"}`}
+        >
           <span className="pb-2.5 font-display text-[22px] font-bold tracking-[0.06em] uppercase">{t.pilotData}</span>
           <dl className="contents">
             {data.map((row) => (
@@ -261,13 +269,47 @@ function Verdicts({ title, items, lang, className }: { title: string; items: Tra
   );
 }
 
+/** Virus-scan style card over the cover art, telling how much gacha the game has. */
+function GachaBanner({ level, t }: { level: Gacha; t: Strings["gacha"] }) {
+  const style = GACHA_STYLES[level];
+  const strings = t.levels[level - 1];
+  return (
+    <div style={{ "--c": style.color } as CSSProperties} className="absolute right-3 bottom-16 -left-4.5 flex -rotate-2 flex-col border-2 border-(--c) bg-(--c) font-mono text-fg">
+      {/* The card's own background is the level colour: once rotated, the seams between its border and the sections blend into it instead of showing dark hairlines. */}
+      <div className="h-2.5 bg-[repeating-linear-gradient(135deg,var(--c)_0_8px,var(--bg)_8px_16px)]" />
+      <div className="flex items-center justify-between gap-2 bg-(--c) px-3 py-2 text-[11px] font-bold tracking-[0.08em] text-bg">
+        <span className="min-w-0 truncate">
+          {style.icon} {strings.title}
+        </span>
+        <span>1/1</span>
+      </div>
+      <div className="flex flex-col gap-1.5 bg-bg px-3 pt-2.5 pb-3 text-[11px] leading-[1.4] tracking-[0.06em]">
+        <div className="flex justify-between gap-2">
+          <span className="text-fg-dim">{t.file}</span>
+          <span className="font-bold text-(--c)">{style.file ?? t.none}</span>
+        </div>
+        <div className="flex justify-between gap-2">
+          <span className="text-fg-dim">{t.type}</span>
+          <span className="font-bold">{strings.type}</span>
+        </div>
+        <div className="mt-1 h-1.5 bg-[#2a1b40]">
+          <div className="h-full bg-[repeating-linear-gradient(90deg,var(--acc)_0_6px,transparent_6px_8px)]" />
+        </div>
+        <span className="text-[10px] tracking-[0.12em] text-fg-dim">{t.scanComplete}</span>
+      </div>
+    </div>
+  );
+}
+
 function Neighbour({ link, label, lang, direction }: { link: ReportLink; label: string; lang: Locale; direction: "prev" | "next" }) {
   const prev = direction === "prev";
   return (
     <Link
       href={gameHref(lang, link.id)}
       className={`flex flex-col gap-2 bg-surface py-6 text-fg hover:bg-surface-hover hover:text-fg ${
-        prev ? "pr-6 pl-11 [clip-path:polygon(24px_0,100%_0,100%_100%,24px_100%,0_50%)]" : "pr-11 pl-6 text-right [clip-path:polygon(0_0,calc(100%-24px)_0,100%_50%,calc(100%-24px)_100%,0_100%)]"
+        prev
+          ? "pr-6 pl-11 [clip-path:polygon(24px_0,100%_0,100%_100%,24px_100%,0_50%)]"
+          : "pr-11 pl-6 text-right [clip-path:polygon(0_0,calc(100%-24px)_0,100%_50%,calc(100%-24px)_100%,0_100%)]"
       }`}
     >
       <span className={`font-mono text-[11px] font-bold tracking-[0.14em] ${prev ? "text-acc2" : "text-acc"}`}>{label}</span>
