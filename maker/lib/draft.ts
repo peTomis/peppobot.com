@@ -135,11 +135,11 @@ export function toFields(draft: Draft): Omit<GameFields, "id" | "mainGame"> & { 
   };
 }
 
-/** The game as the site would show it. With `full`, what the site only shows for ended runs (score, pros, cons, report) is kept whatever the status, so it can be checked while the run goes on. */
+/** The game as the site would show it. With `full`, what the site only shows for ended runs (score, pros, cons, report, gacha) is kept whatever the status, so it can be checked while the run goes on. */
 export function previewGame(draft: Draft, fallbackId: string, full = false): Game {
   const { id, ...fields } = toFields(draft);
   const game = normalizeGame({ ...fields, id }, fallbackId);
-  return full ? { ...game, scores: fields.scores, average: fields.average, pros: fields.pros ?? null, cons: fields.cons ?? null, blocks: fields.blocks ?? null } : game;
+  return full ? { ...game, scores: fields.scores, average: fields.average, pros: fields.pros ?? null, cons: fields.cons ?? null, blocks: fields.blocks ?? null, gacha: fields.gacha ?? null } : game;
 }
 
 /** `YYYY-MM-DD` in UTC, as the site reads dates, for date inputs. */

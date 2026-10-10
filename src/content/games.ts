@@ -115,7 +115,7 @@ export type Game = {
   progress: number | null;
   /** Cover art URL; null shows the striped placeholder. */
   cover: string | null;
-  /** Gacha level (1–3), shown as a banner on the cover art; null for games without gacha. Only loaded on the game page. */
+  /** Gacha level (1–3), shown as a banner on the cover art; only for finished runs (Completed or Dropped), null otherwise or for games without gacha. Only loaded on the game page. */
   gacha: Gacha | null;
   /** Peppobot's take on the game, shown on cards and as the report's headline. */
   description: Translated;
@@ -139,7 +139,7 @@ export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "bloc
 
 /** The game as pages show it; `fallbackId` is used when the game has no `id` of its own. */
 export function normalizeGame(game: GameFields, fallbackId: string): Game {
-  // Only ended runs have a score, an end date, pros and cons, whatever the document holds.
+  // Only ended runs have a score, an end date, pros, cons and a gacha level, whatever the document holds.
   const ended = game.status === "Completed" || game.status === "Dropped";
   return {
     ...game,
@@ -152,7 +152,7 @@ export function normalizeGame(game: GameFields, fallbackId: string): Game {
     cons: ended ? (game.cons ?? null) : null,
     description: game.description ?? [],
     cover: game.cover ?? null,
-    gacha: GACHA_LEVELS.find((level) => level === game.gacha) ?? null,
+    gacha: ended ? (GACHA_LEVELS.find((level) => level === game.gacha) ?? null) : null,
     dlc: game.dlc ?? false,
     mainGame: game.dlc && game.mainGame ? String(game.mainGame) : null,
     alsoPlayedOn: (game.alsoPlayedOn ?? []).filter((platform) => platform !== game.platform),

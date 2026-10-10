@@ -19,7 +19,7 @@ Read `README.md` first. Two Next.js apps share this repo, its `node_modules` and
 
 - `src/` must not import from `maker/`. The maker imports from `src/` through `@/*` (mapped to `../src/*` in `maker/tsconfig.json`), so changes to shared code (`src/content/games.ts`, `src/components/game-report.tsx`, the dictionaries, `src/lib/mongodb.ts`, `src/app/fonts.ts`) affect both apps. Check the maker when you change them.
 - `src/content/games.ts` is the schema. When you add a game field, update `GameFields` and `normalizeGame`, the projections in `src/lib/games.ts` (fields are listed explicitly), and the maker's `Draft`, `emptyDraft`, `toDraft`, `toFields` in `maker/lib/draft.ts` plus its form.
-- Fields that only apply to ended runs (`scores`, `average`, `finishedOn`, `pros`, `cons`) are hidden by `normalizeGame` for other statuses. Do not rely on them being null in the database.
+- Fields that only apply to ended runs (`scores`, `average`, `finishedOn`, `pros`, `cons`, `gacha`) are hidden by `normalizeGame` for other statuses. Do not rely on them being null in the database.
 - Platforms and genres are stored as numeric ids. Never renumber the existing ones in `PLATFORMS` / `GENRES`. Add new ids at the end. A new genre also needs its two axis criteria in `protocol.genreAxes` in both dictionaries.
 - Content texts are `Translated` (`{ key, value }[]`) and are read with `pickTranslation()`. UI strings go in `src/i18n/dictionaries/{en,it}.json`, which must have the same keys (`en.json` defines the type).
 - Code under `src/lib/` is `server-only`. Client components receive data and strings as props.
