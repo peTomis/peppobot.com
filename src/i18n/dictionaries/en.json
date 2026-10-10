@@ -220,12 +220,30 @@
     },
     "genreAxesHead": ["Genre", "Genre · I", "Genre · II"],
     "genreAxes": {
-      "1": ["Narrative", "Progression"],
-      "2": ["Characters", "Combat system"],
-      "3": ["Build variety", "Combat feel"],
-      "4": ["Endgame", "Balance"],
-      "5": ["Creativity", "Freedom"],
-      "6": ["Level design", "Controls"]
+      "1": [
+        { "name": "Narrative", "note": "Story, writing and choices. Does the world have something to say, and do my decisions actually change it?" },
+        { "name": "Progression", "note": "Levels, skills and gear over the long run. Does getting stronger feel earned, and does it change how I play?" }
+      ],
+      "2": [
+        { "name": "Characters", "note": "The party and the cast around it. By the final boss, do I care about who I travelled with?" },
+        { "name": "Combat system", "note": "Turns, gauges, timelines and combos. Is the battle system still deep after the hundredth encounter?" }
+      ],
+      "3": [
+        { "name": "Build & loot", "note": "Build variety, synergies, and progression. Is experimenting rewarding?" },
+        { "name": "Endgame", "note": "Challenges and replayability. Is the grind fun, or is it all about the rewards?" }
+      ],
+      "4": [
+        { "name": "Endgame", "note": "Raids, dungeons and content at the level cap. Is there still a reason to log in once the levelling is over?" },
+        { "name": "Balance", "note": "Classes, roles and economy. Does every playstyle have a place, or has the meta already solved the game?" }
+      ],
+      "5": [
+        { "name": "Creativity", "note": "The tools to build and express. How far can I go beyond what the developers imagined?" },
+        { "name": "Freedom", "note": "Open goals and systemic play. Does the world let me set my own objectives and reach them my way?" }
+      ],
+      "6": [
+        { "name": "Level design", "note": "Layout, pacing and secrets. Does every stage teach something new and then put it to the test?" },
+        { "name": "Controls", "note": "Jumps, momentum and precision. When I fall, is it always my fault and never the controller's?" }
+      ]
     },
     "tiers": ["Rating", "tiers"],
     "tierNotes": {

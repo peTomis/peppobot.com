@@ -24,6 +24,7 @@ export type Draft = {
   gacha: Gacha | null;
   description: Translated;
   signature: Translated;
+  signatureDescription: Translated;
   scores: (number | null)[];
   pros: Translated[];
   cons: Translated[];
@@ -54,6 +55,7 @@ export function emptyDraft(): Draft {
     gacha: null,
     description: [],
     signature: [],
+    signatureDescription: [],
     scores: EMPTY_SCORES,
     pros: [],
     cons: [],
@@ -82,6 +84,7 @@ export function toDraft(game: StoredGame): Draft {
     gacha: game.gacha ?? null,
     description: game.description ?? [],
     signature: game.signature ?? [],
+    signatureDescription: game.signatureDescription ?? [],
     scores: game.scores?.length === 6 ? game.scores : EMPTY_SCORES,
     pros: game.pros ?? [],
     cons: game.cons ?? [],
@@ -105,6 +108,7 @@ export function toFields(draft: Draft): Omit<GameFields, "id" | "mainGame"> & { 
   const pros = draft.pros.map(clean).filter((text) => text.length);
   const cons = draft.cons.map(clean).filter((text) => text.length);
   const signature = clean(draft.signature);
+  const signatureDescription = clean(draft.signatureDescription);
   const alsoPlayedOn = draft.alsoPlayedOn.filter((platform) => platform !== draft.platform);
   const scored = draft.scores.some((score) => score != null);
   return {
@@ -125,6 +129,7 @@ export function toFields(draft: Draft): Omit<GameFields, "id" | "mainGame"> & { 
     gacha: draft.gacha,
     description: clean(draft.description),
     signature: signature.length ? signature : null,
+    signatureDescription: signatureDescription.length ? signatureDescription : null,
     // The radar and bars show a dash for an axis not scored yet.
     scores: scored ? (draft.scores as Scores) : null,
     average: averageOf(draft.scores),

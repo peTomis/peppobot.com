@@ -173,6 +173,9 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
           <Field label="Signature (what only this game does)">
             <TranslatedInput value={draft.signature} onChange={(value) => set("signature", value)} />
           </Field>
+          <Field label="Signature description (shown under the axis in the score matrix)">
+            <TranslatedInput multiline value={draft.signatureDescription} onChange={(value) => set("signatureDescription", value)} />
+          </Field>
 
           <Section title="Scores" actions={<span className={labelClass}>Average {average != null ? average.toFixed(1) : "—"}</span>}>
             {!ended(draft.status) && <p className="text-xs text-fg-dim">Scores, pros and cons show on the site only for completed or dropped runs.</p>}

@@ -220,12 +220,30 @@
     },
     "genreAxesHead": ["Genere", "Genere · I", "Genere · II"],
     "genreAxes": {
-      "1": ["Narrativa", "Progressione"],
-      "2": ["Personaggi", "Sistema di combattimento"],
-      "3": ["Varietà delle build", "Feeling del combattimento"],
-      "4": ["Endgame", "Bilanciamento"],
-      "5": ["Creatività", "Libertà"],
-      "6": ["Level design", "Controlli"]
+      "1": [
+        { "name": "Narrativa", "note": "Storia, scrittura e scelte. Il mondo ha qualcosa da dire, e le mie decisioni lo cambiano davvero?" },
+        { "name": "Progressione", "note": "Livelli, abilità ed equipaggiamento sulla lunga distanza. Diventare più forti è una conquista, e cambia il modo in cui gioco?" }
+      ],
+      "2": [
+        { "name": "Personaggi", "note": "Il party e il cast che lo circonda. Al boss finale, mi importa di chi ha viaggiato con me?" },
+        { "name": "Sistema di combattimento", "note": "Turni, barre, timeline e combo. Il sistema di combattimento resta profondo anche al centesimo scontro?" }
+      ],
+      "3": [
+        { "name": "Build & loot", "note": "Varietà delle build, sinergie e progressione. Sperimentare dà soddisfazione?" },
+        { "name": "Endgame", "note": "Sfide e rigiocabilità. Il farming diverte o conta soltanto la ricompensa?" }
+      ],
+      "4": [
+        { "name": "Endgame", "note": "Raid, dungeon e contenuti al livello massimo. C'è ancora un motivo per collegarsi una volta finito di livellare?" },
+        { "name": "Bilanciamento", "note": "Classi, ruoli ed economia. Ogni stile di gioco ha il suo spazio, o il meta ha già risolto il gioco?" }
+      ],
+      "5": [
+        { "name": "Creatività", "note": "Gli strumenti per costruire ed esprimersi. Fin dove posso spingermi oltre ciò che gli sviluppatori avevano immaginato?" },
+        { "name": "Libertà", "note": "Obiettivi aperti e gioco sistemico. Il mondo mi lascia scegliere i miei obiettivi e raggiungerli a modo mio?" }
+      ],
+      "6": [
+        { "name": "Level design", "note": "Struttura, ritmo e segreti. Ogni livello insegna qualcosa di nuovo e poi lo mette alla prova?" },
+        { "name": "Controlli", "note": "Salti, inerzia e precisione. Quando cado, è sempre colpa mia e mai del controller?" }
+      ]
     },
     "tiers": ["Fasce", "di voto"],
     "tierNotes": {

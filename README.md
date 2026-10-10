@@ -59,7 +59,7 @@ The content lives in MongoDB. There is no seed data and no static fallback.
 
 One document per game, matching `GameFields` in [`src/content/games.ts`](src/content/games.ts). Pages use the optional string `id` as the URL slug; a game without one is reached by its `_id`. Suggested indexes: unique `{ id: 1 }` (sparse), `{ finishedOn: -1, _id: 1 }`, `{ status: 1 }`.
 
-Texts written by Peppobot (description, signature, pros, cons, report blocks) are stored as `Translated`, a list of `{ key: "en" | "it", value }`. `pickTranslation()` shows the page's language, then English, then whatever exists.
+Texts written by Peppobot (description, signature and its description, pros, cons, report blocks) are stored as `Translated`, a list of `{ key: "en" | "it", value }`. `pickTranslation()` shows the page's language, then English, then whatever exists.
 
 Dates (`releasedOn`, `finishedOn`) are Unix timestamps in milliseconds, read in UTC.
 

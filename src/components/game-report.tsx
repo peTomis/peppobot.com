@@ -33,10 +33,14 @@ const placeholder =
 /** Full game report: hero, score matrix, written report with pilot data, and neighbouring reports. */
 export function GameReport({ report, lang, t, statuses, genreAxes }: { report: Report; lang: Locale; t: Strings; statuses: Statuses; genreAxes: GenreAxes }) {
   const { game } = report;
-  // The genre axes take the names of the game's genre criteria, the signature axis the game's own.
-  const criteria: readonly string[] = genreAxes[game.genre] ?? [];
-  const signature = pickTranslation(game.signature, lang)?.value;
-  const axisNames = t.axes.map((axis, index) => (index === 3 || index === 4 ? (criteria[index - 3] ?? axis.name) : index === 5 ? (signature ?? axis.name) : axis.name));
+  // The genre axes take the names and notes of the game's genre criteria, the signature axis the game's own.
+  const criteria: readonly { name: string; note: string }[] = genreAxes[game.genre] ?? [];
+  const signature = { name: pickTranslation(game.signature, lang)?.value, note: pickTranslation(game.signatureDescription, lang)?.value };
+  const axes = t.axes.map((axis, index) => {
+    const own = index === 3 || index === 4 ? criteria[index - 3] : index === 5 ? signature : undefined;
+    return { name: own?.name ?? axis.name, note: own?.note ?? axis.note };
+  });
+  const axisNames = axes.map((axis) => axis.name);
   const one = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const tier = game.average != null ? tierOf(game.average) : null;
   const statusColor = STATUS_COLORS[game.status];
@@ -161,7 +165,7 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
                   <div className="h-5.5 bg-surface [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)]">
                     <div style={{ width: `${value * 10}%` }} className={`h-full [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)] ${index % 2 ? "bg-acc2" : "bg-acc"}`} />
                   </div>
-                  <p className="text-[13px] leading-normal text-fg-dim">{t.axes[index].note}</p>
+                  <p className="text-[13px] leading-normal text-fg-dim">{axes[index].note}</p>
                 </li>
               ))}
             </ul>

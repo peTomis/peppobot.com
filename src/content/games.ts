@@ -127,6 +127,8 @@ export type Game = {
   blocks: ReportBlock[] | null;
   /** What only this game does, scored on the Signature axis. Expected on finished runs (Completed or Dropped), optional otherwise; null when missing. Only loaded on the game page. */
   signature: Translated | null;
+  /** What the Signature axis measures for this game, shown under it in the score matrix; null shows the generic note. Only loaded on the game page. */
+  signatureDescription: Translated | null;
   /** Only for finished runs (Completed or Dropped); null while playing. */
   scores: Scores | null;
   /** Only for finished runs (Completed or Dropped); null while playing. */
@@ -134,8 +136,8 @@ export type Game = {
 };
 
 /** A game as stored: optional fields may be missing, and fields that do not apply to the status may still be set. `mainGame` is an ObjectId in the database and a hex string in the maker's drafts. */
-export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover" | "gacha" | "alsoPlayedOn" | "dlc" | "mainGame"> &
-  Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "blocks" | "cover" | "gacha">> & { alsoPlayedOn?: Platform[] | null; dlc?: boolean; mainGame?: ObjectId | string | null };
+export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "signatureDescription" | "blocks" | "cover" | "gacha" | "alsoPlayedOn" | "dlc" | "mainGame"> &
+  Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "signatureDescription" | "blocks" | "cover" | "gacha">> & { alsoPlayedOn?: Platform[] | null; dlc?: boolean; mainGame?: ObjectId | string | null };
 
 /** The game as pages show it; `fallbackId` is used when the game has no `id` of its own. */
 export function normalizeGame(game: GameFields, fallbackId: string): Game {
@@ -157,6 +159,7 @@ export function normalizeGame(game: GameFields, fallbackId: string): Game {
     mainGame: game.dlc && game.mainGame ? String(game.mainGame) : null,
     alsoPlayedOn: (game.alsoPlayedOn ?? []).filter((platform) => platform !== game.platform),
     signature: game.signature ?? null,
+    signatureDescription: game.signatureDescription ?? null,
     blocks: game.blocks?.length ? game.blocks : null,
   };
 }

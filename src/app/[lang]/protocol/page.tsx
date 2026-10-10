@@ -83,8 +83,8 @@ export default async function ProtocolPage() {
                 <th scope="row" className="text-left font-display text-[17px] leading-[1.1] font-bold text-fg uppercase">
                   {genre.name}
                 </th>
-                <td className="text-sm leading-[1.3] text-fg-muted">{t.genreAxes[genre.id][0]}</td>
-                <td className="text-sm leading-[1.3] text-fg-muted">{t.genreAxes[genre.id][1]}</td>
+                <td className="text-sm leading-[1.3] text-fg-muted">{t.genreAxes[genre.id][0].name}</td>
+                <td className="text-sm leading-[1.3] text-fg-muted">{t.genreAxes[genre.id][1].name}</td>
               </tr>
             ))}
           </tbody>
