@@ -225,8 +225,8 @@
         { "name": "Progressione", "note": "Livelli, abilità ed equipaggiamento sulla lunga distanza. Diventare più forti è una conquista, e cambia il modo in cui gioco?" }
       ],
       "2": [
-        { "name": "Personaggi", "note": "Il party e il cast che lo circonda. Al boss finale, mi importa di chi ha viaggiato con me?" },
-        { "name": "Sistema di combattimento", "note": "Turni, barre, timeline e combo. Il sistema di combattimento resta profondo anche al centesimo scontro?" }
+        { "name": "Storia e personaggi", "note": "Valuta trama, ritmo narrativo, qualità dei dialoghi, caratterizzazione, relazioni tra i personaggi e costruzione del mondo di gioco." },
+        { "name": "Progressione", "note": "Profondità della progressione, varietà delle build e libertà di personalizzazione. Sviluppare il party è appagante?" }
       ],
       "3": [
         { "name": "Build & loot", "note": "Varietà delle build, sinergie e progressione. Sperimentare dà soddisfazione?" },

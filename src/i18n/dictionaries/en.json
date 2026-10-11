@@ -225,8 +225,8 @@
         { "name": "Progression", "note": "Levels, skills and gear over the long run. Does getting stronger feel earned, and does it change how I play?" }
       ],
       "2": [
-        { "name": "Characters", "note": "The party and the cast around it. By the final boss, do I care about who I travelled with?" },
-        { "name": "Combat system", "note": "Turns, gauges, timelines and combos. Is the battle system still deep after the hundredth encounter?" }
+        { "name": "Story & characters", "note": "Evaluates plot, narrative pacing, dialogue quality, characterization, character relationships, and worldbuilding." },
+        { "name": "Progression", "note": "Progression depth, build variety, and customization freedom. Is developing your party rewarding?" }
       ],
       "3": [
         { "name": "Build & loot", "note": "Build variety, synergies, and progression. Is experimenting rewarding?" },
