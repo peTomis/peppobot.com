@@ -43,7 +43,11 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
   const axisNames = axes.map((axis) => axis.name);
   const one = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const tier = game.average != null ? tierOf(game.average) : null;
-  const statusColor = STATUS_COLORS[game.status];
+  // A corrupted game takes the corrupted colour where the report is otherwise green or purple.
+  const corrupted = tier?.label === "CORRUPTED" ? tier.color : null;
+  // A glitched game takes the glitched colour on the status, the score matrix's purple, the cons and the operator data.
+  const glitched = tier?.label === "GLITCHED" ? tier.color : null;
+  const statusColor = corrupted ?? glitched ?? STATUS_COLORS[game.status];
   const platform = PLATFORMS[game.platform] ? <PlatformLogo platform={game.platform} /> : null;
   const year = releaseYear(game) ?? t.tba;
   const logged = game.finishedOn != null && new Intl.DateTimeFormat(lang, { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" }).format(game.finishedOn);
@@ -96,8 +100,8 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
               <span className="text-[46px] leading-none">{game.average != null ? one.format(game.average) : "—"}</span>
               <span className="text-[10px] tracking-[0.16em]">{t.outOf}</span>
             </div>
-            <DotHex fill="var(--acc)" className="absolute -bottom-8 -left-6 -z-1 h-auto w-27.5" />
-            {game.gacha && <GachaBanner level={game.gacha} t={t.gacha} />}
+            <DotHex fill={corrupted ? "var(--acc2)" : "var(--acc)"} className="absolute -bottom-8 -left-6 -z-1 h-auto w-27.5" />
+            {game.gacha && <GachaBanner level={game.gacha} t={t.gacha} cleanColor={corrupted ? "var(--acc2)" : undefined} />}
           </div>
 
           <div className="flex min-w-0 flex-[1_1_360px] flex-col gap-6">
@@ -152,9 +156,15 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
 
       {game.scores && (
         <section aria-labelledby="score-matrix" className="flex flex-col gap-10">
-          <SectionHeading id="score-matrix" index={nextIndex()} first={t.scoreMatrix[0]} second={t.scoreMatrix[1]} accent="acc2" small />
+          <SectionHeading id="score-matrix" index={nextIndex()} first={t.scoreMatrix[0]} second={t.scoreMatrix[1]} accent="acc2" color={glitched ?? undefined} small />
           <div className="grid grid-cols-1 items-center gap-16 desk:grid-cols-2">
-            <Radar values={game.scores} labels={axisNames} format={one} />
+            <Radar
+              values={game.scores}
+              labels={axisNames}
+              format={one}
+              {...(corrupted && { color: corrupted, valueColor: "var(--acc2)" })}
+              {...(glitched && { color: glitched })}
+            />
             <ul className="flex flex-col gap-4.5">
               {game.scores.map((value, index) => (
                 <li key={index} className="flex flex-col gap-2">
@@ -163,7 +173,10 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
                     <span className="font-mono text-lg font-bold">{one.format(value)}</span>
                   </div>
                   <div className="h-5.5 bg-surface [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)]">
-                    <div style={{ width: `${value * 10}%` }} className={`h-full [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)] ${index % 2 ? "bg-acc2" : "bg-acc"}`} />
+                    <div
+                      style={{ width: `${value * 10}%`, background: index % 2 ? (glitched ?? "var(--acc2)") : (corrupted ?? "var(--acc)") }}
+                      className="h-full [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)]"
+                    />
                   </div>
                   <p className="text-[13px] leading-normal text-fg-dim">{axes[index].note}</p>
                 </li>
@@ -176,18 +189,19 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
       <div className="flex flex-col gap-14 desk:flex-row desk:items-start">
         {hasReport && (
           <article aria-labelledby="full-report" className="flex min-w-0 flex-1 flex-col gap-8">
-            <SectionHeading id="full-report" index={nextIndex()} first={t.fullReport[0]} second={t.fullReport[1]} accent="acc" small />
+            <SectionHeading id="full-report" index={nextIndex()} first={t.fullReport[0]} second={t.fullReport[1]} accent={corrupted ? "acc2" : "acc"} small />
             {game.blocks && <ReportBlocks blocks={game.blocks} lang={lang} />}
             {Boolean(game.pros?.length || game.cons?.length) && (
               <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] gap-3 pt-2">
                 {game.pros?.length ? <Verdicts title={t.pros} items={game.pros} lang={lang} className="bg-acc" /> : null}
-                {game.cons?.length ? <Verdicts title={t.cons} items={game.cons} lang={lang} className="bg-acc3" /> : null}
+                {game.cons?.length ? <Verdicts title={t.cons} items={game.cons} lang={lang} className={glitched ? "" : "bg-acc3"} style={glitched ? { background: glitched } : undefined} /> : null}
               </div>
             )}
           </article>
         )}
         <aside
-          className={`flex flex-col gap-1 bg-acc2 p-7 text-bg [clip-path:polygon(28px_0,100%_0,100%_100%,0_100%,0_28px)] ${hasReport ? "desk:sticky desk:top-24 desk:w-80 desk:shrink-0" : "desk:w-full"}`}
+          style={{ background: corrupted ?? glitched ?? "var(--acc2)" }}
+          className={`flex flex-col gap-1 p-7 text-bg [clip-path:polygon(28px_0,100%_0,100%_100%,0_100%,0_28px)] ${hasReport ? "desk:sticky desk:top-24 desk:w-80 desk:shrink-0" : "desk:w-full"}`}
         >
           <span className="pb-2.5 font-display text-[22px] font-bold tracking-[0.06em] uppercase">{t.pilotData}</span>
           <dl className="contents">
@@ -257,9 +271,9 @@ export function GameReportSkeleton({ t }: { t: Strings }) {
   );
 }
 
-function Verdicts({ title, items, lang, className }: { title: string; items: Translated[]; lang: Locale; className: string }) {
+function Verdicts({ title, items, lang, className, style }: { title: string; items: Translated[]; lang: Locale; className: string; style?: CSSProperties }) {
   return (
-    <div className={`flex flex-col gap-3.5 p-6.5 text-bg [clip-path:polygon(0_0,calc(100%-24px)_0,100%_24px,100%_100%,0_100%)] ${className}`}>
+    <div style={style} className={`flex flex-col gap-3.5 p-6.5 text-bg [clip-path:polygon(0_0,calc(100%-24px)_0,100%_24px,100%_100%,0_100%)] ${className}`}>
       <span className="font-display text-[22px] font-bold tracking-[0.06em] uppercase">{title}</span>
       <ul className="flex flex-col gap-3.5">
         {items.map((item, index) => (
@@ -274,8 +288,8 @@ function Verdicts({ title, items, lang, className }: { title: string; items: Tra
 }
 
 /** Virus-scan style card over the cover art, telling how much gacha the game has. */
-function GachaBanner({ level, t }: { level: Gacha; t: Strings["gacha"] }) {
-  const style = GACHA_STYLES[level];
+function GachaBanner({ level, t, cleanColor }: { level: Gacha; t: Strings["gacha"]; cleanColor?: string }) {
+  const style = level === 1 && cleanColor ? { ...GACHA_STYLES[1], color: cleanColor } : GACHA_STYLES[level];
   const strings = t.levels[level - 1];
   return (
     <div style={{ "--c": style.color } as CSSProperties} className="absolute right-3 bottom-16 -left-4.5 flex -rotate-2 flex-col border-2 border-(--c) bg-(--c) font-mono text-fg">

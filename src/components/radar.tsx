@@ -14,8 +14,20 @@ function point(i: number, r: number) {
 
 const polygon = (radii: number[]) => radii.map((r, i) => point(i, r).map((n) => n.toFixed(1)).join(",")).join(" ");
 
-/** Six-axis 0–10 radar with labelled corners, in the order of `AXES`; a null value draws at the centre and shows a dash. */
-export function Radar({ values: axisValues, labels: axisLabels, format }: { values: (number | null)[]; labels: string[]; format: Intl.NumberFormat }) {
+/** Six-axis 0–10 radar with labelled corners, in the order of `AXES`; a null value draws at the centre and shows a dash. `color` fills the shape, `valueColor` the numbers. */
+export function Radar({
+  values: axisValues,
+  labels: axisLabels,
+  format,
+  color = "var(--acc2)",
+  valueColor = "var(--acc)",
+}: {
+  values: (number | null)[];
+  labels: string[];
+  format: Intl.NumberFormat;
+  color?: string;
+  valueColor?: string;
+}) {
   const values = CORNERS.map((axis) => axisValues[axis] ?? null);
   const labels = CORNERS.map((axis) => axisLabels[axis] ?? "");
   const rings = [5, 4, 3, 2, 1].map((k) => polygon(Array(6).fill((R * k) / 5)));
@@ -28,7 +40,7 @@ export function Radar({ values: axisValues, labels: axisLabels, format }: { valu
           <polygon key={index} points={points} className={`stroke-line ${index ? "fill-none" : "fill-surface"}`} />
         ))}
         <path d={axes} className="stroke-line" />
-        <polygon points={polygon(labels.map((_, i) => (R * (values[i] ?? 0)) / 10))} className="fill-acc2/80 stroke-acc2 stroke-2 [stroke-linejoin:round]" />
+        <polygon points={polygon(labels.map((_, i) => (R * (values[i] ?? 0)) / 10))} style={{ fill: color, fillOpacity: 0.8, stroke: color }} className="stroke-2 [stroke-linejoin:round]" />
       </svg>
       {labels.map((label, i) => {
         const [x, y] = point(i, R + 34);
@@ -36,7 +48,7 @@ export function Radar({ values: axisValues, labels: axisLabels, format }: { valu
         return (
           <div key={i} style={{ left: `${x / 3}%`, top: `${y / 3}%` }} className="absolute flex w-max max-w-32 flex-col items-center gap-0.5 text-center font-display font-bold -translate-x-1/2 -translate-y-1/2">
             <span className="text-[13px] leading-tight tracking-widest text-balance text-fg-muted uppercase">{label}</span>
-            <span className="text-[22px] leading-none text-acc">{value != null ? format.format(value) : "—"}</span>
+            <span style={{ color: valueColor }} className="text-[22px] leading-none">{value != null ? format.format(value) : "—"}</span>
           </div>
         );
       })}
