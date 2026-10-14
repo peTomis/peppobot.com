@@ -21,11 +21,11 @@ type GenreAxes = Dictionary["protocol"]["genreAxes"];
 /** Spinning hexagon shown where an image is still loading. */
 const loader = <span className="hex h-10 w-11.5 animate-[spin_1.4s_linear_infinite] bg-acc2" />;
 
-/** Look of the gacha banner per level: 1 is gacha free, 2 partial gacha, 3 full gacha. */
-const GACHA_STYLES: Record<Gacha, { color: string; icon: string; count: string; file: string | null }> = {
-  1: { color: "#ffffff", icon: "✓", count: "0/1", file: null },
+/** Look of the gacha banner per level: 1 is F2P friendly, 2 greedy, 3 pay to win. `count` places the level on the 0–2 scale; the protocol page shows the same scale. */
+export const GACHA_STYLES: Record<Gacha, { color: string; icon: string; count: string; file: string | null }> = {
+  1: { color: "#ffffff", icon: "✓", count: "0/2", file: null },
   2: { color: "var(--acc)", icon: "⚠", count: "1/2", file: "GACHA.DLL" },
-  3: { color: "var(--acc3)", icon: "⚠", count: "1/1", file: "GACHA.EXE" },
+  3: { color: "var(--acc3)", icon: "⚠", count: "2/2", file: "GACHA.EXE" },
 };
 
 const placeholder =
@@ -300,7 +300,7 @@ function GachaBanner({ level, t, cleanColor }: { level: Gacha; t: Strings["gacha
         <span className="min-w-0 truncate">
           {style.icon} {strings.title}
         </span>
-        <span>1/1</span>
+        <span>{style.count}</span>
       </div>
       <div className="flex flex-col gap-1.5 bg-bg px-3 pt-2.5 pb-3 text-[11px] leading-[1.4] tracking-[0.06em]">
         <div className="flex justify-between gap-2">

@@ -9,7 +9,23 @@ const STROKES: Record<Accent, { large: string; small: string }> = {
 };
 
 /** Numbered section heading: hexagon index, solid word, outlined word. `small` is the inner-page size; `color` overrides the accent with any CSS colour. */
-export function SectionHeading({ id, index, first, second, accent, color, small = false }: { id: string; index: string; first: string; second: string; accent: Accent; color?: string; small?: boolean }) {
+export function SectionHeading({
+  id,
+  index,
+  first,
+  second,
+  accent,
+  color,
+  small = false,
+}: {
+  id: string;
+  index: string;
+  first: string;
+  second: string;
+  accent: Accent;
+  color?: string;
+  small?: boolean;
+}) {
   return (
     <div className="flex items-center gap-5">
       <span

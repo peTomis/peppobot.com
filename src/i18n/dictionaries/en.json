@@ -218,7 +218,7 @@
       "title": ["Genre", "calibration"],
       "text": "Not every game runs on the same hardware. Or the same expectations. Axes 04 and 05 adapt to the genre. The other four stay consistent."
     },
-    "genreAxesHead": ["Genre", "Genre · I", "Genre · II"],
+    "genreAxesHead": ["Genre", "Axis · I", "Axis · II"],
     "genreAxes": {
       "1": [
         { "name": "Narrative", "note": "Story, writing and choices. Does the world have something to say, and do my decisions actually change it?" },
@@ -244,6 +244,21 @@
         { "name": "Level design", "note": "Layout, pacing and secrets. Does every stage teach something new and then put it to the test?" },
         { "name": "Controls", "note": "Jumps, momentum and precision. When I fall, is it always my fault and never the controller's?" }
       ]
+    },
+    "gachaMeter": {
+      "title": ["Gacha", "meter"],
+      "text": "A virus scan for monetization, shown on the cover art of finished runs. Despite the name, it doesn't only look at paid pulls: premium currencies, loot boxes, battle passes, paywalls and pay-to-skip all count. It measures how hard the game pushes you to pay. It sits outside the six axes and never changes the average. Live games get scanned again when an update changes their economy.",
+      "scale": "SCALE",
+      "levelNotes": [
+        "Everything that matters can be earned by playing. Spending is optional and never needed to keep up.",
+        "Not pay to win, but the shop pushes hard: steep prices, artificial grind, timers or FOMO nudging you toward the wallet.",
+        "Money buys power or progress that playing can't reasonably match. Not paying means falling behind."
+      ]
+    },
+    "rig": {
+      "title": ["Test", "bench"],
+      "text": "Every report is filed from one of these machines. Visuals and audio are judged on what they actually show and play, so the same game may run differently on your hardware.",
+      "kinds": { "pc": "PC", "console": "Console", "hybrid": "Hybrid console", "phone": "Smartphone", "tablet": "Tablet" }
     },
     "tiers": ["Rating", "tiers"],
     "tierNotes": {

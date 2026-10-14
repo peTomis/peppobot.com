@@ -248,6 +248,21 @@
         { "name": "Controlli", "note": "Salti, inerzia e precisione. Quando cado, è sempre colpa mia e mai del controller?" }
       ]
     },
+    "gachaMeter": {
+      "title": ["Gacha", "metro"],
+      "text": "Una scansione antivirus della monetizzazione, mostrata sulla copertina delle run concluse. Nonostante il nome, non guarda solo le estrazioni a pagamento: valute premium, loot box, battle pass, contenuti bloccati e scorciatoie a pagamento contano tutti. Misura quanto il gioco spinge a pagare. Resta fuori dai sei assi e non cambia mai la media. I giochi live vengono scansionati di nuovo quando un aggiornamento ne cambia l'economia.",
+      "scale": "SCALA",
+      "levelNotes": [
+        "Tutto ciò che conta si ottiene giocando. Spendere è facoltativo e non serve mai per restare al passo.",
+        "Non è pay to win, ma il negozio insiste: prezzi alti, grind artificiale, timer o FOMO che spingono verso il portafoglio.",
+        "Il denaro compra potenza o progressi che, giocando, non si recuperano in tempi ragionevoli. Chi non paga resta indietro."
+      ]
+    },
+    "rig": {
+      "title": ["Banco", "di prova"],
+      "text": "Ogni report viene scritto su una di queste macchine. Grafica e audio si giudicano per ciò che mostrano e riproducono davvero: sul tuo hardware lo stesso gioco potrebbe rendere diversamente.",
+      "kinds": { "pc": "PC", "console": "Console", "hybrid": "Console ibrida", "phone": "Smartphone", "tablet": "Tablet" }
+    },
     "tiers": ["Fasce", "di voto"],
     "tierNotes": {
       "OVERCLOCKED": "Supera ogni aspettativa. Salvato per sempre nella memoria centrale.",
