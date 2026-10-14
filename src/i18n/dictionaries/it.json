@@ -116,7 +116,7 @@
         },
         {
           "title": "FILE SOSPETTO",
-          "type": "GACHA AGGRESSIVO"
+          "type": "MONETIZZAZIONE AGGRESSIVA"
         },
         {
           "title": "SISTEMA COMPROMESSO",
@@ -225,7 +225,10 @@
         { "name": "Progressione", "note": "Livelli, abilità ed equipaggiamento sulla lunga distanza. Diventare più forti è una conquista, e cambia il modo in cui gioco?" }
       ],
       "2": [
-        { "name": "Storia e personaggi", "note": "Valuta trama, ritmo narrativo, qualità dei dialoghi, caratterizzazione, relazioni tra i personaggi e costruzione del mondo di gioco." },
+        {
+          "name": "Storia e personaggi",
+          "note": "Valuta trama, ritmo narrativo, qualità dei dialoghi, caratterizzazione, relazioni tra i personaggi e costruzione del mondo di gioco."
+        },
         { "name": "Progressione", "note": "Profondità della progressione, varietà delle build e libertà di personalizzazione. Sviluppare il party è appagante?" }
       ],
       "3": [
@@ -233,8 +236,8 @@
         { "name": "Endgame", "note": "Sfide e rigiocabilità. Il farming diverte o conta soltanto la ricompensa?" }
       ],
       "4": [
-        { "name": "Endgame", "note": "Raid, dungeon e contenuti al livello massimo. C'è ancora un motivo per collegarsi una volta finito di livellare?" },
-        { "name": "Bilanciamento", "note": "Classi, ruoli ed economia. Ogni stile di gioco ha il suo spazio, o il meta ha già risolto il gioco?" }
+        { "name": "Endgame", "note": "Varietà dei contenuti, ricompense e rigiocabilità. Vale la pena tornare a giocare dopo aver raggiunto il livello massimo?" },
+        { "name": "Bilanciamento", "note": "Equilibrio tra classi, progressione e competizione. Il gioco garantisce condizioni di confronto eque?" }
       ],
       "5": [
         { "name": "Creatività", "note": "Gli strumenti per costruire ed esprimersi. Fin dove posso spingermi oltre ciò che gli sviluppatori avevano immaginato?" },

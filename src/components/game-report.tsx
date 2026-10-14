@@ -6,6 +6,7 @@ import { localizePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { pickTranslation, type Translated } from "@/i18n/translations";
 import { DotHex } from "./dot-hex";
+import { BoldText } from "./bold-text";
 import { gameHref } from "./nav";
 import { PlatformLogo } from "./platform-logo";
 import { Radar } from "./radar";
@@ -178,7 +179,7 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
                       className="h-full [clip-path:polygon(0_0,100%_0,calc(100%-8px)_100%,0_100%)]"
                     />
                   </div>
-                  <p className="text-[13px] leading-normal text-fg-dim">{axes[index].note}</p>
+                  <p className="text-[13px] leading-normal text-fg-dim"><BoldText text={axes[index].note} /></p>
                 </li>
               ))}
             </ul>

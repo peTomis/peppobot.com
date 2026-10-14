@@ -1,5 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import { pickTranslation, type Translated } from "@/i18n/translations";
+import { BoldText } from "./bold-text";
 
 /**
  * A stored text in the page's language, or its best fallback. A fallback in another
@@ -10,7 +11,9 @@ export function TranslatedText({ text, lang, as: Tag = "p", quoted = false, clas
   if (!picked) return null;
   return (
     <Tag lang={picked.key === lang ? undefined : picked.key} className={className}>
-      {quoted ? `“${picked.value}”` : picked.value}
+      {quoted && "“"}
+      <BoldText text={picked.value} />
+      {quoted && "”"}
     </Tag>
   );
 }

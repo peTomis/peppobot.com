@@ -116,7 +116,7 @@
         },
         {
           "title": "SUSPICIOUS FILE",
-          "type": "GREEDY GACHA"
+          "type": "GREEDY"
         },
         {
           "title": "SYSTEM COMPROMISED",
@@ -233,8 +233,8 @@
         { "name": "Endgame", "note": "Challenges and replayability. Is the grind fun, or is it all about the rewards?" }
       ],
       "4": [
-        { "name": "Endgame", "note": "Raids, dungeons and content at the level cap. Is there still a reason to log in once the levelling is over?" },
-        { "name": "Balance", "note": "Classes, roles and economy. Does every playstyle have a place, or has the meta already solved the game?" }
+        { "name": "Endgame", "note": "Content variety, rewards and replayability. Is the endgame worth coming back to?" },
+        { "name": "Balance", "note": "Class, progression and competitive balance. Is the playing field fair?" }
       ],
       "5": [
         { "name": "Creativity", "note": "The tools to build and express. How far can I go beyond what the developers imagined?" },

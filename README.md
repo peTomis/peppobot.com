@@ -47,6 +47,8 @@ Every page also has the top bar (desktop nav, mobile menu, EN/IT switch), the "F
 
 ### Report blocks
 
+Report texts support paired `<b>text</b>` and `<strong>text</strong>` tags for bold, including in the maker's live preview. Other HTML is displayed as plain text.
+
 A game's written report is an ordered list of `ReportBlock`s: `heading`, `paragraph`, `image`, `pair` (two images), `quote` and `facts` (label/value tiles). Every text is a `Translated` value (see below). Blocks without an `accent` take the next accent in turn.
 
 ---
