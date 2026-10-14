@@ -26,11 +26,12 @@ export default function PreviewPage() {
   const dict = DICTIONARIES[message.lang];
 
   return (
-    // Same frame as the site's game page; links would leave the preview, so they are disabled.
+    // Keep navigation inside the preview disabled, but allow links opening a new tab.
     <main
       className="w-full px-6 pt-10 pb-16 mx-auto flex-1 max-w-310"
       onClickCapture={(event) => {
-        if ((event.target as Element).closest("a")) event.preventDefault();
+        const link = (event.target as Element).closest("a");
+        if (link && link.target !== "_blank") event.preventDefault();
       }}
     >
       {message.view === "images" ? (

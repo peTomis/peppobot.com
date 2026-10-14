@@ -119,6 +119,7 @@ const ACCENT_OPTIONS: { value: Accent | ""; label: string }[] = [
   { value: "acc", label: "Green" },
   { value: "acc2", label: "Purple" },
   { value: "acc3", label: "Pink" },
+  { value: "acc4", label: "Orange (GLITCHED)" },
 ];
 
 function AccentSelect({ value, onChange }: { value: Accent | undefined; onChange: (value: Accent | undefined) => void }) {

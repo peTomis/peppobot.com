@@ -1,21 +1,32 @@
 import Image from "next/image";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Accent, ReportBlock, ReportImage } from "@/content/games";
 import type { Locale } from "@/i18n/config";
 import { pickTranslation, type Translated } from "@/i18n/translations";
 import { TranslatedText } from "./translated-text";
 
 const ACCENTS: Accent[] = ["acc", "acc2", "acc3"];
-const BG = { acc: "bg-acc", acc2: "bg-acc2", acc3: "bg-acc3" } as const;
-const TEXT = { acc: "text-acc", acc2: "text-acc2", acc3: "text-acc3" } as const;
+const BG = { acc: "bg-acc", acc2: "bg-acc2", acc3: "bg-acc3", acc4: "bg-acc4" } as const;
+const TEXT = { acc: "text-acc", acc2: "text-acc2", acc3: "text-acc3", acc4: "text-acc4" } as const;
 
 const placeholder = "grid place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_12px,#170f24_12px_24px)] p-4 text-center font-mono text-[11px] tracking-[0.12em] text-fg-dim uppercase";
 
 /** The written report: headings, paragraphs, images, quotes and fact tiles, in order. */
 export function ReportBlocks({ blocks, lang }: { blocks: ReportBlock[]; lang: Locale }) {
+  let headingAccent: Accent = "acc";
   return blocks.map((block, index) => {
     // Accents cycle through the blocks, unless a block picks its own.
     const accent = ("accent" in block && block.accent) || ACCENTS[index % ACCENTS.length];
+    if (block.type === "heading") headingAccent = accent;
+    return (
+      <div key={index} className="contents" style={{ "--report-bold": `var(--${headingAccent})` } as CSSProperties}>
+        {renderBlock(block, index, accent, lang)}
+      </div>
+    );
+  });
+}
+
+function renderBlock(block: ReportBlock, index: number, accent: Accent, lang: Locale) {
     switch (block.type) {
       case "heading":
         return (
@@ -72,7 +83,6 @@ export function ReportBlocks({ blocks, lang }: { blocks: ReportBlock[]; lang: Lo
           </dl>
         );
     }
-  });
 }
 
 function Figure({ caption, lang, children }: { caption?: Translated; lang: Locale; children: ReactNode }) {

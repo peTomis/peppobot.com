@@ -14,6 +14,7 @@
   --acc: #abff3d;
   --acc2: #8a1fd6;
   --acc3: #f02670;
+  --acc4: #ff8a5c;
   /* --acc: #5cff8a;
   --acc2: #b65cff; */
 }
@@ -31,6 +32,7 @@
   --color-acc: var(--acc);
   --color-acc2: var(--acc2);
   --color-acc3: var(--acc3);
+  --color-acc4: var(--acc4);
   --font-display: var(--font-chakra-petch);
   --font-sans: var(--font-plex-sans);
   --font-mono: var(--font-jetbrains-mono);

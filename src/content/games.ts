@@ -68,7 +68,7 @@ export const TIERS = [
   { min: 9, label: "OVERCLOCKED", color: "var(--acc)" },
   { min: 8, label: "OPTIMAL", color: "#a8ff5c" },
   { min: 7, label: "STABLE", color: "var(--acc2)" },
-  { min: 5, label: "GLITCHED", color: "#ff8a5c" },
+  { min: 5, label: "GLITCHED", color: "var(--acc4)" },
   { min: 0, label: "CORRUPTED", color: "#ff5c7a" },
 ] as const;
 
@@ -86,7 +86,7 @@ export type ReportBlock =
   | { type: "quote"; text: Translated; accent?: Accent }
   | { type: "facts"; facts: { label: Translated; value: string }[] };
 
-export type Accent = "acc" | "acc2" | "acc3";
+export type Accent = "acc" | "acc2" | "acc3" | "acc4";
 
 /** Gacha levels, shown as a banner on the game page's cover art. */
 export const GACHA_LEVELS = [1, 2, 3] as const;
