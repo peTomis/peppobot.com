@@ -126,15 +126,16 @@
     },
     "rows": {
       "status": "STATUS",
-      "platform": "PLATFORM",
+      "platform": "PLAYED ON",
       "developer": "DEVELOPER",
       "playtime": "PLAYTIME",
       "logged": "LOGGED",
       "released": "RELEASED",
-      "signature": "SIGNATURE",
       "progress": "PROGRESS",
-      "tier": "TIER"
+      "tier": "TIER",
+      "metacritic": "METACRITIC"
     },
+    "openMetacritic": "OPEN",
     "previous": "PREVIOUS REPORT",
     "next": "NEXT REPORT",
     "axes": [

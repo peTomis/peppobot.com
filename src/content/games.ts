@@ -109,6 +109,10 @@ export type Game = {
   releasedOn: number | null;
   status: GameStatus;
   hours: number;
+  /** Hides the completion percentage from the game page, for games where it cannot be told. Only loaded on the game page. */
+  hideProgress: boolean;
+  /** Metacritic page URL, linked from the game page's operator data whatever the status; null when missing. Only loaded on the game page. */
+  metacritic: string | null;
   /** When the run ended, as a Unix timestamp in milliseconds; only for Completed or Dropped, null otherwise. */
   finishedOn: number | null;
   /** Completion percentage; null until the run has started. */
@@ -136,8 +140,8 @@ export type Game = {
 };
 
 /** A game as stored: optional fields may be missing, and fields that do not apply to the status may still be set. `mainGame` is an ObjectId in the database and a hex string in the maker's drafts. */
-export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "signatureDescription" | "blocks" | "cover" | "gacha" | "alsoPlayedOn" | "dlc" | "mainGame"> &
-  Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "signatureDescription" | "blocks" | "cover" | "gacha">> & { alsoPlayedOn?: Platform[] | null; dlc?: boolean; mainGame?: ObjectId | string | null };
+export type GameFields = Omit<Game, "id" | "pros" | "cons" | "signature" | "signatureDescription" | "blocks" | "cover" | "gacha" | "alsoPlayedOn" | "dlc" | "mainGame" | "hideProgress" | "metacritic"> &
+  Partial<Pick<Game, "id" | "pros" | "cons" | "signature" | "signatureDescription" | "blocks" | "cover" | "gacha" | "hideProgress" | "metacritic">> & { alsoPlayedOn?: Platform[] | null; dlc?: boolean; mainGame?: ObjectId | string | null };
 
 /** The game as pages show it; `fallbackId` is used when the game has no `id` of its own. */
 export function normalizeGame(game: GameFields, fallbackId: string): Game {
@@ -156,6 +160,8 @@ export function normalizeGame(game: GameFields, fallbackId: string): Game {
     cover: game.cover ?? null,
     gacha: ended ? (GACHA_LEVELS.find((level) => level === game.gacha) ?? null) : null,
     dlc: game.dlc ?? false,
+    hideProgress: game.hideProgress ?? false,
+    metacritic: game.metacritic ?? null,
     mainGame: game.dlc && game.mainGame ? String(game.mainGame) : null,
     alsoPlayedOn: (game.alsoPlayedOn ?? []).filter((platform) => platform !== game.platform),
     signature: game.signature ?? null,

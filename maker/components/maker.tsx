@@ -153,6 +153,10 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
             <Field label="Progress %">
               <NumberInput value={draft.progress} min={0} max={100} onChange={(value) => set("progress", value)} />
             </Field>
+            <label className="flex items-center gap-2 self-end py-2">
+              <input type="checkbox" className="accent-acc" checked={draft.hideProgress} onChange={(event) => set("hideProgress", event.target.checked)} />
+              <span className={labelClass}>Hide progress % on the game page</span>
+            </label>
             <Field label="Release date (empty: TBA)">
               <input type="date" className={inputClass} value={toDateInput(draft.releasedOn)} onChange={(event) => set("releasedOn", fromDateInput(event.target.value))} />
             </Field>
@@ -161,6 +165,9 @@ export function Maker({ id, initial, number, games }: { id: string | null; initi
             </Field>
             <Field label="Cover URL">
               <TextInput value={draft.cover} placeholder="https://…" onChange={(value) => set("cover", value)} />
+            </Field>
+            <Field label="Metacritic URL">
+              <TextInput value={draft.metacritic} placeholder="https://www.metacritic.com/game/…" onChange={(value) => set("metacritic", value)} />
             </Field>
             <Field label="Gacha">
               <Select<number> value={draft.gacha ?? 0} options={GACHA_OPTIONS} onChange={(value) => set("gacha", GACHA_LEVELS.find((level) => level === value) ?? null)} />

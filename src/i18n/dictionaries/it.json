@@ -126,15 +126,16 @@
     },
     "rows": {
       "status": "STATO",
-      "platform": "PIATTAFORMA",
+      "platform": "GIOCATO SU",
       "developer": "SVILUPPATORE",
       "playtime": "TEMPO DI GIOCO",
       "logged": "REGISTRATO",
       "released": "USCITA",
-      "signature": "ESCLUSIVO",
       "progress": "PROGRESSO",
-      "tier": "FASCIA"
+      "tier": "FASCIA",
+      "metacritic": "METACRITIC"
     },
+    "openMetacritic": "APRI",
     "previous": "REPORT PRECEDENTE",
     "next": "REPORT SUCCESSIVO",
     "axes": [

@@ -60,10 +60,17 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
     { k: t.rows.developer, v: game.dev },
     { k: t.rows.playtime, v: `${game.hours} h` },
     { k: t.rows.released, v: year },
-    { k: t.rows.signature, v: game.signature?.length ? <TranslatedText text={game.signature} lang={lang} as="span" /> : null },
     { k: t.rows.logged, v: logged },
-    { k: t.rows.progress, v: game.progress != null ? `${game.progress}%` : null },
+    { k: t.rows.progress, v: game.progress != null && !game.hideProgress ? `${game.progress}%` : null },
     { k: t.rows.tier, v: tier?.label },
+    {
+      k: t.rows.metacritic,
+      v: game.metacritic && (
+        <a href={game.metacritic} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:no-underline">
+          {t.openMetacritic} ↗
+        </a>
+      ),
+    },
   ].filter((row) => row.v != null && row.v !== false);
 
   // Section numbers follow what is shown.
@@ -144,7 +151,7 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
                   {tier.label}
                 </span>
               )}
-              {game.status === "Playing" && (
+              {game.status === "Playing" && !game.hideProgress && (
                 <span className="font-mono text-xs font-bold tracking-[0.12em] text-acc3">
                   {t.inProgress} {game.progress ?? 0}%
                 </span>

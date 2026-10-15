@@ -17,6 +17,9 @@ export type Draft = {
   mainGame: string;
   status: GameStatus;
   hours: number;
+  hideProgress: boolean;
+  /** Metacritic page URL; "" when none. */
+  metacritic: string;
   progress: number | null;
   releasedOn: number | null;
   finishedOn: number | null;
@@ -48,6 +51,8 @@ export function emptyDraft(): Draft {
     mainGame: "",
     status: "Not Started",
     hours: 0,
+    hideProgress: false,
+    metacritic: "",
     progress: null,
     releasedOn: null,
     finishedOn: null,
@@ -77,6 +82,8 @@ export function toDraft(game: StoredGame): Draft {
     mainGame: game.mainGame ? String(game.mainGame) : "",
     status: game.status ?? empty.status,
     hours: game.hours ?? 0,
+    hideProgress: game.hideProgress ?? false,
+    metacritic: game.metacritic ?? "",
     progress: game.progress ?? null,
     releasedOn: game.releasedOn ?? null,
     finishedOn: game.finishedOn ?? null,
@@ -122,6 +129,8 @@ export function toFields(draft: Draft): Omit<GameFields, "id" | "mainGame"> & { 
     mainGame: draft.dlc ? draft.mainGame || null : null,
     status: draft.status,
     hours: draft.hours,
+    hideProgress: draft.hideProgress,
+    metacritic: draft.metacritic.trim() || null,
     progress: draft.progress,
     releasedOn: draft.releasedOn,
     finishedOn: draft.finishedOn,
