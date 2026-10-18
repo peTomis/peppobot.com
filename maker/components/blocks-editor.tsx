@@ -3,10 +3,10 @@
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import type { Accent, ReportBlock, ReportImage } from "@/content/games";
 import type { KeyedBlock } from "../lib/draft";
-import { buttonClass, Field, labelClass, Select, TextInput, TranslatedInput } from "./fields";
+import { buttonClass, Field, inputClass, labelClass, Select, TextInput, TranslatedInput } from "./fields";
 
 type BlockType = ReportBlock["type"];
 
@@ -77,7 +77,75 @@ export function BlocksEditor({ blocks, onChange }: { blocks: KeyedBlock[]; onCha
           </button>
         ))}
       </div>
+      <JsonEditor blocks={blocks} onChange={onChange} nextKey={nextKey} />
     </div>
+  );
+}
+
+const isObject = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+const isImage = (value: unknown) => isObject(value) && Array.isArray(value.alt);
+
+/** Checks the shape the block fields rely on, so a typo in the JSON cannot crash the form. */
+function isBlock(value: unknown): value is ReportBlock {
+  if (!isObject(value)) return false;
+  switch (value.type) {
+    case "heading":
+    case "paragraph":
+    case "quote":
+      return Array.isArray(value.text);
+    case "image":
+      return isImage(value.image);
+    case "pair":
+      return Array.isArray(value.images) && value.images.length === 2 && value.images.every(isImage);
+    case "facts":
+      return Array.isArray(value.facts) && value.facts.every((fact) => isObject(fact) && Array.isArray(fact.label) && typeof fact.value === "string");
+    default:
+      return false;
+  }
+}
+
+/** The blocks as they will be saved. Edits apply as soon as the JSON is valid; while it is not, the blocks stay as they were. */
+function JsonEditor({ blocks, onChange, nextKey }: { blocks: KeyedBlock[]; onChange: (blocks: KeyedBlock[]) => void; nextKey: () => string }) {
+  const json = JSON.stringify(
+    blocks.map(({ block }) => block),
+    null,
+    2,
+  );
+  // The text being typed, kept while focused so invalid JSON is not overwritten.
+  const [text, setText] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const edit = (next: string) => {
+    setText(next);
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(next);
+    } catch (cause) {
+      return setError((cause as Error).message);
+    }
+    if (!Array.isArray(parsed)) return setError("Expected an array of blocks");
+    const bad = parsed.findIndex((block) => !isBlock(block));
+    if (bad >= 0) return setError(`Block ${bad + 1} is not a valid block`);
+    setError(null);
+    // Keys stay positional, so unchanged blocks keep their form.
+    onChange(parsed.map((block: ReportBlock, index) => ({ key: blocks[index]?.key ?? nextKey(), block })));
+  };
+
+  return (
+    <Field label="JSON">
+      <textarea
+        spellCheck={false}
+        className={`${inputClass} h-64 resize-y font-mono text-xs leading-relaxed ${error ? "border-acc3! focus:border-acc3!" : ""}`}
+        value={text ?? json}
+        onFocus={() => setText(json)}
+        onBlur={() => {
+          setText(null);
+          setError(null);
+        }}
+        onChange={(event) => edit(event.target.value)}
+      />
+      {error && <span className="font-mono text-[11px] text-acc3">{error} — not applied</span>}
+    </Field>
   );
 }
 

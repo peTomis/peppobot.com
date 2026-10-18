@@ -71,13 +71,14 @@ function renderBlock(block: ReportBlock, index: number, accent: Accent, lang: Lo
         );
       case "facts":
         return (
+          // Each tile spans two shared rows (value, label), so values and labels line up across the tiles of a row.
           <dl key={index} className="my-2 grid grid-cols-[repeat(auto-fit,minmax(min(100%,160px),1fr))] gap-2.5">
             {block.facts.map((fact, factIndex) => (
-              <div key={factIndex} className="flex flex-col-reverse gap-1.5 bg-surface p-4.5 font-mono">
-                <dt className="text-[10px] tracking-[0.14em] text-fg-dim uppercase">
+              <div key={factIndex} className="row-span-2 grid grid-rows-subgrid gap-y-1.5 bg-surface p-4.5 font-mono">
+                <dt className="row-start-2 text-[10px] tracking-[0.14em] text-fg-dim uppercase">
                   <TranslatedText text={fact.label} lang={lang} as="span" />
                 </dt>
-                <dd className={`text-[28px] leading-none font-bold ${TEXT[ACCENTS[factIndex % ACCENTS.length]]}`}>{fact.value}</dd>
+                <dd className={`row-start-1 text-[28px] leading-none font-bold ${TEXT[ACCENTS[factIndex % ACCENTS.length]]}`}>{fact.value}</dd>
               </div>
             ))}
           </dl>
