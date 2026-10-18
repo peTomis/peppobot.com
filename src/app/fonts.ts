@@ -9,7 +9,7 @@ const chakraPetch = Chakra_Petch({
 const plexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: "variable",
 });
 
 const jetbrainsMono = JetBrains_Mono({

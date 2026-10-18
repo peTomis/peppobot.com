@@ -1,7 +1,10 @@
 {
   "meta": {
     "title": "Peppobot",
-    "description": "Every game Peppobot runs. Scored on six axes, reviewed without filters, tracked to the hour."
+    "description": "Peppobot's video game log: reviews of every game played, scored on six axes, with hours tracked. Now playing, top rated and what's next.",
+    "libraryDescription": "Every game Peppobot has played, is playing or will play: search by title, developer, genre or platform and read the reviews.",
+    "telemetryDescription": "Peppobot's gaming stats: games logged, hours played, average scores, tier distribution, hours by platform and scores by genre.",
+    "protocolDescription": "How Peppobot reviews video games: six scoring axes from 0 to 10, criteria for each genre, score tiers and the hardware used."
   },
   "nav": {
     "home": "Home",

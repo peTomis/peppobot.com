@@ -4,7 +4,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 
 type Gametag = { name: string; handle: string; url?: string; icon: string; color: string };
 
-const GAMETAGS: Gametag[] = [
+export const GAMETAGS: Gametag[] = [
   { name: "PlayStation Network", handle: "Peppobot", url: "https://psnprofiles.com/Peppobot", icon: "playstation", color: "#0070D1" },
   { name: "Xbox Live", handle: "Peppobot", url: "https://www.xbox.com/it-IT/play/user/Peppobot", icon: "xbox", color: "#107C10" },
   { name: "Steam", handle: "peppobot", url: "https://steamcommunity.com/id/peppobot/", icon: "steam", color: "#7C3AED" },

@@ -131,6 +131,13 @@ export async function getGameReport(id: string): Promise<GameReport | null> {
   return { game, number, prev: link(order[index + 1]), next: index > 0 ? link(order[index - 1]) : null, mainGame: link(main) };
 }
 
+/** URL segment of every game (slug, or `_id` for games without one), for the sitemap. */
+export async function getGameSlugs(): Promise<string[]> {
+  const db = await getDatabase();
+  const games = await db.collection<GameDocument>("games").find({}, { projection: { _id: 1, id: 1 } }).sort({ _id: 1 }).maxTimeMS(5000).toArray();
+  return games.map((game) => game.id || game._id.toHexString());
+}
+
 export async function getGame(id: string): Promise<Game | null> {
   const db = await getDatabase();
   const collection = db.collection<GameDocument>("games");

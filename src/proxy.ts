@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { BARE_HOST, SITE_URL } from "@/content/site";
 import { LOCALE_COOKIE, defaultLocale, hasLocale, localizePath, type Locale } from "@/i18n/config";
 
 /** Saved choice first, then the browser's Accept-Language, then the default. */
@@ -19,7 +20,12 @@ function pickLocale(request: NextRequest): Locale {
 }
 
 export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
+
+  // The bare domain moves permanently to www, so search engines index a single site.
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  if (host === BARE_HOST) return NextResponse.redirect(new URL(pathname + search, SITE_URL), 308);
+
   const first = pathname.split("/")[1];
   if (hasLocale(first)) return;
 

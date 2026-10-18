@@ -1,7 +1,10 @@
 {
   "meta": {
     "title": "Peppobot",
-    "description": "Ogni gioco affrontato da Peppobot. Valutato su sei assi, recensito senza filtri, tracciato ora per ora."
+    "description": "Il diario videoludico di Peppobot: recensioni di ogni gioco giocato, con voti su sei assi e ore tracciate. In gioco ora, i migliori e i prossimi.",
+    "libraryDescription": "Tutti i giochi di Peppobot, giocati, in corso o in coda: cerca per titolo, sviluppatore, genere o piattaforma e leggi le recensioni.",
+    "telemetryDescription": "Le statistiche di gioco di Peppobot: giochi registrati, ore giocate, voti medi, distribuzione dei tier, ore per piattaforma e voti per genere.",
+    "protocolDescription": "Come Peppobot recensisce i videogiochi: sei assi di voto da 0 a 10, criteri per ogni genere, fasce di voto e l'hardware utilizzato."
   },
   "nav": {
     "home": "Home",

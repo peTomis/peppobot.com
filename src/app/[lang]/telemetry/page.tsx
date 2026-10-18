@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { TelemetryKpis, TelemetrySections } from "@/components/telemetry";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
-import { localizedAlternates } from "@/i18n/metadata";
+import { pageMetadata } from "@/i18n/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { nav } = await getDictionary();
-  return { title: nav.telemetry, alternates: await localizedAlternates("/telemetry") };
+  const { nav, meta } = await getDictionary();
+  return pageMetadata("/telemetry", { title: nav.telemetry, description: meta.telemetryDescription });
 }
 
 // The heading is prerendered; the figures stream in from the `data` document.

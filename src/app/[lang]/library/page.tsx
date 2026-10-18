@@ -3,11 +3,11 @@ import { Suspense } from "react";
 import { DotHex } from "@/components/dot-hex";
 import { ControlsFace, CounterFace, DEFAULT_STATE, LibraryControls, LibraryCounter, LibraryResults, ResultsFallback } from "@/components/library";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
-import { localizedAlternates } from "@/i18n/metadata";
+import { pageMetadata } from "@/i18n/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { nav } = await getDictionary();
-  return { title: nav.library, alternates: await localizedAlternates("/library") };
+  const { nav, meta } = await getDictionary();
+  return pageMetadata("/library", { title: nav.library, description: meta.libraryDescription });
 }
 
 // The heading is prerendered; everything that reads the URL streams in its own boundary.

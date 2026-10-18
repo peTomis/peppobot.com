@@ -5,11 +5,11 @@ import { GACHA_STYLES } from "@/components/game-report";
 import { SectionHeading } from "@/components/section-heading";
 import { GACHA_LEVELS, GENRES_BY_NAME, TIERS } from "@/content/games";
 import { getDictionary, getLocale, type Dictionary } from "@/i18n/dictionaries";
-import { localizedAlternates } from "@/i18n/metadata";
+import { pageMetadata } from "@/i18n/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { nav } = await getDictionary();
-  return { title: nav.protocol, alternates: await localizedAlternates("/protocol") };
+  const { nav, meta } = await getDictionary();
+  return pageMetadata("/protocol", { title: nav.protocol, description: meta.protocolDescription });
 }
 
 const ACCENTS = ["var(--acc)", "var(--acc2)", "var(--acc3)"];

@@ -4,7 +4,7 @@ import { connection } from "next/server";
 import { cache, Suspense } from "react";
 import { GameReport, GameReportSkeleton } from "@/components/game-report";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
-import { localizedAlternates } from "@/i18n/metadata";
+import { pageMetadata } from "@/i18n/metadata";
 import { pickTranslation } from "@/i18n/translations";
 import { getGameReport } from "@/lib/games";
 
@@ -20,7 +20,8 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/library/[i
   const report = await loadReport(id);
   if (!report) return {};
   const description = pickTranslation(report.game.description, lang)?.value;
-  return { title: report.game.title, description, alternates: await localizedAlternates(`/library/${id}`) };
+  // Canonical on the slug, also when the page is reached by `_id`.
+  return pageMetadata(`/library/${encodeURIComponent(report.game.id)}`, { title: report.game.title, description, image: report.game.cover });
 }
 
 // The skeleton is prerendered; the report streams in once the game is loaded.

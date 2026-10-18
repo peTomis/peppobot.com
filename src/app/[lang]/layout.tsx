@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { BottomBar } from "@/components/bottom-bar";
 import { FindPeppobot } from "@/components/find-peppobot";
 import { ActiveTopBar, TopBar } from "@/components/top-bar";
+import { SITE_NAME, SITE_URL } from "@/content/site";
 import { locales } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { fontVariables } from "../fonts";
@@ -16,9 +17,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const dict = await getDictionary();
   return {
     // Pages set a short title (e.g. "Library"), shown as "Library — Peppobot".
-    title: { default: dict.meta.title, template: "%s — Peppobot" },
+    title: { default: dict.meta.title, template: `%s — ${SITE_NAME}` },
     description: dict.meta.description,
-    metadataBase: new URL("https://www.peppobot.com"),
+    applicationName: SITE_NAME,
+    metadataBase: new URL(SITE_URL),
   };
 }
 
