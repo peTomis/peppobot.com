@@ -247,6 +247,10 @@
       "6": [
         { "name": "Level design", "note": "Layout, pacing and secrets. Does every stage teach something new and then put it to the test?" },
         { "name": "Controls", "note": "Jumps, momentum and precision. When I fall, is it always my fault and never the controller's?" }
+      ],
+      "7": [
+        { "name": "Exploration", "note": "World design, discovery and puzzles. Does exploring reward curiosity and make every new path worth following?" },
+        { "name": "Story & pacing", "note": "Story, characters and the balance between action and adventure. Does the journey stay engaging from start to finish?" }
       ]
     },
     "gachaMeter": {

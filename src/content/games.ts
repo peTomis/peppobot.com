@@ -50,6 +50,7 @@ export const GENRES = {
   4: { id: 4, name: "MMORPG" },
   5: { id: 5, name: "Sandbox" },
   6: { id: 6, name: "Platform" },
+  7: { id: 7, name: "Action Adventure" },
 } as const;
 
 export type Genre = keyof typeof GENRES;

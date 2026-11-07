@@ -250,6 +250,10 @@
       "6": [
         { "name": "Level design", "note": "Struttura, ritmo e segreti. Ogni livello insegna qualcosa di nuovo e poi lo mette alla prova?" },
         { "name": "Controlli", "note": "Salti, inerzia e precisione. Quando cado, è sempre colpa mia e mai del controller?" }
+      ],
+      "7": [
+        { "name": "Esplorazione", "note": "Struttura del mondo, scoperte ed enigmi. Esplorare premia la curiosità e rende ogni nuovo percorso degno di essere seguito?" },
+        { "name": "Storia e ritmo", "note": "Storia, personaggi ed equilibrio tra azione e avventura. Il viaggio resta coinvolgente dall'inizio alla fine?" }
       ]
     },
     "gachaMeter": {
