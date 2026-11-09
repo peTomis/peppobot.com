@@ -1,6 +1,10 @@
 # peppobot.com
 
-Source for **[www.peppobot.com](https://www.peppobot.com)**: Peppobot's personal video game log and review site.
+Personal gaming journal featuring reviews, ratings across six criteria, and gameplay statistics.
+Built with Next.js, TypeScript, and MongoDB, available in English and Italian.
+Includes a local editor with live previews for managing games and reviews.
+
+Website: **[www.peppobot.com](https://www.peppobot.com)**.
 
 > **PEPPOBOT — GAME LOG // DIAGNOSTIC REPORTS**
 > _Games played. Reports filed._
