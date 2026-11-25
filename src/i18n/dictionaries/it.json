@@ -311,6 +311,22 @@
       "21": [
         { "name": "Tattica", "note": "Pianificazione, informazioni e gioco di squadra. Le decisioni intelligenti battono i riflessi rapidi?" },
         { "name": "Design delle mappe", "note": "Angoli, percorsi e distruttibilità. Ogni mappa apre nuovi modi di attaccare e difendere?" }
+      ],
+      "22": [
+        { "name": "Economia", "note": "Prezzi, domanda e crescita. Le mie decisioni muovono i numeri in modi che posso leggere e da cui imparare?" },
+        { "name": "Profondità gestionale", "note": "Personale, logistica ed espansione. Gestire l'attività continua a porre nuovi problemi man mano che cresce?" }
+      ],
+      "23": [
+        { "name": "Flusso del combattimento", "note": "Combo, juggle e controllo delle folle. Ripulire lo schermo dai nemici è d'impatto e con stile?" },
+        { "name": "Co-op e rigiocabilità", "note": "Personaggi, multiplayer e sblocchi. Vale la pena rigiocarlo con gli amici?" }
+      ],
+      "24": [
+        { "name": "Guida", "note": "Fisica, velocità e feedback. Ogni auto ha un carattere diverso, e guidarla bene dà soddisfazione?" },
+        { "name": "Tracciati e modalità", "note": "Circuiti, eventi e progressione. C'è abbastanza varietà da continuare a correre?" }
+      ],
+      "25": [
+        { "name": "Tattica", "note": "Posizionamento, terreno ed economia dei turni. Ogni battaglia premia la pianificazione rispetto alla forza bruta?" },
+        { "name": "Costruzione del party", "note": "Classi, abilità e crescita delle unità. Plasmare la squadra apre nuovi modi di vincere?" }
       ]
     },
     "gachaMeter": {

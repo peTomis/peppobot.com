@@ -65,6 +65,10 @@ export const GENRES = {
   19: { id: 19, name: "Sports" },
   20: { id: 20, name: "First Person Shooter" },
   21: { id: 21, name: "Tactical Shooter" },
+  22: { id: 22, name: "Business Simulation" },
+  23: { id: 23, name: "Beat 'em Up" },
+  24: { id: 24, name: "Racing" },
+  25: { id: 25, name: "Tactical RPG" },
 } as const;
 
 export type Genre = keyof typeof GENRES;

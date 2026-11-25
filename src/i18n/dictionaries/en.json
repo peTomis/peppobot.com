@@ -308,6 +308,22 @@
       "21": [
         { "name": "Tactics", "note": "Planning, information and teamwork. Do smart decisions beat fast reflexes?" },
         { "name": "Map design", "note": "Angles, routes and destructibility. Does every map open new ways to attack and defend?" }
+      ],
+      "22": [
+        { "name": "Economy", "note": "Prices, demand and growth. Do my decisions move the numbers in ways I can read and learn from?" },
+        { "name": "Management depth", "note": "Staff, logistics and expansion. Does running the business keep posing new problems as it grows?" }
+      ],
+      "23": [
+        { "name": "Combat flow", "note": "Combos, juggles and crowd control. Does clearing a screen of enemies feel punchy and stylish?" },
+        { "name": "Co-op & replay", "note": "Characters, multiplayer and unlocks. Is it worth running through again with friends?" }
+      ],
+      "24": [
+        { "name": "Handling", "note": "Physics, speed and feedback. Does every car feel distinct, and does driving it well feel earned?" },
+        { "name": "Tracks & modes", "note": "Circuits, events and progression. Is there enough variety to keep me racing?" }
+      ],
+      "25": [
+        { "name": "Tactics", "note": "Positioning, terrain and turn economy. Does every battle reward planning over brute force?" },
+        { "name": "Party building", "note": "Classes, skills and unit growth. Does shaping my squad open new ways to win?" }
       ]
     },
     "gachaMeter": {
