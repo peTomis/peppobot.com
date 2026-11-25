@@ -127,12 +127,24 @@ function Tickers({ words, purple, green }: { words: string[]; purple: string[]; 
   );
 }
 
+/*
+ * Approximate ticker widths in em of the band's font (Chakra Petch bold, uppercase,
+ * 0.14em tracking): an average character, and the gaps plus separator per item.
+ */
+const TICKER_CHAR_EM = 0.8;
+const TICKER_ITEM_EM = 3.5;
+/** Scrolling speed in em per second (about 65px/s at 22px). */
+const TICKER_SPEED_EM = 3;
+
 function TickerTrack({ items, reverse = false, triangle = false }: { items: string[]; reverse?: boolean; triangle?: boolean }) {
   // Two identical groups keep the wrap seamless; each covers at least the band.
   const repeated = Array.from({ length: Math.max(1, Math.ceil(8 / (items.length || 1))) }, () => items).flat();
+  // Each loop moves the track by one group, so the duration follows its width for a constant speed.
+  const groupEm = repeated.reduce((sum, item) => sum + item.length * TICKER_CHAR_EM + TICKER_ITEM_EM, 0);
+  const duration = `${Math.round(groupEm / TICKER_SPEED_EM)}s`;
 
   return (
-    <div className={`flex w-max motion-safe:animate-ticker ${reverse ? "motion-safe:[animation-direction:reverse]" : ""}`}>
+    <div style={{ animationDuration: duration }} className={`flex w-max motion-safe:animate-ticker ${reverse ? "motion-safe:[animation-direction:reverse]" : ""}`}>
       {[0, 1].map((copy) => (
         <div key={copy} className="flex min-w-[110vw] shrink-0 items-center justify-around gap-8 pr-8">
           {repeated.map((item, index) => (

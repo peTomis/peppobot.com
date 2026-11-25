@@ -97,7 +97,7 @@ img {
 
 /* Duplicate ticker groups meet exactly at the halfway point of the track. */
 @theme {
-  --animate-ticker: ticker 40s linear infinite;
+  --animate-ticker: ticker 60s linear infinite; /* duration set per track in home-hero.tsx */
 
   @keyframes ticker {
     to {
