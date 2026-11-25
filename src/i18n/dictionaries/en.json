@@ -348,6 +348,10 @@
       "31": [
         { "name": "Shooting & patterns", "note": "Weapons, enemy waves and bullet patterns. Is every stage a readable, thrilling dance?" },
         { "name": "Score & replay", "note": "Scoring systems, routes and difficulty. Does it pull me back to beat my best run?" }
+      ],
+      "32": [
+        { "name": "Music & timing", "note": "Tracklist, charts and input feel. Does hitting the beat feel tight, and do the songs stick in my head?" },
+        { "name": "Challenge & variety", "note": "Difficulty curve, modes and charts. Does it keep teaching new patterns and pushing me to improve?" }
       ]
     },
     "gachaMeter": {

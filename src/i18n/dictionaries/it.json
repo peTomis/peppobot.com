@@ -351,6 +351,10 @@
       "31": [
         { "name": "Sparatorie e pattern", "note": "Armi, ondate nemiche e pattern di proiettili. Ogni livello è una danza leggibile ed emozionante?" },
         { "name": "Punteggio e rigiocabilità", "note": "Sistemi di punteggio, percorsi e difficoltà. Mi spinge a tornare per battere il mio record?" }
+      ],
+      "32": [
+        { "name": "Musica e tempismo", "note": "Tracklist, chart e sensazione degli input. Andare a tempo è preciso, e le canzoni restano in testa?" },
+        { "name": "Sfida e varietà", "note": "Curva di difficoltà, modalità e chart. Continua a insegnare nuovi pattern e a spingermi a migliorare?" }
       ]
     },
     "gachaMeter": {
