@@ -347,6 +347,10 @@
       "30": [
         { "name": "Pianificazione", "note": "Disposizione, zone e logistica. Una città ben pianificata si distingue da una disordinata, e imparo a costruire meglio?" },
         { "name": "Crescita e sfida", "note": "Bisogni, crisi ed espansione. La città continua a porre nuovi problemi man mano che cresce?" }
+      ],
+      "31": [
+        { "name": "Sparatorie e pattern", "note": "Armi, ondate nemiche e pattern di proiettili. Ogni livello è una danza leggibile ed emozionante?" },
+        { "name": "Punteggio e rigiocabilità", "note": "Sistemi di punteggio, percorsi e difficoltà. Mi spinge a tornare per battere il mio record?" }
       ]
     },
     "gachaMeter": {

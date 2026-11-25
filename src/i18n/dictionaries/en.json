@@ -344,6 +344,10 @@
       "30": [
         { "name": "Planning", "note": "Layout, zoning and logistics. Does a well-planned city feel different from a messy one, and do I learn to build better?" },
         { "name": "Growth & challenge", "note": "Needs, crises and expansion. Does the city keep posing new problems as it grows?" }
+      ],
+      "31": [
+        { "name": "Shooting & patterns", "note": "Weapons, enemy waves and bullet patterns. Is every stage a readable, thrilling dance?" },
+        { "name": "Score & replay", "note": "Scoring systems, routes and difficulty. Does it pull me back to beat my best run?" }
       ]
     },
     "gachaMeter": {
