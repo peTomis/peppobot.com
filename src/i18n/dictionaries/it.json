@@ -291,6 +291,26 @@
       "16": [
         { "name": "Struttura della mappa", "note": "Interconnessione, scorciatoie e backtracking. Il mondo si richiude su se stesso in modo appagante?" },
         { "name": "Abilità e accessi", "note": "Nuovi poteri e le strade che aprono. Ogni potenziamento cambia il modo in cui vedo la mappa?" }
+      ],
+      "17": [
+        { "name": "Divertimento di gruppo", "note": "Risate, caos e momenti condivisi. Migliora man mano che si aggiungono giocatori?" },
+        { "name": "Accessibilità", "note": "Regole, controlli e primo approccio. Chiunque può prenderlo in mano e divertirsi in pochi minuti?" }
+      ],
+      "18": [
+        { "name": "Azione momento per momento", "note": "Reattività, ritmo e impatto. Ogni secondo di gioco è preciso e appagante?" },
+        { "name": "Sfida", "note": "Curva di difficoltà, nemici e padronanza. Il gioco mi spinge a migliorare e mi premia quando ci riesco?" }
+      ],
+      "19": [
+        { "name": "Sensazione dello sport", "note": "Fisica, animazioni e controlli. Riesce a catturare ciò che rende divertente quello sport?" },
+        { "name": "Modalità e longevità", "note": "Carriera, online e modalità secondarie. C'è abbastanza per continuare a tornarci stagione dopo stagione?" }
+      ],
+      "20": [
+        { "name": "Gunplay", "note": "Sensazione delle armi, rinculo, feedback e varietà. Ogni colpo ha peso, e ogni arma si guadagna il suo posto?" },
+        { "name": "Design degli scontri", "note": "Arene, nemici e ritmo. Gli scontri mi chiedono di pensare e muovermi, non solo di mirare?" }
+      ],
+      "21": [
+        { "name": "Tattica", "note": "Pianificazione, informazioni e gioco di squadra. Le decisioni intelligenti battono i riflessi rapidi?" },
+        { "name": "Design delle mappe", "note": "Angoli, percorsi e distruttibilità. Ogni mappa apre nuovi modi di attaccare e difendere?" }
       ]
     },
     "gachaMeter": {

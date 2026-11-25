@@ -288,6 +288,26 @@
       "16": [
         { "name": "Map design", "note": "Interconnection, shortcuts and backtracking. Does the world fold back on itself in satisfying ways?" },
         { "name": "Ability gating", "note": "New powers and the paths they open. Does every upgrade change how I see the map?" }
+      ],
+      "17": [
+        { "name": "Group fun", "note": "Laughs, chaos and shared moments. Does it get better the more people join in?" },
+        { "name": "Accessibility", "note": "Rules, controls and onboarding. Can anyone pick it up and have fun within minutes?" }
+      ],
+      "18": [
+        { "name": "Moment-to-moment", "note": "Responsiveness, rhythm and impact. Does every second of play feel sharp and satisfying?" },
+        { "name": "Challenge", "note": "Difficulty curve, enemies and mastery. Does the game push me to get better and reward me when I do?" }
+      ],
+      "19": [
+        { "name": "Feel of the sport", "note": "Physics, animations and controls. Does it capture what makes the sport fun to play?" },
+        { "name": "Modes & longevity", "note": "Career, online and side modes. Is there enough to keep coming back season after season?" }
+      ],
+      "20": [
+        { "name": "Gunplay", "note": "Weapon feel, recoil, feedback and variety. Does every shot land with weight, and does each gun earn its place?" },
+        { "name": "Encounter design", "note": "Arenas, enemies and pacing. Do fights ask me to think and move, not just aim?" }
+      ],
+      "21": [
+        { "name": "Tactics", "note": "Planning, information and teamwork. Do smart decisions beat fast reflexes?" },
+        { "name": "Map design", "note": "Angles, routes and destructibility. Does every map open new ways to attack and defend?" }
       ]
     },
     "gachaMeter": {

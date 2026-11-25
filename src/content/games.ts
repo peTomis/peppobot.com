@@ -60,6 +60,11 @@ export const GENRES = {
   14: { id: 14, name: "Hack and Slash" },
   15: { id: 15, name: "Survival Horror" },
   16: { id: 16, name: "Metroidvania" },
+  17: { id: 17, name: "Party" },
+  18: { id: 18, name: "Action" },
+  19: { id: 19, name: "Sports" },
+  20: { id: 20, name: "First Person Shooter" },
+  21: { id: 21, name: "Tactical Shooter" },
 } as const;
 
 export type Genre = keyof typeof GENRES;
