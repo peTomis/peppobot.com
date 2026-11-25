@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { GENRES, PLATFORMS, releaseYear, STATUS_COLORS, tierOf, type Gacha, type GameReport as Report, type ReportLink } from "@/content/games";
 import { localizePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -31,16 +31,25 @@ export const GACHA_STYLES: Record<Gacha, { color: string; icon: string; count: s
 const placeholder =
   "grid place-items-center bg-[repeating-linear-gradient(135deg,#2a1b40_0_12px,#170f24_12px_24px)] p-4 text-center font-mono text-[11px] tracking-[0.12em] text-fg-dim uppercase";
 
-/** Full game report: hero, score matrix, written report with pilot data, and neighbouring reports. */
-export function GameReport({ report, lang, t, statuses, genreAxes }: { report: Report; lang: Locale; t: Strings; statuses: Statuses; genreAxes: GenreAxes }) {
-  const { game } = report;
-  // The genre axes take the names and notes of the game's genre criteria, the signature axis the game's own.
+/** Names and notes of a game's six axes: the genre axes take its genre's criteria, the signature axis the game's own. */
+export function reportAxes(
+  game: Pick<Report["game"], "genre" | "signature"> & Partial<Pick<Report["game"], "signatureDescription">>,
+  lang: Locale,
+  axes: Strings["axes"],
+  genreAxes: GenreAxes,
+) {
   const criteria: readonly { name: string; note: string }[] = genreAxes[game.genre] ?? [];
   const signature = { name: pickTranslation(game.signature, lang)?.value, note: pickTranslation(game.signatureDescription, lang)?.value };
-  const axes = t.axes.map((axis, index) => {
+  return axes.map((axis, index) => {
     const own = index === 3 || index === 4 ? criteria[index - 3] : index === 5 ? signature : undefined;
     return { name: own?.name ?? axis.name, note: own?.note ?? axis.note };
   });
+}
+
+/** Full game report: hero, score matrix, written report with pilot data, and neighbouring reports. `crew` is shown under the operator data (the site's crew reviews; the maker's preview leaves it out). */
+export function GameReport({ report, lang, t, statuses, genreAxes, crew }: { report: Report; lang: Locale; t: Strings; statuses: Statuses; genreAxes: GenreAxes; crew?: ReactNode }) {
+  const { game } = report;
+  const axes = reportAxes(game, lang, t.axes, genreAxes);
   const axisNames = axes.map((axis) => axis.name);
   const one = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const tier = game.average != null ? tierOf(game.average) : null;
@@ -207,20 +216,24 @@ export function GameReport({ report, lang, t, statuses, genreAxes }: { report: R
             )}
           </article>
         )}
-        <aside
-          style={{ background: corrupted ?? glitched ?? "var(--acc2)" }}
-          className={`flex flex-col gap-1 p-7 text-bg [clip-path:polygon(28px_0,100%_0,100%_100%,0_100%,0_28px)] ${hasReport ? "desk:sticky desk:top-24 desk:w-80 desk:shrink-0" : "desk:w-full"}`}
-        >
-          <span className="pb-2.5 font-display text-[22px] font-bold tracking-[0.06em] uppercase">{t.pilotData}</span>
-          <dl className="contents">
-            {data.map((row) => (
-              <div key={row.k} className="flex justify-between gap-3 bg-bg/12 px-3 py-2.5 font-mono text-xs font-bold">
-                <dt className="tracking-[0.12em]">{row.k}</dt>
-                <dd className="flex items-center justify-end text-right uppercase">{row.v}</dd>
-              </div>
-            ))}
-          </dl>
-        </aside>
+        {/* With crew data under it the column is too tall to stick. */}
+        <div className={`flex flex-col gap-6 ${hasReport ? `desk:w-80 desk:shrink-0 ${crew ? "" : "desk:sticky desk:top-24"}` : "desk:w-full"}`}>
+          <aside
+            style={{ background: corrupted ?? glitched ?? "var(--acc2)" }}
+            className="flex flex-col gap-1 p-7 text-bg [clip-path:polygon(28px_0,100%_0,100%_100%,0_100%,0_28px)]"
+          >
+            <span className="pb-2.5 font-display text-[22px] font-bold tracking-[0.06em] uppercase">{t.pilotData}</span>
+            <dl className="contents">
+              {data.map((row) => (
+                <div key={row.k} className="flex justify-between gap-3 bg-bg/12 px-3 py-2.5 font-mono text-xs font-bold">
+                  <dt className="tracking-[0.12em]">{row.k}</dt>
+                  <dd className="flex items-center justify-end text-right uppercase">{row.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </aside>
+          {crew}
+        </div>
       </div>
 
       {(report.prev || report.next) && (

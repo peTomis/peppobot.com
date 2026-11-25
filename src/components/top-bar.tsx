@@ -6,12 +6,14 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type CSSProperties } from "react";
 import { LOCALE_COOKIE, localizePath, locales, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { AccountFace, AccountPanel, accountLabel, useAccountMenu } from "./account-menu";
 import { ACCENTS, NAV, NavItem, isActive } from "./nav";
 
 type TopBarProps = {
   lang: Locale;
   nav: Dictionary["nav"];
   strings: Dictionary["topBar"];
+  account: Dictionary["accountMenu"];
 };
 
 /** Reads the route; `cacheComponents` requires it to sit inside <Suspense>. */
@@ -19,11 +21,16 @@ export function ActiveTopBar(props: TopBarProps) {
   return <TopBar pathname={usePathname()} {...props} />;
 }
 
-export function TopBar({ pathname, lang, nav, strings: t }: TopBarProps & { pathname: string | null }) {
+export function TopBar({ pathname, lang, nav, strings: t, account: accountStrings }: TopBarProps & { pathname: string | null }) {
   const home = localizePath("/", lang);
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const account = useAccountMenu(pathname);
+  const openAccount = () => {
+    setMenuOpen(false);
+    account.setOpen(true);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -76,7 +83,24 @@ export function TopBar({ pathname, lang, nav, strings: t }: TopBarProps & { path
             );
           })}
         </nav>
-        <Online>{t.online}</Online>
+        {/* The online status opens the crew panel: sign in, or the visitor's tag and account. */}
+        <button
+          type="button"
+          aria-label={accountLabel(account.me, accountStrings)}
+          aria-haspopup="dialog"
+          aria-expanded={account.open}
+          onClick={openAccount}
+          className="group cursor-pointer"
+        >
+          <span className="flex items-center gap-2.5 py-1 font-mono text-[11px] tracking-widest text-fg-dim group-hover:text-fg">
+            {/* Signed in: online, with the tag once chosen. Signed out: a login button. */}
+            {account.me ? <span className="size-2 rounded-full bg-[#05b105]" /> : null}
+            <span className={`max-w-32 truncate ${account.me ? "" : "font-bold text-fg group-hover:text-acc"}`}>{account.me ? (account.me.tag ?? t.online) : accountStrings.login}</span>
+            <span className="hex grid h-7.5 w-8.5 place-items-center bg-surface text-[15px] text-fg group-hover:bg-acc group-hover:text-bg">
+              <AccountFace me={account.me} className="size-4" />
+            </span>
+          </span>
+        </button>
       </div>
 
       {/* Mobile */}
@@ -87,6 +111,16 @@ export function TopBar({ pathname, lang, nav, strings: t }: TopBarProps & { path
         </Link>
         <div className="flex items-center gap-2.5">
           <LanguageSwitch pathname={pathname} lang={lang} label={t.language} onSwitch={() => setMenuOpen(false)} />
+          <button
+            type="button"
+            aria-label={accountLabel(account.me, accountStrings)}
+            aria-haspopup="dialog"
+            aria-expanded={account.open}
+            onClick={openAccount}
+            className={`hex grid h-11.25 w-13 cursor-pointer place-items-center text-lg ${account.me ? "bg-acc2 text-bg" : "bg-surface text-fg"}`}
+          >
+            <AccountFace me={account.me} />
+          </button>
           <button
             type="button"
             aria-label={menuOpen ? t.closeMenu : t.openMenu}
@@ -129,6 +163,8 @@ export function TopBar({ pathname, lang, nav, strings: t }: TopBarProps & { path
           </div>
         </nav>
       )}
+
+      <AccountPanel {...account} pathname={pathname} lang={lang} t={accountStrings} />
     </header>
   );
 }

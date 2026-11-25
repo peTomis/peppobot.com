@@ -44,6 +44,9 @@ Every page is under a language prefix (`/en/…`, `/it/…`).
 | `/[lang]`              | Hero with KPI chips (from `/api/data`), now playing, latest reports (last 3 completed), hall of fame (top 5 completed by average) and next in queue.                                      |
 | `/[lang]/library`      | Search (title, developer, genre, platform), status filter, sort (recent / score / hours / A–Z) and pagination at 12 per page. State lives in the URL query.                               |
 | `/[lang]/library/[id]` | Game report: score badge, radar and per-axis bars, report blocks, pros and cons, pilot data sidebar, links to the previous and next report. `id` is the game's slug or its MongoDB `_id`. |
+| `/[lang]/library/[id]/reviews` | Every crew review of the game, 20 per page (`?page=`). |
+| `/[lang]/library/[id]/review`  | The signed-in visitor's review form (not indexed). |
+| `/[lang]/account`      | Choose or change the crew tag, sign out (not indexed). New members land here after their first sign-in. |
 | `/[lang]/telemetry`    | Site-wide figures from the `data` document: KPIs, axis profile, tier distribution, hours by platform, genre scan.                                                                         |
 | `/[lang]/protocol`     | Scoring method: the six axes, genre calibration table, tiers, about the pilot. Fully static.                                                                                              |
 
@@ -54,6 +57,18 @@ Every page also has the top bar (desktop nav, mobile menu, EN/IT switch), the "F
 Report texts support paired `<b>text</b>` and `<strong>text</strong>` tags for bold, including in the maker's live preview. Source links written as `<a href="https://example.com">text</a>` open in a new tab with `rel="noopener noreferrer ugc nofollow"`; only absolute HTTP and HTTPS URLs are supported. Other HTML is displayed as plain text.
 
 A game's written report is an ordered list of `ReportBlock`s: `heading`, `paragraph`, `image`, `pair` (two images), `quote` and `facts` (label/value tiles). Every text is a `Translated` value (see below). Blocks without an `accent` take the next accent in turn.
+
+### Crew reviews
+
+Visitors can sign in with Google and file their own review of a released game: a six-axis hexagon (0–10 in steps of 0.5, on the same axes as Peppobot's, genre criteria and signature included) and up to 8 paragraphs of up to 1,500 characters. One review per visitor and game; they can edit or delete it.
+
+- **Sign-in**: `GET /api/auth/google?next=<local path>` starts an OpenID Connect authorization-code flow with PKCE, `state` and `nonce`; `/api/auth/google/callback` checks them, saves the user and sets an httpOnly session cookie (`__Host-pb_session` in production, 30 days). Only the cookie's random token is sent to the browser; the database keeps its SHA-256 (`sessions`, deleted by a TTL index on expiry). No auth library is used.
+- **Crew tag**: at the first sign-in the visitor chooses a tag (3–20 letters, digits, `_`, `-`), unique regardless of case (unique index on `users.tagKey`). Reviews show the tag, never the Google name or email. Tags containing `peppobot` and a few others (`admin`, `mod`, …) are reserved.
+- **Text safety**: paragraphs support `<b>`/`<strong>` only. `sanitizeReviewText()` (`src/content/reviews.ts`) runs on the server on every save and keeps only balanced, non-nested `<b>…</b>`; every other tag-like sequence, control character and bidi override is removed. Pages render the result with `BoldText links={false}` as React text nodes, never through `innerHTML`. The form's preview uses the same function.
+- **Game page**: the **Crew data** card under the operator data shows the crew's average, a radar of the crew's averages per axis, the two latest reviews, a link to all of them and a button to sign in, choose a tag, or write/edit one's review.
+- Server actions (`src/app/actions/`) check the session themselves. There is no moderation UI yet: remove a review from `reviews` and save any review of that game again, or recompute `reviewStats`, to update the averages.
+
+Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` (an OAuth client of type *Web application* in the Google Cloud console) in `.env.local` and in Amplify. Authorized redirect URIs: `https://www.peppobot.com/api/auth/google/callback` and, for development, `http://localhost:4888/api/auth/google/callback`. Without them the rest of the site works and the sign-in route answers 503.
 
 ---
 
@@ -74,6 +89,15 @@ Dates (`releasedOn`, `finishedOn`) are Unix timestamps in milliseconds, read in 
 One document with site-wide figures, typed `Data` in [`src/content/data.ts`](src/content/data.ts): count, hours, average score, completed count, axis averages, tier counts, hours per platform and genre averages. Score figures count completed games only. The home KPIs and the telemetry page read this document as it is and do not aggregate the games.
 
 > The maker recomputes the `data` document from every game after each save (`maker/lib/data.ts`). Edits made to `games` outside the maker leave it stale until the next save. The site caches it for up to 60 seconds.
+
+### Crew collections
+
+Written by the site, never by the maker. The site's database user needs `find`, `insert`, `update` and `remove` on these four collections. The site tries to create their indexes on first use; if its user lacks `createIndex`, run `node --env-file=.env scripts/crew-indexes.mjs` once with a user that has it. The unique indexes are what keep tags unique and one review per visitor and game.
+
+- `users`: `googleSub` (unique), `email`, `name` (from Google, never sent to pages), `tag`, `tagKey` (lower case, unique), `createdAt`, `lastLoginAt`.
+- `sessions`: `tokenHash`, `user`, `createdAt`, `expiresAt` (TTL).
+- `reviews`: `game` and `user` (ObjectIds, unique together), `scores`, `average`, `blocks` (`{ type: "paragraph", text }`), `lang`, `createdAt`, `updatedAt`.
+- `reviewStats`: one document per game (`_id` is the game's), with `count`, per-axis `scores` and `average`, recomputed after every review write so pages never aggregate the reviews.
 
 ### Server helpers and API
 

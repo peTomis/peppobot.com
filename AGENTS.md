@@ -12,7 +12,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Read `README.md` first. Two Next.js apps share this repo, its `node_modules` and one MongoDB database:
 
-- **Site** (root, `src/`): the public website, deployed on AWS Amplify. Read-only access to MongoDB. `npm run dev` → port 4888.
+- **Site** (root, `src/`): the public website, deployed on AWS Amplify. Reads games from MongoDB; writes only visitors' accounts, sessions and crew reviews (`users`, `sessions`, `reviews`, `reviewStats`). `npm run dev` → port 4888.
 - **Maker** (`maker/`): a local-only editor that writes games to MongoDB. `npm run maker` → port 4889. It has no auth and must never be deployed, built by `npm run build` or imported from `src/`.
 
 ### Rules
@@ -26,4 +26,5 @@ Read `README.md` first. Two Next.js apps share this repo, its `node_modules` and
 - The `data` collection (telemetry and home KPIs) is precomputed by the maker after every save (`computeData` in `maker/lib/data.ts`). Do not add per-request aggregations over `games` on the site. When you change `Data` or how a figure is defined, update `computeData` too.
 - Image hosts are listed in both `next.config.ts` and `maker/next.config.ts`. Keep the two lists in sync.
 - After changing dependencies, make sure `npm ci` still works with the npm version Amplify uses. See "Deployment" in the README.
+- Crew reviews are written by visitors. Their text is cleaned by `sanitizeReviewText()` on the server and rendered with `BoldText links={false}` as React text: never render it with `dangerouslySetInnerHTML`. Every server action re-checks the session (`getViewer()`).
 - Run `npm run lint` and `npx tsc --noEmit` (root) plus `npx tsc --noEmit -p maker` before you finish.

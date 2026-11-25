@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
 
-/** Render paired bold tags and safe links; other markup stays escaped text. */
-export function BoldText({ text }: { text: string }) {
+/** Render paired bold tags and safe links; other markup stays escaped text. With `links={false}` (texts written by visitors) link tags stay text too. */
+export function BoldText({ text, links = true }: { text: string; links?: boolean }) {
   const root: ReactNode[] = [];
   const stack: { tag: string; opening: string; href?: string; children: ReactNode[] }[] = [];
   const append = (node: ReactNode) => (stack.at(-1)?.children ?? root).push(node);
 
   for (const [index, token] of text.split(/(<\/?(?:b|strong)>|<a\s+href\s*=\s*(?:"[^"]*"|'[^']*')(?:\s+(?:target|rel)\s*=\s*(?:"[^"]*"|'[^']*'))*\s*>|<\/a>)/gi).entries()) {
     const tag = /^<(\/?)(b|strong|a)(?:\s+href\s*=\s*(?:"([^"]*)"|'([^']*)')(?:\s+(?:target|rel)\s*=\s*(?:"[^"]*"|'[^']*'))*\s*)?>$/i.exec(token);
-    if (!tag) {
+    if (!tag || (!links && tag[2].toLowerCase() === "a")) {
       append(token);
     } else if (!tag[1]) {
       const name = tag[2].toLowerCase();

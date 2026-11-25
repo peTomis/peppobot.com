@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
   const [lang, dict] = await Promise.all([getLocale(), getDictionary()]);
-  const topBar = { lang, nav: dict.nav, strings: dict.topBar };
+  const topBar = { lang, nav: dict.nav, strings: dict.topBar, account: dict.accountMenu };
 
   return (
     <html

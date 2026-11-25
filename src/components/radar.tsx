@@ -14,19 +14,21 @@ function point(i: number, r: number) {
 
 const polygon = (radii: number[]) => radii.map((r, i) => point(i, r).map((n) => n.toFixed(1)).join(",")).join(" ");
 
-/** Six-axis 0–10 radar with labelled corners, in the order of `AXES`; a null value draws at the centre and shows a dash. `color` fills the shape, `valueColor` the numbers. */
+/** Six-axis 0–10 radar with labelled corners, in the order of `AXES`; a null value draws at the centre and shows a dash. `color` fills the shape, `valueColor` the numbers, `compact` fits a narrow column. */
 export function Radar({
   values: axisValues,
   labels: axisLabels,
   format,
   color = "var(--acc2)",
   valueColor = "var(--acc)",
+  compact = false,
 }: {
   values: (number | null)[];
   labels: string[];
   format: Intl.NumberFormat;
   color?: string;
   valueColor?: string;
+  compact?: boolean;
 }) {
   const values = CORNERS.map((axis) => axisValues[axis] ?? null);
   const labels = CORNERS.map((axis) => axisLabels[axis] ?? "");
@@ -34,7 +36,7 @@ export function Radar({
   const axes = labels.map((_, i) => `M150 150 L${point(i, R).map((n) => n.toFixed(1)).join(" ")}`).join(" ");
 
   return (
-    <div className="relative mx-auto aspect-square w-[calc(100%-64px)] max-w-120">
+    <div className={`relative mx-auto aspect-square max-w-120 ${compact ? "w-[calc(100%-72px)]" : "w-[calc(100%-64px)]"}`}>
       <svg viewBox="0 0 300 300" aria-hidden className="absolute inset-0 overflow-visible size-full">
         {rings.map((points, index) => (
           <polygon key={index} points={points} className={`stroke-line ${index ? "fill-none" : "fill-surface"}`} />
@@ -46,9 +48,9 @@ export function Radar({
         const [x, y] = point(i, R + 34);
         const value = values[i];
         return (
-          <div key={i} style={{ left: `${x / 3}%`, top: `${y / 3}%` }} className="absolute flex w-max max-w-32 flex-col items-center gap-0.5 text-center font-display font-bold -translate-x-1/2 -translate-y-1/2">
-            <span className="text-[13px] leading-tight tracking-widest text-balance text-fg-muted uppercase">{label}</span>
-            <span style={{ color: valueColor }} className="text-[22px] leading-none">{value != null ? format.format(value) : "—"}</span>
+          <div key={i} style={{ left: `${x / 3}%`, top: `${y / 3}%` }} className={`absolute flex w-max flex-col items-center gap-0.5 text-center font-display font-bold -translate-x-1/2 -translate-y-1/2 ${compact ? "max-w-20" : "max-w-32"}`}>
+            <span className={`leading-tight text-balance text-fg-muted uppercase ${compact ? "text-[9px] tracking-wider" : "text-[13px] tracking-widest"}`}>{label}</span>
+            <span style={{ color: valueColor }} className={`leading-none ${compact ? "text-[15px]" : "text-[22px]"}`}>{value != null ? format.format(value) : "—"}</span>
           </div>
         );
       })}

@@ -19,6 +19,21 @@
     "closeMenu": "Close menu",
     "language": "Language"
   },
+  "accountMenu": {
+    "login": "LOGIN",
+    "open": "Open crew panel",
+    "openSignedIn": "Crew panel, signed in as {tag}",
+    "title": "Crew panel",
+    "close": "Close crew panel",
+    "signInPrompt": "Sign in to file your own reports and rate games on the six axes.",
+    "signInGoogle": "Sign in with Google",
+    "signingIn": "Connecting…",
+    "member": "CREW MEMBER",
+    "noTag": "Choose your crew tag to start reviewing.",
+    "chooseTag": "Choose crew tag",
+    "account": "Account and crew tag",
+    "signOut": "Sign out"
+  },
   "hero": {
     "badge": "PB-0001 // HUMAN OPERATED",
     "eyebrow": "PB-0001 // UPDATED · SINCE 1999",
@@ -168,6 +183,78 @@
         "note": "What only this game does. The thing it will be remembered for."
       }
     ]
+  },
+  "crew": {
+    "heading": "Crew data",
+    "average": "CREW AVG",
+    "reviews": "{count} REVIEWS",
+    "oneReview": "1 REVIEW",
+    "empty": "No crew reports yet. Be the first to file one.",
+    "seeAll": "See all crew reports",
+    "write": "File your report",
+    "edit": "Edit your report",
+    "signIn": "Sign in with Google to review",
+    "chooseTag": "Choose your crew tag to review",
+    "signedInAs": "SIGNED IN AS",
+    "account": "Account",
+    "unreleased": "Reviews open on release day.",
+    "loading": "Loading crew data…",
+    "yours": "YOU",
+    "allTitle": "Crew reports",
+    "allHeading": ["Crew", "reports"],
+    "page": "PAGE {page} / {pages}",
+    "previousPage": "Previous",
+    "nextPage": "Next"
+  },
+  "reviewForm": {
+    "title": "Your report",
+    "heading": ["Your", "report"],
+    "intro": "Rate the six axes from 0 to 10 and, if you want, write a few paragraphs. Select text and press B for bold; no other formatting.",
+    "hexagon": "Your hexagon",
+    "average": "AVERAGE",
+    "paragraphs": "Paragraphs",
+    "paragraph": "Paragraph {n}",
+    "addParagraph": "+ Add paragraph",
+    "remove": "Remove",
+    "bold": "B",
+    "boldLabel": "Bold",
+    "preview": "Preview",
+    "chars": "{count} / {max}",
+    "save": "Save report",
+    "saving": "Saving…",
+    "delete": "Delete report",
+    "deleting": "Deleting…",
+    "confirmDelete": "Delete your report for good?",
+    "cancel": "Back to the report",
+    "errors": {
+      "signedOut": "Your session expired. Sign in again.",
+      "noTag": "Choose a crew tag first.",
+      "notFound": "This game no longer exists.",
+      "unreleased": "This game is not out yet.",
+      "scores": "Every axis needs a score from 0 to 10.",
+      "tooMany": "Too many paragraphs (max {max}).",
+      "tooLong": "A paragraph is too long (max {max} characters)."
+    }
+  },
+  "account": {
+    "title": "Account",
+    "heading": ["Crew", "account"],
+    "chooseIntro": "Pick the tag the crew will know you by. It is shown on your reviews instead of your name, and must be unique.",
+    "changeIntro": "Your tag is shown on your reviews. You can change it, if the new one is free.",
+    "current": "CURRENT TAG",
+    "tag": "Crew tag",
+    "tagHint": "3–20 characters: letters, digits, _ and -. Starts with a letter or digit.",
+    "save": "Confirm tag",
+    "saving": "Checking…",
+    "signOut": "Sign out",
+    "signIn": "Sign in with Google",
+    "signedOut": "Sign in to choose your crew tag.",
+    "errors": {
+      "invalid": "Use 3–20 letters, digits, _ or -, starting with a letter or digit.",
+      "reserved": "That tag is reserved.",
+      "taken": "That tag is already taken.",
+      "signedOut": "Your session expired. Sign in again."
+    }
   },
   "telemetry": {
     "diagnostics": "PB-0001 // DIAGNOSTICS",

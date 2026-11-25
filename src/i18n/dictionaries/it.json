@@ -19,6 +19,21 @@
     "closeMenu": "Chiudi menu",
     "language": "Lingua"
   },
+  "accountMenu": {
+    "login": "ACCEDI",
+    "open": "Apri pannello crew",
+    "openSignedIn": "Pannello crew, connesso come {tag}",
+    "title": "Pannello crew",
+    "close": "Chiudi pannello crew",
+    "signInPrompt": "Accedi per scrivere i tuoi report e valutare i giochi sui sei assi.",
+    "signInGoogle": "Accedi con Google",
+    "signingIn": "Connessione…",
+    "member": "MEMBRO CREW",
+    "noTag": "Scegli il tuo tag crew per iniziare a recensire.",
+    "chooseTag": "Scegli il tag crew",
+    "account": "Account e tag crew",
+    "signOut": "Esci"
+  },
   "hero": {
     "badge": "PB-0001 // PILOTATO DA UN UMANO",
     "eyebrow": "PB-0001 // AGGIORNATO · DAL 1999",
@@ -168,6 +183,78 @@
         "note": "Ciò che solo questo gioco fa. Il motivo per cui verrà ricordato."
       }
     ]
+  },
+  "crew": {
+    "heading": "Dati crew",
+    "average": "MEDIA CREW",
+    "reviews": "{count} RECENSIONI",
+    "oneReview": "1 RECENSIONE",
+    "empty": "Ancora nessun report della crew. Scrivi il primo.",
+    "seeAll": "Vedi tutti i report della crew",
+    "write": "Scrivi il tuo report",
+    "edit": "Modifica il tuo report",
+    "signIn": "Accedi con Google per recensire",
+    "chooseTag": "Scegli il tuo tag crew per recensire",
+    "signedInAs": "CONNESSO COME",
+    "account": "Account",
+    "unreleased": "Le recensioni si aprono all'uscita.",
+    "loading": "Caricamento dati crew…",
+    "yours": "TU",
+    "allTitle": "Report della crew",
+    "allHeading": ["Report", "crew"],
+    "page": "PAGINA {page} / {pages}",
+    "previousPage": "Precedente",
+    "nextPage": "Successiva"
+  },
+  "reviewForm": {
+    "title": "Il tuo report",
+    "heading": ["Il tuo", "report"],
+    "intro": "Valuta i sei assi da 0 a 10 e, se vuoi, scrivi qualche paragrafo. Seleziona il testo e premi B per il grassetto; nessun'altra formattazione.",
+    "hexagon": "Il tuo esagono",
+    "average": "MEDIA",
+    "paragraphs": "Paragrafi",
+    "paragraph": "Paragrafo {n}",
+    "addParagraph": "+ Aggiungi paragrafo",
+    "remove": "Rimuovi",
+    "bold": "B",
+    "boldLabel": "Grassetto",
+    "preview": "Anteprima",
+    "chars": "{count} / {max}",
+    "save": "Salva report",
+    "saving": "Salvataggio…",
+    "delete": "Elimina report",
+    "deleting": "Eliminazione…",
+    "confirmDelete": "Eliminare definitivamente il tuo report?",
+    "cancel": "Torna al report",
+    "errors": {
+      "signedOut": "La sessione è scaduta. Accedi di nuovo.",
+      "noTag": "Scegli prima un tag crew.",
+      "notFound": "Questo gioco non esiste più.",
+      "unreleased": "Questo gioco non è ancora uscito.",
+      "scores": "Ogni asse richiede un voto da 0 a 10.",
+      "tooMany": "Troppi paragrafi (max {max}).",
+      "tooLong": "Un paragrafo è troppo lungo (max {max} caratteri)."
+    }
+  },
+  "account": {
+    "title": "Account",
+    "heading": ["Account", "crew"],
+    "chooseIntro": "Scegli il tag con cui la crew ti conoscerà. Compare sulle tue recensioni al posto del tuo nome e deve essere unico.",
+    "changeIntro": "Il tuo tag compare sulle tue recensioni. Puoi cambiarlo, se quello nuovo è libero.",
+    "current": "TAG ATTUALE",
+    "tag": "Tag crew",
+    "tagHint": "3–20 caratteri: lettere, cifre, _ e -. Inizia con una lettera o una cifra.",
+    "save": "Conferma tag",
+    "saving": "Verifica…",
+    "signOut": "Esci",
+    "signIn": "Accedi con Google",
+    "signedOut": "Accedi per scegliere il tuo tag crew.",
+    "errors": {
+      "invalid": "Usa 3–20 lettere, cifre, _ o -, iniziando con una lettera o una cifra.",
+      "reserved": "Quel tag è riservato.",
+      "taken": "Quel tag è già in uso.",
+      "signedOut": "La sessione è scaduta. Accedi di nuovo."
+    }
   },
   "telemetry": {
     "diagnostics": "PB-0001 // DIAGNOSTICA",
