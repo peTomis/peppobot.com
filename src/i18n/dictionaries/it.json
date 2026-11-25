@@ -355,6 +355,10 @@
       "32": [
         { "name": "Musica e tempismo", "note": "Tracklist, chart e sensazione degli input. Andare a tempo è preciso, e le canzoni restano in testa?" },
         { "name": "Sfida e varietà", "note": "Curva di difficoltà, modalità e chart. Continua a insegnare nuovi pattern e a spingermi a migliorare?" }
+      ],
+      "33": [
+        { "name": "Scrittura", "note": "Trama, prosa e personaggi. La storia mi coinvolge e mi fa affezionare ai personaggi?" },
+        { "name": "Scelte e struttura", "note": "Bivi, route e ritmo. Le mie decisioni contano, e ogni route vale la pena di essere letta?" }
       ]
     },
     "gachaMeter": {
