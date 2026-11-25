@@ -356,6 +356,10 @@
       "33": [
         { "name": "Writing", "note": "Plot, prose and characters. Does the story grip me and make me care about the people in it?" },
         { "name": "Choices & structure", "note": "Branches, routes and pacing. Do my decisions matter, and is every route worth reading?" }
+      ],
+      "34": [
+        { "name": "Daily life", "note": "Routines, chores and small rewards. Does living this life become cozy and absorbing rather than repetitive?" },
+        { "name": "Growth & freedom", "note": "Upgrades, relationships and goals. Does my place in the world change in ways I chose?" }
       ]
     },
     "gachaMeter": {

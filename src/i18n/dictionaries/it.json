@@ -359,6 +359,10 @@
       "33": [
         { "name": "Scrittura", "note": "Trama, prosa e personaggi. La storia mi coinvolge e mi fa affezionare ai personaggi?" },
         { "name": "Scelte e struttura", "note": "Bivi, route e ritmo. Le mie decisioni contano, e ogni route vale la pena di essere letta?" }
+      ],
+      "34": [
+        { "name": "Vita quotidiana", "note": "Routine, faccende e piccole ricompense. Vivere questa vita diventa accogliente e coinvolgente invece che ripetitivo?" },
+        { "name": "Crescita e libertà", "note": "Miglioramenti, relazioni e obiettivi. Il mio posto nel mondo cambia nei modi che ho scelto?" }
       ]
     },
     "gachaMeter": {

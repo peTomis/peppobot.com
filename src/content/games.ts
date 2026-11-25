@@ -77,6 +77,7 @@ export const GENRES = {
   31: { id: 31, name: "Shoot 'em Up" },
   32: { id: 32, name: "Rhythm" },
   33: { id: 33, name: "Visual Novel" },
+  34: { id: 34, name: "Life Simulation" },
 } as const;
 
 export type Genre = keyof typeof GENRES;
