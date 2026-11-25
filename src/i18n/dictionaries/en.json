@@ -65,6 +65,7 @@
     "searchLabel": "Search the library",
     "sortBy": "SORT BY",
     "sorts": {
+      "status": "Status",
       "recent": "Recent",
       "score": "Score",
       "hours": "Hours",
@@ -251,6 +252,42 @@
       "7": [
         { "name": "Exploration", "note": "World design, discovery and puzzles. Does exploring reward curiosity and make every new path worth following?" },
         { "name": "Story & pacing", "note": "Story, characters and the balance between action and adventure. Does the journey stay engaging from start to finish?" }
+      ],
+      "8": [
+        { "name": "Gunplay", "note": "Weapon feel, recoil, feedback and variety. Does every shot land with weight, and does each gun earn its place?" },
+        { "name": "Cover & movement", "note": "Cover, mobility and positioning. Does the camera and the way I move turn every firefight into a tactical choice?" }
+      ],
+      "9": [
+        { "name": "Depth", "note": "Systems, detail and fidelity. Does the simulation hold up when I look closer, and do its parts interact in believable ways?" },
+        { "name": "Immersion", "note": "Routine, flow and the feeling of the role. Does doing the job become absorbing rather than a chore?" }
+      ],
+      "10": [
+        { "name": "Combat system", "note": "Moveset depth, combos and the neutral game. Does mastering a character keep opening new options?" },
+        { "name": "Roster & balance", "note": "Character variety and fairness. Is every pick viable, and does each one play differently?" }
+      ],
+      "11": [
+        { "name": "Community", "note": "Neighbours, relationships and shared moments. Do the characters around me feel alive and worth coming back to?" },
+        { "name": "Daily rhythm", "note": "Routines, seasons and small goals. Does every day give me a reason to log in without turning into a chore?" }
+      ],
+      "12": [
+        { "name": "Run variety", "note": "Procedural layouts, builds and surprises. Does every run feel different from the last?" },
+        { "name": "Meta progression", "note": "Unlocks and knowledge carried between runs. Does each death leave me stronger or wiser for the next one?" }
+      ],
+      "13": [
+        { "name": "Discovery", "note": "Places, secrets and the pull of the unknown. Does the world keep rewarding the urge to see what's next?" },
+        { "name": "Atmosphere", "note": "Mood, setting and sense of place. Does the journey leave an impression that stays after the credits?" }
+      ],
+      "14": [
+        { "name": "Combat flow", "note": "Combos, crowd control and impact. Does cutting through hordes feel powerful and stay fun for hours?" },
+        { "name": "Variety", "note": "Characters, weapons, enemies and missions. Does the game find new ways to keep the action fresh?" }
+      ],
+      "15": [
+        { "name": "Tension", "note": "Dread, scares and pacing. Does the fear build up, or does it fade into routine?" },
+        { "name": "Resource management", "note": "Ammo, healing and saves. Is scarcity a meaningful pressure that shapes every choice?" }
+      ],
+      "16": [
+        { "name": "Map design", "note": "Interconnection, shortcuts and backtracking. Does the world fold back on itself in satisfying ways?" },
+        { "name": "Ability gating", "note": "New powers and the paths they open. Does every upgrade change how I see the map?" }
       ]
     },
     "gachaMeter": {

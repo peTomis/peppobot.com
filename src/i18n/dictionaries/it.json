@@ -65,6 +65,7 @@
     "searchLabel": "Cerca nella libreria",
     "sortBy": "ORDINA PER",
     "sorts": {
+      "status": "Stato",
       "recent": "Recenti",
       "score": "Voto",
       "hours": "Ore",
@@ -254,6 +255,42 @@
       "7": [
         { "name": "Esplorazione", "note": "Struttura del mondo, scoperte ed enigmi. Esplorare premia la curiosità e rende ogni nuovo percorso degno di essere seguito?" },
         { "name": "Storia e ritmo", "note": "Storia, personaggi ed equilibrio tra azione e avventura. Il viaggio resta coinvolgente dall'inizio alla fine?" }
+      ],
+      "8": [
+        { "name": "Gunplay", "note": "Sensazione delle armi, rinculo, feedback e varietà. Ogni colpo ha peso, e ogni arma si guadagna il suo posto?" },
+        { "name": "Coperture e movimento", "note": "Coperture, mobilità e posizionamento. La telecamera e il modo in cui mi muovo trasformano ogni scontro in una scelta tattica?" }
+      ],
+      "9": [
+        { "name": "Profondità", "note": "Sistemi, dettaglio e fedeltà. La simulazione regge quando la guardo da vicino, e le sue parti interagiscono in modo credibile?" },
+        { "name": "Immersione", "note": "Routine, ritmo e la sensazione del ruolo. Svolgere il lavoro diventa coinvolgente invece che un peso?" }
+      ],
+      "10": [
+        { "name": "Sistema di combattimento", "note": "Profondità del moveset, combo e gioco neutro. Padroneggiare un personaggio continua ad aprire nuove opzioni?" },
+        { "name": "Roster e bilanciamento", "note": "Varietà dei personaggi ed equità. Ogni scelta è valida, e ognuna si gioca in modo diverso?" }
+      ],
+      "11": [
+        { "name": "Comunità", "note": "Vicini, relazioni e momenti condivisi. I personaggi intorno a me sembrano vivi e vale la pena tornare da loro?" },
+        { "name": "Ritmo quotidiano", "note": "Routine, stagioni e piccoli obiettivi. Ogni giorno mi dà un motivo per entrare senza diventare un obbligo?" }
+      ],
+      "12": [
+        { "name": "Varietà delle run", "note": "Livelli procedurali, build e sorprese. Ogni run sembra diversa dalla precedente?" },
+        { "name": "Meta-progressione", "note": "Sblocchi e conoscenze che restano tra una run e l'altra. Ogni morte mi lascia più forte o più esperto per la prossima?" }
+      ],
+      "13": [
+        { "name": "Scoperta", "note": "Luoghi, segreti e il richiamo dell'ignoto. Il mondo continua a premiare la voglia di vedere cosa c'è dopo?" },
+        { "name": "Atmosfera", "note": "Mood, ambientazione e senso del luogo. Il viaggio lascia un'impressione che resta dopo i titoli di coda?" }
+      ],
+      "14": [
+        { "name": "Flusso del combattimento", "note": "Combo, controllo delle orde e impatto. Farsi strada tra le orde dà una sensazione di potenza e resta divertente per ore?" },
+        { "name": "Varietà", "note": "Personaggi, armi, nemici e missioni. Il gioco trova nuovi modi per mantenere l'azione fresca?" }
+      ],
+      "15": [
+        { "name": "Tensione", "note": "Inquietudine, spaventi e ritmo. La paura cresce, o si spegne nella routine?" },
+        { "name": "Gestione delle risorse", "note": "Munizioni, cure e salvataggi. La scarsità è una pressione reale che influenza ogni scelta?" }
+      ],
+      "16": [
+        { "name": "Struttura della mappa", "note": "Interconnessione, scorciatoie e backtracking. Il mondo si richiude su se stesso in modo appagante?" },
+        { "name": "Abilità e accessi", "note": "Nuovi poteri e le strade che aprono. Ogni potenziamento cambia il modo in cui vedo la mappa?" }
       ]
     },
     "gachaMeter": {

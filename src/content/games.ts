@@ -14,7 +14,7 @@ export const STATUS_COLORS: Record<GameStatus, string> = {
 };
 
 /** Library orderings, in the order the sort controls show them. */
-export const LIBRARY_SORTS = ["recent", "score", "hours", "az"] as const;
+export const LIBRARY_SORTS = ["status", "recent", "score", "hours", "az"] as const;
 
 export type LibrarySort = (typeof LIBRARY_SORTS)[number];
 
@@ -51,6 +51,15 @@ export const GENRES = {
   5: { id: 5, name: "Sandbox" },
   6: { id: 6, name: "Platform" },
   7: { id: 7, name: "Action Adventure" },
+  8: { id: 8, name: "Third Person Shooter" },
+  9: { id: 9, name: "Simulation" },
+  10: { id: 10, name: "Fighting" },
+  11: { id: 11, name: "Social Simulation" },
+  12: { id: 12, name: "Roguelike" },
+  13: { id: 13, name: "Adventure" },
+  14: { id: 14, name: "Hack and Slash" },
+  15: { id: 15, name: "Survival Horror" },
+  16: { id: 16, name: "Metroidvania" },
 } as const;
 
 export type Genre = keyof typeof GENRES;

@@ -1,6 +1,6 @@
 import "server-only";
 import { ObjectId, type WithId } from "mongodb";
-import { GENRES, normalizeGame, PLATFORMS, type Game, type GameFields, type GameReport, type LibraryPage, type LibraryQuery, type LibrarySort } from "@/content/games";
+import { GENRES, normalizeGame, PLATFORMS, type Game, type GameFields, type GameReport, type GameStatus, type LibraryPage, type LibraryQuery, type LibrarySort } from "@/content/games";
 import { getDatabase } from "@/lib/mongodb";
 
 // Explicit public fields: additional database fields never leak into API responses.
@@ -69,8 +69,12 @@ export async function getNextInQueue(): Promise<Game | null> {
 
 const LIBRARY_PAGE_SIZE = 12;
 
-// Ties fall back to `_id` so paging is stable.
+// The "status" sort's order: finished runs first, the backlog last.
+const STATUS_ORDER: GameStatus[] = ["Completed", "Playing", "Dropped", "Not Started"];
+
+// Ties fall back to `_id` so paging is stable. `statusRank` and `releaseRank` are added by `getLibraryPage`.
 const LIBRARY_ORDER: Record<LibrarySort, Record<string, 1 | -1>> = {
+  status: { statusRank: 1, releaseRank: -1, _id: -1 },
   recent: { finishedOn: -1, _id: -1 },
   score: { average: -1, _id: -1 },
   hours: { hours: -1, _id: -1 },
@@ -98,12 +102,19 @@ export async function getLibraryPage({ q, status, sort, page }: LibraryQuery): P
   const current = Math.min(Math.max(1, page), pages);
   const offset = (current - 1) * LIBRARY_PAGE_SIZE;
   const games = await collection
-    .find(filter, { projection })
-    .sort(LIBRARY_ORDER[sort])
-    .collation({ locale: "en", strength: 2 })
-    .skip(offset)
-    .limit(LIBRARY_PAGE_SIZE)
-    .maxTimeMS(5000)
+    .aggregate<WithId<GameDocument>>(
+      [
+        { $match: filter },
+        // Statuses sort in the order of `STATUS_ORDER`, not alphabetically.
+        // A game without a release date isn't out yet, so it counts as the newest.
+        { $addFields: { statusRank: { $indexOfArray: [STATUS_ORDER, "$status"] }, releaseRank: { $ifNull: ["$releasedOn", Number.MAX_SAFE_INTEGER] } } },
+        { $sort: LIBRARY_ORDER[sort] },
+        { $skip: offset },
+        { $limit: LIBRARY_PAGE_SIZE },
+        { $project: projection },
+      ],
+      { collation: { locale: "en", strength: 2 }, maxTimeMS: 5000 },
+    )
     .toArray();
 
   return { games: games.map(toGame), matches, total, page: current, pages, offset };

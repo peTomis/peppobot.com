@@ -15,7 +15,7 @@ type View = "grid" | "list";
 type LibraryState = LibraryQuery & { view: View };
 export type LibrarySearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-export const DEFAULT_STATE: LibraryState = { q: "", status: null, sort: "recent", page: 1, view: "grid" };
+export const DEFAULT_STATE: LibraryState = { q: "", status: null, sort: "status", page: 1, view: "grid" };
 
 function first(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
