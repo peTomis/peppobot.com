@@ -363,6 +363,30 @@
       "34": [
         { "name": "Vita quotidiana", "note": "Routine, faccende e piccole ricompense. Vivere questa vita diventa accogliente e coinvolgente invece che ripetitivo?" },
         { "name": "Crescita e libertà", "note": "Miglioramenti, relazioni e obiettivi. Il mio posto nel mondo cambia nei modi che ho scelto?" }
+      ],
+      "35": [
+        { "name": "Sistemi stealth", "note": "Luce, suono e percezione dell'IA. Le regole per essere scoperti sono chiare, giuste e tese?" },
+        { "name": "Level design", "note": "Percorsi, strumenti e opzioni. Ogni area offre più vie d'accesso e premia la creatività?" }
+      ],
+      "36": [
+        { "name": "Tattica", "note": "Posizionamento, coperture ed economia delle azioni. Ogni turno premia una pianificazione attenta?" },
+        { "name": "Squadra e progressione", "note": "Unità, potenziamenti e perdite. I miei soldati crescono in modi che cambiano come combatto?" }
+      ],
+      "37": [
+        { "name": "Guida e armi", "note": "Sensazione di guida, armi e impatto. Combattere al volante è pesante e caotico nel modo giusto?" },
+        { "name": "Arene e modalità", "note": "Mappe, eventi e progressione. C'è abbastanza varietà da mantenere fresca la carneficina?" }
+      ],
+      "38": [
+        { "name": "Automazione", "note": "Macchine, nastri e produttività. Costruire una fabbrica efficiente è un puzzle appagante?" },
+        { "name": "Scala e obiettivi", "note": "Espansione, ricerca e traguardi. La fabbrica continua a crescere verso nuovi problemi da risolvere?" }
+      ],
+      "39": [
+        { "name": "Comando", "note": "Controllo delle unità, terreno e tempismo. Le decisioni rapide sul campo fanno la differenza?" },
+        { "name": "Scenari", "note": "Missioni, obiettivi e varietà. Ogni battaglia richiede un approccio diverso?" }
+      ],
+      "40": [
+        { "name": "Costruzione", "note": "Disposizione, strumenti e libertà. Progettare il mio spazio è creativo e funzionale allo stesso tempo?" },
+        { "name": "Gestione", "note": "Personale, soldi e clienti. Far funzionare tutto resta coinvolgente man mano che cresce?" }
       ]
     },
     "gachaMeter": {

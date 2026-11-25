@@ -360,6 +360,30 @@
       "34": [
         { "name": "Daily life", "note": "Routines, chores and small rewards. Does living this life become cozy and absorbing rather than repetitive?" },
         { "name": "Growth & freedom", "note": "Upgrades, relationships and goals. Does my place in the world change in ways I chose?" }
+      ],
+      "35": [
+        { "name": "Stealth systems", "note": "Light, sound and AI awareness. Do the rules of being seen feel clear, fair and tense?" },
+        { "name": "Level design", "note": "Routes, tools and options. Does every area offer several ways in, and reward creativity?" }
+      ],
+      "36": [
+        { "name": "Tactics", "note": "Positioning, cover and action economy. Does every turn reward careful planning?" },
+        { "name": "Squad & progression", "note": "Units, upgrades and losses. Do my soldiers grow in ways that change how I fight?" }
+      ],
+      "37": [
+        { "name": "Handling & weapons", "note": "Driving feel, weapons and impact. Does fighting at the wheel feel weighty and chaotic in the right way?" },
+        { "name": "Arenas & modes", "note": "Maps, events and progression. Is there enough variety to keep the carnage fresh?" }
+      ],
+      "38": [
+        { "name": "Automation", "note": "Machines, belts and throughput. Is building an efficient factory a satisfying puzzle?" },
+        { "name": "Scale & goals", "note": "Expansion, research and milestones. Does the factory keep growing into new problems worth solving?" }
+      ],
+      "39": [
+        { "name": "Command", "note": "Unit control, terrain and timing. Do quick decisions on the battlefield make the difference?" },
+        { "name": "Scenarios", "note": "Missions, objectives and variety. Does every battle ask for a different approach?" }
+      ],
+      "40": [
+        { "name": "Building", "note": "Layout, tools and freedom. Is designing my place both creative and functional?" },
+        { "name": "Management", "note": "Staff, money and guests. Does keeping it all running stay engaging as it grows?" }
       ]
     },
     "gachaMeter": {
