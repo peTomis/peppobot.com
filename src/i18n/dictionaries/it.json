@@ -339,6 +339,10 @@
       "28": [
         { "name": "Ciclo di sopravvivenza", "note": "Fame, minacce e crafting. Restare vivo mi tiene sulle spine senza diventare un peso?" },
         { "name": "Costruzione e progressione", "note": "Basi, strumenti e tecnologia. Ogni passo avanti cambia il modo in cui affronto il mondo?" }
+      ],
+      "29": [
+        { "name": "Adattamento", "note": "Regole, componenti e sensazione al tavolo. La versione digitale conserva ciò che rende divertente il gioco da tavolo?" },
+        { "name": "Modalità di gioco", "note": "Online, locale e avversari IA. È facile trovare una buona partita in qualsiasi momento?" }
       ]
     },
     "gachaMeter": {

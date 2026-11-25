@@ -336,6 +336,10 @@
       "28": [
         { "name": "Survival loop", "note": "Hunger, threats and crafting. Does staying alive keep me on edge without becoming a chore?" },
         { "name": "Building & progression", "note": "Bases, tools and technology. Does each step forward change how I face the world?" }
+      ],
+      "29": [
+        { "name": "Adaptation", "note": "Rules, components and table feel. Does the digital version keep what makes the board game fun?" },
+        { "name": "Play options", "note": "Online, local and AI opponents. Is it easy to find a good game at any time?" }
       ]
     },
     "gachaMeter": {
