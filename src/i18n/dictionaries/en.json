@@ -340,6 +340,10 @@
       "29": [
         { "name": "Adaptation", "note": "Rules, components and table feel. Does the digital version keep what makes the board game fun?" },
         { "name": "Play options", "note": "Online, local and AI opponents. Is it easy to find a good game at any time?" }
+      ],
+      "30": [
+        { "name": "Planning", "note": "Layout, zoning and logistics. Does a well-planned city feel different from a messy one, and do I learn to build better?" },
+        { "name": "Growth & challenge", "note": "Needs, crises and expansion. Does the city keep posing new problems as it grows?" }
       ]
     },
     "gachaMeter": {

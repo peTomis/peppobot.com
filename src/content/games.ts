@@ -73,6 +73,7 @@ export const GENRES = {
   27: { id: 27, name: "Turn-Based Strategy" },
   28: { id: 28, name: "Survival" },
   29: { id: 29, name: "Digital Tabletop" },
+  30: { id: 30, name: "City Builder" },
 } as const;
 
 export type Genre = keyof typeof GENRES;

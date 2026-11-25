@@ -343,6 +343,10 @@
       "29": [
         { "name": "Adattamento", "note": "Regole, componenti e sensazione al tavolo. La versione digitale conserva ciò che rende divertente il gioco da tavolo?" },
         { "name": "Modalità di gioco", "note": "Online, locale e avversari IA. È facile trovare una buona partita in qualsiasi momento?" }
+      ],
+      "30": [
+        { "name": "Pianificazione", "note": "Disposizione, zone e logistica. Una città ben pianificata si distingue da una disordinata, e imparo a costruire meglio?" },
+        { "name": "Crescita e sfida", "note": "Bisogni, crisi ed espansione. La città continua a porre nuovi problemi man mano che cresce?" }
       ]
     },
     "gachaMeter": {
