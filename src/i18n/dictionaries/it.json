@@ -268,10 +268,6 @@
         { "name": "Sistema di combattimento", "note": "Profondità del moveset, combo e gioco neutro. Padroneggiare un personaggio continua ad aprire nuove opzioni?" },
         { "name": "Roster e bilanciamento", "note": "Varietà dei personaggi ed equità. Ogni scelta è valida, e ognuna si gioca in modo diverso?" }
       ],
-      "11": [
-        { "name": "Comunità", "note": "Vicini, relazioni e momenti condivisi. I personaggi intorno a me sembrano vivi e vale la pena tornare da loro?" },
-        { "name": "Ritmo quotidiano", "note": "Routine, stagioni e piccoli obiettivi. Ogni giorno mi dà un motivo per entrare senza diventare un obbligo?" }
-      ],
       "12": [
         { "name": "Varietà delle run", "note": "Livelli procedurali, build e sorprese. Ogni run sembra diversa dalla precedente?" },
         { "name": "Meta-progressione", "note": "Sblocchi e conoscenze che restano tra una run e l'altra. Ogni morte mi lascia più forte o più esperto per la prossima?" }
@@ -280,17 +276,9 @@
         { "name": "Scoperta", "note": "Luoghi, segreti e il richiamo dell'ignoto. Il mondo continua a premiare la voglia di vedere cosa c'è dopo?" },
         { "name": "Atmosfera", "note": "Mood, ambientazione e senso del luogo. Il viaggio lascia un'impressione che resta dopo i titoli di coda?" }
       ],
-      "14": [
-        { "name": "Flusso del combattimento", "note": "Combo, controllo delle orde e impatto. Farsi strada tra le orde dà una sensazione di potenza e resta divertente per ore?" },
-        { "name": "Varietà", "note": "Personaggi, armi, nemici e missioni. Il gioco trova nuovi modi per mantenere l'azione fresca?" }
-      ],
       "15": [
         { "name": "Tensione", "note": "Inquietudine, spaventi e ritmo. La paura cresce, o si spegne nella routine?" },
         { "name": "Gestione delle risorse", "note": "Munizioni, cure e salvataggi. La scarsità è una pressione reale che influenza ogni scelta?" }
-      ],
-      "16": [
-        { "name": "Struttura della mappa", "note": "Interconnessione, scorciatoie e backtracking. Il mondo si richiude su se stesso in modo appagante?" },
-        { "name": "Abilità e accessi", "note": "Nuovi poteri e le strade che aprono. Ogni potenziamento cambia il modo in cui vedo la mappa?" }
       ],
       "17": [
         { "name": "Divertimento di gruppo", "note": "Risate, caos e momenti condivisi. Migliora man mano che si aggiungono giocatori?" },
@@ -308,85 +296,13 @@
         { "name": "Gunplay", "note": "Sensazione delle armi, rinculo, feedback e varietà. Ogni colpo ha peso, e ogni arma si guadagna il suo posto?" },
         { "name": "Design degli scontri", "note": "Arene, nemici e ritmo. Gli scontri mi chiedono di pensare e muovermi, non solo di mirare?" }
       ],
-      "21": [
-        { "name": "Tattica", "note": "Pianificazione, informazioni e gioco di squadra. Le decisioni intelligenti battono i riflessi rapidi?" },
-        { "name": "Design delle mappe", "note": "Angoli, percorsi e distruttibilità. Ogni mappa apre nuovi modi di attaccare e difendere?" }
-      ],
-      "22": [
-        { "name": "Economia", "note": "Prezzi, domanda e crescita. Le mie decisioni muovono i numeri in modi che posso leggere e da cui imparare?" },
-        { "name": "Profondità gestionale", "note": "Personale, logistica ed espansione. Gestire l'attività continua a porre nuovi problemi man mano che cresce?" }
-      ],
-      "23": [
-        { "name": "Flusso del combattimento", "note": "Combo, juggle e controllo delle folle. Ripulire lo schermo dai nemici è d'impatto e con stile?" },
-        { "name": "Co-op e rigiocabilità", "note": "Personaggi, multiplayer e sblocchi. Vale la pena rigiocarlo con gli amici?" }
-      ],
       "24": [
         { "name": "Guida", "note": "Fisica, velocità e feedback. Ogni auto ha un carattere diverso, e guidarla bene dà soddisfazione?" },
         { "name": "Tracciati e modalità", "note": "Circuiti, eventi e progressione. C'è abbastanza varietà da continuare a correre?" }
       ],
-      "25": [
-        { "name": "Tattica", "note": "Posizionamento, terreno ed economia dei turni. Ogni battaglia premia la pianificazione rispetto alla forza bruta?" },
-        { "name": "Costruzione del party", "note": "Classi, abilità e crescita delle unità. Plasmare la squadra apre nuovi modi di vincere?" }
-      ],
-      "26": [
-        { "name": "Design degli eroi", "note": "Abilità, ruoli e identità. Ogni eroe porta uno stile di gioco distinto e divertente da padroneggiare?" },
-        { "name": "Gioco di squadra", "note": "Sinergie, counter e obiettivi. Le partite premiano la coordinazione più delle imprese solitarie?" }
-      ],
       "27": [
         { "name": "Profondità strategica", "note": "Unità, risorse e piani a lungo termine. Ogni turno offre scelte significative con conseguenze?" },
         { "name": "Avversari e bilanciamento", "note": "IA, fazioni ed equità. La sfida è intelligente e le parti sono bilanciate?" }
-      ],
-      "28": [
-        { "name": "Ciclo di sopravvivenza", "note": "Fame, minacce e crafting. Restare vivo mi tiene sulle spine senza diventare un peso?" },
-        { "name": "Costruzione e progressione", "note": "Basi, strumenti e tecnologia. Ogni passo avanti cambia il modo in cui affronto il mondo?" }
-      ],
-      "29": [
-        { "name": "Adattamento", "note": "Regole, componenti e sensazione al tavolo. La versione digitale conserva ciò che rende divertente il gioco da tavolo?" },
-        { "name": "Modalità di gioco", "note": "Online, locale e avversari IA. È facile trovare una buona partita in qualsiasi momento?" }
-      ],
-      "30": [
-        { "name": "Pianificazione", "note": "Disposizione, zone e logistica. Una città ben pianificata si distingue da una disordinata, e imparo a costruire meglio?" },
-        { "name": "Crescita e sfida", "note": "Bisogni, crisi ed espansione. La città continua a porre nuovi problemi man mano che cresce?" }
-      ],
-      "31": [
-        { "name": "Sparatorie e pattern", "note": "Armi, ondate nemiche e pattern di proiettili. Ogni livello è una danza leggibile ed emozionante?" },
-        { "name": "Punteggio e rigiocabilità", "note": "Sistemi di punteggio, percorsi e difficoltà. Mi spinge a tornare per battere il mio record?" }
-      ],
-      "32": [
-        { "name": "Musica e tempismo", "note": "Tracklist, chart e sensazione degli input. Andare a tempo è preciso, e le canzoni restano in testa?" },
-        { "name": "Sfida e varietà", "note": "Curva di difficoltà, modalità e chart. Continua a insegnare nuovi pattern e a spingermi a migliorare?" }
-      ],
-      "33": [
-        { "name": "Scrittura", "note": "Trama, prosa e personaggi. La storia mi coinvolge e mi fa affezionare ai personaggi?" },
-        { "name": "Scelte e struttura", "note": "Bivi, route e ritmo. Le mie decisioni contano, e ogni route vale la pena di essere letta?" }
-      ],
-      "34": [
-        { "name": "Vita quotidiana", "note": "Routine, faccende e piccole ricompense. Vivere questa vita diventa accogliente e coinvolgente invece che ripetitivo?" },
-        { "name": "Crescita e libertà", "note": "Miglioramenti, relazioni e obiettivi. Il mio posto nel mondo cambia nei modi che ho scelto?" }
-      ],
-      "35": [
-        { "name": "Sistemi stealth", "note": "Luce, suono e percezione dell'IA. Le regole per essere scoperti sono chiare, giuste e tese?" },
-        { "name": "Level design", "note": "Percorsi, strumenti e opzioni. Ogni area offre più vie d'accesso e premia la creatività?" }
-      ],
-      "36": [
-        { "name": "Tattica", "note": "Posizionamento, coperture ed economia delle azioni. Ogni turno premia una pianificazione attenta?" },
-        { "name": "Squadra e progressione", "note": "Unità, potenziamenti e perdite. I miei soldati crescono in modi che cambiano come combatto?" }
-      ],
-      "37": [
-        { "name": "Guida e armi", "note": "Sensazione di guida, armi e impatto. Combattere al volante è pesante e caotico nel modo giusto?" },
-        { "name": "Arene e modalità", "note": "Mappe, eventi e progressione. C'è abbastanza varietà da mantenere fresca la carneficina?" }
-      ],
-      "38": [
-        { "name": "Automazione", "note": "Macchine, nastri e produttività. Costruire una fabbrica efficiente è un puzzle appagante?" },
-        { "name": "Scala e obiettivi", "note": "Espansione, ricerca e traguardi. La fabbrica continua a crescere verso nuovi problemi da risolvere?" }
-      ],
-      "39": [
-        { "name": "Comando", "note": "Controllo delle unità, terreno e tempismo. Le decisioni rapide sul campo fanno la differenza?" },
-        { "name": "Scenari", "note": "Missioni, obiettivi e varietà. Ogni battaglia richiede un approccio diverso?" }
-      ],
-      "40": [
-        { "name": "Costruzione", "note": "Disposizione, strumenti e libertà. Progettare il mio spazio è creativo e funzionale allo stesso tempo?" },
-        { "name": "Gestione", "note": "Personale, soldi e clienti. Far funzionare tutto resta coinvolgente man mano che cresce?" }
       ]
     },
     "gachaMeter": {

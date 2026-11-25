@@ -265,10 +265,6 @@
         { "name": "Combat system", "note": "Moveset depth, combos and the neutral game. Does mastering a character keep opening new options?" },
         { "name": "Roster & balance", "note": "Character variety and fairness. Is every pick viable, and does each one play differently?" }
       ],
-      "11": [
-        { "name": "Community", "note": "Neighbours, relationships and shared moments. Do the characters around me feel alive and worth coming back to?" },
-        { "name": "Daily rhythm", "note": "Routines, seasons and small goals. Does every day give me a reason to log in without turning into a chore?" }
-      ],
       "12": [
         { "name": "Run variety", "note": "Procedural layouts, builds and surprises. Does every run feel different from the last?" },
         { "name": "Meta progression", "note": "Unlocks and knowledge carried between runs. Does each death leave me stronger or wiser for the next one?" }
@@ -277,17 +273,9 @@
         { "name": "Discovery", "note": "Places, secrets and the pull of the unknown. Does the world keep rewarding the urge to see what's next?" },
         { "name": "Atmosphere", "note": "Mood, setting and sense of place. Does the journey leave an impression that stays after the credits?" }
       ],
-      "14": [
-        { "name": "Combat flow", "note": "Combos, crowd control and impact. Does cutting through hordes feel powerful and stay fun for hours?" },
-        { "name": "Variety", "note": "Characters, weapons, enemies and missions. Does the game find new ways to keep the action fresh?" }
-      ],
       "15": [
         { "name": "Tension", "note": "Dread, scares and pacing. Does the fear build up, or does it fade into routine?" },
         { "name": "Resource management", "note": "Ammo, healing and saves. Is scarcity a meaningful pressure that shapes every choice?" }
-      ],
-      "16": [
-        { "name": "Map design", "note": "Interconnection, shortcuts and backtracking. Does the world fold back on itself in satisfying ways?" },
-        { "name": "Ability gating", "note": "New powers and the paths they open. Does every upgrade change how I see the map?" }
       ],
       "17": [
         { "name": "Group fun", "note": "Laughs, chaos and shared moments. Does it get better the more people join in?" },
@@ -305,85 +293,13 @@
         { "name": "Gunplay", "note": "Weapon feel, recoil, feedback and variety. Does every shot land with weight, and does each gun earn its place?" },
         { "name": "Encounter design", "note": "Arenas, enemies and pacing. Do fights ask me to think and move, not just aim?" }
       ],
-      "21": [
-        { "name": "Tactics", "note": "Planning, information and teamwork. Do smart decisions beat fast reflexes?" },
-        { "name": "Map design", "note": "Angles, routes and destructibility. Does every map open new ways to attack and defend?" }
-      ],
-      "22": [
-        { "name": "Economy", "note": "Prices, demand and growth. Do my decisions move the numbers in ways I can read and learn from?" },
-        { "name": "Management depth", "note": "Staff, logistics and expansion. Does running the business keep posing new problems as it grows?" }
-      ],
-      "23": [
-        { "name": "Combat flow", "note": "Combos, juggles and crowd control. Does clearing a screen of enemies feel punchy and stylish?" },
-        { "name": "Co-op & replay", "note": "Characters, multiplayer and unlocks. Is it worth running through again with friends?" }
-      ],
       "24": [
         { "name": "Handling", "note": "Physics, speed and feedback. Does every car feel distinct, and does driving it well feel earned?" },
         { "name": "Tracks & modes", "note": "Circuits, events and progression. Is there enough variety to keep me racing?" }
       ],
-      "25": [
-        { "name": "Tactics", "note": "Positioning, terrain and turn economy. Does every battle reward planning over brute force?" },
-        { "name": "Party building", "note": "Classes, skills and unit growth. Does shaping my squad open new ways to win?" }
-      ],
-      "26": [
-        { "name": "Hero design", "note": "Abilities, roles and identity. Does every hero bring a distinct playstyle that's fun to master?" },
-        { "name": "Team play", "note": "Synergies, counters and objectives. Do matches reward coordination over solo heroics?" }
-      ],
       "27": [
         { "name": "Strategic depth", "note": "Units, resources and long-term plans. Does every turn offer meaningful choices with consequences?" },
         { "name": "Opponent & balance", "note": "AI, factions and fairness. Is the challenge smart and are the sides balanced?" }
-      ],
-      "28": [
-        { "name": "Survival loop", "note": "Hunger, threats and crafting. Does staying alive keep me on edge without becoming a chore?" },
-        { "name": "Building & progression", "note": "Bases, tools and technology. Does each step forward change how I face the world?" }
-      ],
-      "29": [
-        { "name": "Adaptation", "note": "Rules, components and table feel. Does the digital version keep what makes the board game fun?" },
-        { "name": "Play options", "note": "Online, local and AI opponents. Is it easy to find a good game at any time?" }
-      ],
-      "30": [
-        { "name": "Planning", "note": "Layout, zoning and logistics. Does a well-planned city feel different from a messy one, and do I learn to build better?" },
-        { "name": "Growth & challenge", "note": "Needs, crises and expansion. Does the city keep posing new problems as it grows?" }
-      ],
-      "31": [
-        { "name": "Shooting & patterns", "note": "Weapons, enemy waves and bullet patterns. Is every stage a readable, thrilling dance?" },
-        { "name": "Score & replay", "note": "Scoring systems, routes and difficulty. Does it pull me back to beat my best run?" }
-      ],
-      "32": [
-        { "name": "Music & timing", "note": "Tracklist, charts and input feel. Does hitting the beat feel tight, and do the songs stick in my head?" },
-        { "name": "Challenge & variety", "note": "Difficulty curve, modes and charts. Does it keep teaching new patterns and pushing me to improve?" }
-      ],
-      "33": [
-        { "name": "Writing", "note": "Plot, prose and characters. Does the story grip me and make me care about the people in it?" },
-        { "name": "Choices & structure", "note": "Branches, routes and pacing. Do my decisions matter, and is every route worth reading?" }
-      ],
-      "34": [
-        { "name": "Daily life", "note": "Routines, chores and small rewards. Does living this life become cozy and absorbing rather than repetitive?" },
-        { "name": "Growth & freedom", "note": "Upgrades, relationships and goals. Does my place in the world change in ways I chose?" }
-      ],
-      "35": [
-        { "name": "Stealth systems", "note": "Light, sound and AI awareness. Do the rules of being seen feel clear, fair and tense?" },
-        { "name": "Level design", "note": "Routes, tools and options. Does every area offer several ways in, and reward creativity?" }
-      ],
-      "36": [
-        { "name": "Tactics", "note": "Positioning, cover and action economy. Does every turn reward careful planning?" },
-        { "name": "Squad & progression", "note": "Units, upgrades and losses. Do my soldiers grow in ways that change how I fight?" }
-      ],
-      "37": [
-        { "name": "Handling & weapons", "note": "Driving feel, weapons and impact. Does fighting at the wheel feel weighty and chaotic in the right way?" },
-        { "name": "Arenas & modes", "note": "Maps, events and progression. Is there enough variety to keep the carnage fresh?" }
-      ],
-      "38": [
-        { "name": "Automation", "note": "Machines, belts and throughput. Is building an efficient factory a satisfying puzzle?" },
-        { "name": "Scale & goals", "note": "Expansion, research and milestones. Does the factory keep growing into new problems worth solving?" }
-      ],
-      "39": [
-        { "name": "Command", "note": "Unit control, terrain and timing. Do quick decisions on the battlefield make the difference?" },
-        { "name": "Scenarios", "note": "Missions, objectives and variety. Does every battle ask for a different approach?" }
-      ],
-      "40": [
-        { "name": "Building", "note": "Layout, tools and freedom. Is designing my place both creative and functional?" },
-        { "name": "Management", "note": "Staff, money and guests. Does keeping it all running stay engaging as it grows?" }
       ]
     },
     "gachaMeter": {

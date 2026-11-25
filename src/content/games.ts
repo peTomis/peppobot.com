@@ -42,7 +42,7 @@ export const PLATFORMS = {
 
 export type Platform = keyof typeof PLATFORMS;
 
-/** Stored on games by id, like platforms; the name is the same in every language. */
+/** Stored on games by id, like platforms; the name is the same in every language. Missing ids (11, 14, 16, 21–23, 25, 26, 28–40) belonged to genres merged into these: never reuse them. */
 export const GENRES = {
   1: { id: 1, name: "RPG" },
   2: { id: 2, name: "JRPG" },
@@ -54,36 +54,15 @@ export const GENRES = {
   8: { id: 8, name: "Third Person Shooter" },
   9: { id: 9, name: "Simulation" },
   10: { id: 10, name: "Fighting" },
-  11: { id: 11, name: "Social Simulation" },
   12: { id: 12, name: "Roguelike" },
   13: { id: 13, name: "Adventure" },
-  14: { id: 14, name: "Hack and Slash" },
   15: { id: 15, name: "Survival Horror" },
-  16: { id: 16, name: "Metroidvania" },
   17: { id: 17, name: "Party" },
   18: { id: 18, name: "Action" },
   19: { id: 19, name: "Sports" },
   20: { id: 20, name: "First Person Shooter" },
-  21: { id: 21, name: "Tactical Shooter" },
-  22: { id: 22, name: "Business Simulation" },
-  23: { id: 23, name: "Beat 'em Up" },
   24: { id: 24, name: "Racing" },
-  25: { id: 25, name: "Tactical RPG" },
-  26: { id: 26, name: "Hero Shooter" },
-  27: { id: 27, name: "Turn-Based Strategy" },
-  28: { id: 28, name: "Survival" },
-  29: { id: 29, name: "Digital Tabletop" },
-  30: { id: 30, name: "City Builder" },
-  31: { id: 31, name: "Shoot 'em Up" },
-  32: { id: 32, name: "Rhythm" },
-  33: { id: 33, name: "Visual Novel" },
-  34: { id: 34, name: "Life Simulation" },
-  35: { id: 35, name: "Stealth" },
-  36: { id: 36, name: "Turn-Based Tactics" },
-  37: { id: 37, name: "Vehicular Combat" },
-  38: { id: 38, name: "Factory Simulation" },
-  39: { id: 39, name: "Real-Time Tactics" },
-  40: { id: 40, name: "Construction and Management Simulation" },
+  27: { id: 27, name: "Strategy" },
 } as const;
 
 export type Genre = keyof typeof GENRES;
