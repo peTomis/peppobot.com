@@ -327,6 +327,10 @@
       "25": [
         { "name": "Tattica", "note": "Posizionamento, terreno ed economia dei turni. Ogni battaglia premia la pianificazione rispetto alla forza bruta?" },
         { "name": "Costruzione del party", "note": "Classi, abilità e crescita delle unità. Plasmare la squadra apre nuovi modi di vincere?" }
+      ],
+      "26": [
+        { "name": "Design degli eroi", "note": "Abilità, ruoli e identità. Ogni eroe porta uno stile di gioco distinto e divertente da padroneggiare?" },
+        { "name": "Gioco di squadra", "note": "Sinergie, counter e obiettivi. Le partite premiano la coordinazione più delle imprese solitarie?" }
       ]
     },
     "gachaMeter": {

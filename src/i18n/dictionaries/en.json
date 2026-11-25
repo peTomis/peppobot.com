@@ -324,6 +324,10 @@
       "25": [
         { "name": "Tactics", "note": "Positioning, terrain and turn economy. Does every battle reward planning over brute force?" },
         { "name": "Party building", "note": "Classes, skills and unit growth. Does shaping my squad open new ways to win?" }
+      ],
+      "26": [
+        { "name": "Hero design", "note": "Abilities, roles and identity. Does every hero bring a distinct playstyle that's fun to master?" },
+        { "name": "Team play", "note": "Synergies, counters and objectives. Do matches reward coordination over solo heroics?" }
       ]
     },
     "gachaMeter": {
