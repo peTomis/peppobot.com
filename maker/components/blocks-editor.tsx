@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import type { Accent, ReportBlock, ReportImage } from "@/content/games";
 import type { KeyedBlock } from "../lib/draft";
 import { buttonClass, Field, inputClass, labelClass, Select, TextInput, TranslatedInput } from "./fields";
+import { UploadButton } from "./image-upload";
 
 type BlockType = ReportBlock["type"];
 
@@ -202,7 +203,10 @@ function ImageFields({ image, onChange, label }: { image: ReportImage; onChange:
   return (
     <div className="flex flex-col gap-2">
       <Field label={`${label} URL`}>
-        <TextInput value={image.src ?? ""} placeholder="https://… (empty shows a placeholder)" onChange={(src) => onChange({ ...image, src: src || undefined })} />
+        <div className="flex gap-1.5">
+          <TextInput value={image.src ?? ""} placeholder="https://… (empty shows a placeholder)" onChange={(src) => onChange({ ...image, src: src || undefined })} />
+          <UploadButton onUploaded={(src) => onChange({ ...image, src })} />
+        </div>
       </Field>
       <Field label={`${label} alt text`}>
         <TranslatedInput value={image.alt} onChange={(alt) => onChange({ ...image, alt })} />

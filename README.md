@@ -130,6 +130,8 @@ The maker has **no authentication**. It writes to whatever database its env poin
 
 Next.js loads env files from the app's own folder, so the maker needs its own `maker/.env` (or `maker/.env.local`) with `MONGODB_URI` and `MONGODB_DB`. The root `.env*` files are not read by the maker.
 
+The maker's **Upload…** buttons next to the cover URL and the image URLs of `image` and `pair` blocks put the file in the S3 bucket at `games/<_id>/<name>.<ext>` (served by `media.peppobot.com`) and fill in the URL; the game must be saved first. The cover is always named `cover`; block images ask for a short name (e.g. `art`, `mount_1`), suggested from the file name. It needs `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in `maker/.env`, for an IAM user allowed `s3:PutObject` on the bucket. `S3_BUCKET` (default `peppobot`) and `AWS_REGION` (default `eu-central-1`) are optional.
+
 ---
 
 ## Getting started

@@ -4,6 +4,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // The dev badge would sit on top of the editor and the preview.
   devIndicators: false,
+  experimental: {
+    // Covers are uploaded through a server action (`uploadCover`); the default limit is 1MB.
+    serverActions: { bodySizeLimit: "10mb" },
+  },
   // Same image hosts as the site's next.config.ts (keep them in sync), so covers and report images load in the preview.
   images: {
     remotePatterns: [

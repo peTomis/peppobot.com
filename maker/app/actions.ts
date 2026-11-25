@@ -4,6 +4,21 @@ import { ObjectId } from "mongodb";
 import { getDatabase } from "@/lib/mongodb";
 import { refreshData } from "../lib/data";
 import { toFields, type Draft } from "../lib/draft";
+import { putGameImage } from "../lib/media";
+
+export type UploadResult = { ok: true; url: string } | { ok: false; error: string };
+
+/** Uploads the `file` field of `form` as image `name` (e.g. `cover`) of the saved game `id`. The caller puts the URL in the draft. */
+export async function uploadImage(id: string, name: string, form: FormData): Promise<UploadResult> {
+  if (!ObjectId.isValid(id)) return { ok: false, error: "Save the game before uploading images." };
+  const file = form.get("file");
+  if (!(file instanceof File) || !file.size) return { ok: false, error: "No image selected." };
+  try {
+    return { ok: true, url: await putGameImage(id, name, file) };
+  } catch (error) {
+    return { ok: false, error: `Upload failed: ${error instanceof Error ? error.message : String(error)}` };
+  }
+}
 
 /** `warning`: the game was saved, but something after it failed. */
 export type SaveResult = { ok: true; id: string; warning?: string } | { ok: false; error: string };
