@@ -6,6 +6,8 @@ import type { Genre, Platform } from "./games";
  */
 export type Data = {
   count: number;
+  /** Games with a finished run (Completed or Dropped), the ones with a review. */
+  reviewed: number;
   hours: number;
   avgScore: number | null;
   completed: number;

@@ -25,7 +25,7 @@ async function load(lang: Locale) {
 export async function TelemetryKpis({ lang, t }: { lang: Locale; t: Strings }) {
   const { data, number, one } = await load(lang);
   const kpis = [
-    { label: t.kpis.logged, value: number.format(data.count), color: "var(--acc)" },
+    { label: t.kpis.logged, value: number.format(data.reviewed), color: "var(--acc)" },
     { label: t.kpis.hours, value: number.format(data.hours), color: "var(--acc2)" },
     { label: t.kpis.completed, value: number.format(data.completed), color: "var(--acc3)" },
     { label: t.kpis.avgScore, value: data.avgScore != null ? one.format(data.avgScore) : "—", color: "var(--fg)" },

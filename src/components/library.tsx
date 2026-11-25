@@ -59,16 +59,17 @@ async function load(searchParams: LibrarySearchParams) {
   return { state, result };
 }
 
-/** Purple hexagon with the match count; dashes until the data arrives. */
+/** Purple hexagon: the reviewed games, or the matches while a search or status filter is on; dashes until the data arrives. */
 export async function LibraryCounter({ searchParams, t }: { searchParams: LibrarySearchParams; t: Strings }) {
-  const { result } = await load(searchParams);
-  return <CounterFace matches={result.matches} total={result.total} t={t} />;
+  const { state, result } = await load(searchParams);
+  const filtered = Boolean(state.q || state.status);
+  return <CounterFace count={filtered ? result.matches : result.reviewed} total={result.total} t={t} />;
 }
 
-export function CounterFace({ matches, total, t }: { matches?: number; total?: number; t: Strings }) {
+export function CounterFace({ count, total, t }: { count?: number; total?: number; t: Strings }) {
   return (
     <div className="hex absolute inset-0 flex flex-col items-center justify-center gap-1 bg-acc2 font-mono font-bold text-bg">
-      <span className="text-[72px] leading-[0.9]">{matches ?? "—"}</span>
+      <span className="text-[72px] leading-[0.9]">{count ?? "—"}</span>
       <span className="text-xs tracking-[0.18em]">
         {t.of} {total ?? "—"} {t.entries}
       </span>

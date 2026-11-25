@@ -26,6 +26,7 @@ export function computeData(games: StoredGame[]): Data {
 
   return {
     count: games.length,
+    reviewed: games.filter((game) => game.status === "Completed" || game.status === "Dropped").length,
     hours: games.reduce((total, game) => total + (game.hours ?? 0), 0),
     avgScore: mean(scored.map((game) => game.average)),
     completed: games.filter((game) => game.status === "Completed").length,

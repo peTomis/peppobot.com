@@ -29,7 +29,7 @@
     "intro": "A fake robot with REAL gaming opinions. Six-axis diagnostics, countless hours logged, questionable human judgment.",
     "openLibrary": "Access the archive",
     "scoringProtocol": "Scoring protocol",
-    "kpiLogged": "GAMES LOGGED",
+    "kpiLogged": "GAMES REVIEWED",
     "kpiHours": "HOURS PLAYED",
     "kpiAvgScore": "AVG SCORE",
     "ticker": ["Now playing", "Reports filed", "Six axes", "No filters"]
@@ -173,7 +173,7 @@
     "diagnostics": "PB-0001 // DIAGNOSTICS",
     "title": ["OPERATOR", "telemetry."],
     "kpis": {
-      "logged": "GAMES LOGGED",
+      "logged": "GAMES REVIEWED",
       "hours": "HOURS PLAYED",
       "completed": "COMPLETED",
       "avgScore": "AVG SCORE"

@@ -97,7 +97,11 @@ export async function getLibraryPage({ q, status, sort, page }: LibraryQuery): P
     filter.$or = [{ title: pattern }, { dev: pattern }, { genre: { $in: genres } }, { platform: { $in: platforms } }];
   }
 
-  const [matches, total] = await Promise.all([collection.countDocuments(filter, { maxTimeMS: 5000 }), collection.countDocuments({}, { maxTimeMS: 5000 })]);
+  const [matches, reviewed, total] = await Promise.all([
+    collection.countDocuments(filter, { maxTimeMS: 5000 }),
+    collection.countDocuments({ status: { $in: ["Completed", "Dropped"] } }, { maxTimeMS: 5000 }),
+    collection.countDocuments({}, { maxTimeMS: 5000 }),
+  ]);
   const pages = Math.max(1, Math.ceil(matches / LIBRARY_PAGE_SIZE));
   const current = Math.min(Math.max(1, page), pages);
   const offset = (current - 1) * LIBRARY_PAGE_SIZE;
@@ -117,7 +121,7 @@ export async function getLibraryPage({ q, status, sort, page }: LibraryQuery): P
     )
     .toArray();
 
-  return { games: games.map(toGame), matches, total, page: current, pages, offset };
+  return { games: games.map(toGame), matches, reviewed, total, page: current, pages, offset };
 }
 
 /** A game by slug or ObjectId, with everything its report page shows. */

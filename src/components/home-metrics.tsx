@@ -24,7 +24,7 @@ export function HomeMetrics({ lang, loggedLabel, hoursLabel, averageLabel }: { l
   const number = new Intl.NumberFormat(lang);
   const score = new Intl.NumberFormat(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const kpis = [
-    { value: metrics ? number.format(metrics.count) : "—", label: loggedLabel, bg: "bg-acc" },
+    { value: metrics ? number.format(metrics.reviewed) : "—", label: loggedLabel, bg: "bg-acc" },
     { value: metrics ? number.format(metrics.hours) : "—", label: hoursLabel, bg: "bg-acc2" },
     { value: metrics?.avgScore != null ? score.format(metrics.avgScore) : "—", label: averageLabel, bg: "bg-[#232323] text-white" },
   ];

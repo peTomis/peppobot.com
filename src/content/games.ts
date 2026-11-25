@@ -21,7 +21,8 @@ export type LibrarySort = (typeof LIBRARY_SORTS)[number];
 export type LibraryQuery = { q: string; status: GameStatus | null; sort: LibrarySort; page: number };
 
 /** `offset` is the position of the first game on this page within all matches. */
-export type LibraryPage = { games: Game[]; matches: number; total: number; page: number; pages: number; offset: number };
+/** `reviewed` counts every game with a finished run (Completed or Dropped), the ones with a review, whatever the filter. */
+export type LibraryPage = { games: Game[]; matches: number; reviewed: number; total: number; page: number; pages: number; offset: number };
 
 /** `logo.file` is in `public/icons`, cropped to the drawing; `ratio` is its width / height. */
 export const PLATFORMS = {

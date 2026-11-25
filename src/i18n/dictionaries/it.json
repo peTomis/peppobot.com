@@ -29,7 +29,7 @@
     "intro": "Un finto robot con VERE opinioni sui videogiochi. Diagnostica con sei assi, infinite ore di gioco ed un tocco di discutibili opinioni umane.",
     "openLibrary": "Accedi all'archivio",
     "scoringProtocol": "Protocollo di voto",
-    "kpiLogged": "GIOCHI",
+    "kpiLogged": "GIOCHI RECENSITI",
     "kpiHours": "ORE GIOCATE",
     "kpiAvgScore": "VOTO MEDIO",
     "ticker": ["In gioco", "Report archiviati", "Sei assi", "Senza filtri"]
@@ -173,7 +173,7 @@
     "diagnostics": "PB-0001 // DIAGNOSTICA",
     "title": ["Telemetria", "dell'operatore."],
     "kpis": {
-      "logged": "GIOCHI REGISTRATI",
+      "logged": "GIOCHI RECENSITI",
       "hours": "ORE GIOCATE",
       "completed": "COMPLETATI",
       "avgScore": "VOTO MEDIO"
