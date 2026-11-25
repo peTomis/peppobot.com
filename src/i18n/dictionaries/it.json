@@ -185,6 +185,12 @@
     ]
   },
   "crew": {
+    "openReview": "Apri il report di {tag}",
+    "modalTitle": "Report crew",
+    "otherReviews": "Altri report di {tag}",
+    "noOthers": "{tag} non ha ancora altri report.",
+    "loadError": "Impossibile caricare questo report.",
+    "close": "Chiudi",
     "heading": "Dati crew",
     "average": "MEDIA CREW",
     "reviews": "{count} RECENSIONI",

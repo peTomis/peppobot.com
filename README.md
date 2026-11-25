@@ -110,6 +110,7 @@ Public read-only endpoints, outside the language prefix:
 - `GET /api/games?limit=50&offset=0` returns `{ games, limit, offset }`, sorted by `finishedOn` descending. `limit` is 1–100. Invalid values return 400.
 - `GET /api/games/[id]` returns `{ game }`, looked up by slug, then by `_id`. Unknown games return 404.
 - `GET /api/data` returns the `data` document, with a 60-second HTTP cache.
+- `GET /api/reviews/[id]?lang=en` returns `{ review, others }`: a crew review and the other reviews by its author (up to 50, newest first), each with its game and axis names. Not cached. Unknown reviews return 404.
 - If MongoDB is unavailable or not configured, the endpoints return 503 with a generic error message.
 
 ---

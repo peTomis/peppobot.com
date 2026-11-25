@@ -138,3 +138,36 @@ async function refreshStats(game: ObjectId) {
     { upsert: true },
   );
 }
+
+/** A crew review with the game it is about. */
+export type AuthoredReview = CrewReview & { game: { id: string; title: string; genre: Genre; signature: Translated | null } };
+
+type AuthoredRow = ReviewRow & { gameDoc: { _id: ObjectId; id?: string; title: string; genre: Genre; signature?: Translated | null } };
+
+// The review's game, then its author's current tag; reviews of deleted games drop out.
+const withGameAndTag: Document[] = [
+  { $lookup: { from: "games", localField: "game", foreignField: "_id", as: "gameDoc", pipeline: [{ $project: { _id: 1, id: 1, title: 1, genre: 1, signature: 1 } }] } },
+  { $unwind: "$gameDoc" },
+  { $lookup: { from: "users", localField: "user", foreignField: "_id", as: "author", pipeline: [{ $project: { _id: 0, tag: 1 } }] } },
+  { $project: { scores: 1, average: 1, blocks: 1, lang: 1, createdAt: 1, updatedAt: 1, gameDoc: 1, tag: { $first: "$author.tag" } } },
+];
+
+const toAuthored = (row: AuthoredRow): AuthoredReview => ({
+  ...toReview(row),
+  game: { id: row.gameDoc.id || row.gameDoc._id.toHexString(), title: row.gameDoc.title, genre: row.gameDoc.genre, signature: row.gameDoc.signature ?? null },
+});
+
+/** One review and the other reviews by the same author (most recent first, up to `limit`), or null when it does not exist. The author's id never leaves the server. */
+export async function getReviewThread(reviewId: string, limit = 50): Promise<{ review: AuthoredReview; others: AuthoredReview[] } | null> {
+  if (!/^[a-f0-9]{24}$/i.test(reviewId)) return null;
+  const { reviews } = await collections();
+  const _id = new ObjectId(reviewId);
+  const author = await reviews.findOne({ _id }, { projection: { user: 1 }, maxTimeMS: 5000 });
+  if (!author) return null;
+  const [[row], others] = await Promise.all([
+    reviews.aggregate<AuthoredRow>([{ $match: { _id } }, ...withGameAndTag], { maxTimeMS: 5000 }).toArray(),
+    reviews.aggregate<AuthoredRow>([{ $match: { user: author.user, _id: { $ne: _id } } }, { $sort: { updatedAt: -1, _id: -1 } }, { $limit: limit }, ...withGameAndTag], { maxTimeMS: 5000 }).toArray(),
+  ]);
+  if (!row) return null;
+  return { review: toAuthored(row), others: others.map(toAuthored) };
+}

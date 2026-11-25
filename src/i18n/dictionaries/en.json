@@ -185,6 +185,12 @@
     ]
   },
   "crew": {
+    "openReview": "Open the report by {tag}",
+    "modalTitle": "Crew report",
+    "otherReviews": "Other reports by {tag}",
+    "noOthers": "No other reports by {tag} yet.",
+    "loadError": "This report could not be loaded.",
+    "close": "Close",
     "heading": "Crew data",
     "average": "CREW AVG",
     "reviews": "{count} REVIEWS",

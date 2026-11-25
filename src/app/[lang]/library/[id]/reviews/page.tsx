@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { CrewReviewCard } from "@/components/crew-data";
+import { CrewReviewCard } from "@/components/crew-review-card";
+import { CrewReviewOpener } from "@/components/crew-review-modal";
 import { reportAxes } from "@/components/game-report";
 import { gameHref } from "@/components/nav";
 import { SectionHeading } from "@/components/section-heading";
@@ -60,7 +61,9 @@ async function Reviews({ params, searchParams }: Pick<PageProps<"/[lang]/library
         <ul className="grid grid-cols-1 gap-4 desk:grid-cols-2">
           {reviews.map((review) => (
             <li key={review.id}>
-              <CrewReviewCard review={review} own={review.id === own?.id} lang={lang} t={t} axisNames={axisNames} />
+              <CrewReviewOpener reviewId={review.id} tag={review.tag} lang={lang} t={t}>
+                <CrewReviewCard review={review} own={review.id === own?.id} lang={lang} t={t} axisNames={axisNames} />
+              </CrewReviewOpener>
             </li>
           ))}
         </ul>

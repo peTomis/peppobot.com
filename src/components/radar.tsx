@@ -14,13 +14,14 @@ function point(i: number, r: number) {
 
 const polygon = (radii: number[]) => radii.map((r, i) => point(i, r).map((n) => n.toFixed(1)).join(",")).join(" ");
 
-/** Six-axis 0–10 radar with labelled corners, in the order of `AXES`; a null value draws at the centre and shows a dash. `color` fills the shape, `valueColor` the numbers, `compact` fits a narrow column. */
+/** Six-axis 0–10 radar with labelled corners, in the order of `AXES`; a null value draws at the centre and shows a dash. `color` fills the shape, `valueColor` the numbers, `labelColor` the axis names, `compact` fits a narrow column. */
 export function Radar({
   values: axisValues,
   labels: axisLabels,
   format,
   color = "var(--acc2)",
   valueColor = "var(--acc)",
+  labelColor,
   compact = false,
 }: {
   values: (number | null)[];
@@ -28,6 +29,7 @@ export function Radar({
   format: Intl.NumberFormat;
   color?: string;
   valueColor?: string;
+  labelColor?: string;
   compact?: boolean;
 }) {
   const values = CORNERS.map((axis) => axisValues[axis] ?? null);
@@ -49,7 +51,7 @@ export function Radar({
         const value = values[i];
         return (
           <div key={i} style={{ left: `${x / 3}%`, top: `${y / 3}%` }} className={`absolute flex w-max flex-col items-center gap-0.5 text-center font-display font-bold -translate-x-1/2 -translate-y-1/2 ${compact ? "max-w-20" : "max-w-32"}`}>
-            <span className={`leading-tight text-balance text-fg-muted uppercase ${compact ? "text-[9px] tracking-wider" : "text-[13px] tracking-widest"}`}>{label}</span>
+            <span style={labelColor ? { color: labelColor } : undefined} className={`leading-tight text-balance text-fg-muted uppercase ${compact ? "text-[9px] tracking-wider" : "text-[13px] tracking-widest"}`}>{label}</span>
             <span style={{ color: valueColor }} className={`leading-none ${compact ? "text-[15px]" : "text-[22px]"}`}>{value != null ? format.format(value) : "—"}</span>
           </div>
         );

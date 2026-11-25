@@ -36,7 +36,10 @@ const initialOf = (tag: string) => tag.charAt(0).toUpperCase();
 
 /** What the account buttons show: the tag's initial when signed in, a pilot icon otherwise. */
 export function AccountFace({ me, className = "" }: { me: Me | null; className?: string }) {
-  if (me?.tag) return <span className={`font-display font-bold ${className}`}>{initialOf(me.tag)}</span>;
+  if (me?.tag) {
+    // Trimmed to the capital's height, so the letter sits in the optical centre of its hexagon whatever the font's metrics.
+    return <span className={`grid place-items-center font-display leading-none font-bold [text-box:trim-both_cap_alphabetic] ${className}`}>{initialOf(me.tag)}</span>;
+  }
   return (
     <svg viewBox="0 0 24 24" aria-hidden className={`size-5 ${className}`} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="square">
       <circle cx="12" cy="8" r="4" />
