@@ -331,6 +331,14 @@
       "26": [
         { "name": "Design degli eroi", "note": "Abilità, ruoli e identità. Ogni eroe porta uno stile di gioco distinto e divertente da padroneggiare?" },
         { "name": "Gioco di squadra", "note": "Sinergie, counter e obiettivi. Le partite premiano la coordinazione più delle imprese solitarie?" }
+      ],
+      "27": [
+        { "name": "Profondità strategica", "note": "Unità, risorse e piani a lungo termine. Ogni turno offre scelte significative con conseguenze?" },
+        { "name": "Avversari e bilanciamento", "note": "IA, fazioni ed equità. La sfida è intelligente e le parti sono bilanciate?" }
+      ],
+      "28": [
+        { "name": "Ciclo di sopravvivenza", "note": "Fame, minacce e crafting. Restare vivo mi tiene sulle spine senza diventare un peso?" },
+        { "name": "Costruzione e progressione", "note": "Basi, strumenti e tecnologia. Ogni passo avanti cambia il modo in cui affronto il mondo?" }
       ]
     },
     "gachaMeter": {
